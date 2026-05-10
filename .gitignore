@@ -1,0 +1,15 @@
+# Local-only "soft delete" folder used by Cowork agent — never commit
+_trash/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Logs and temp files
+*.log
+*.tmp
