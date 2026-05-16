@@ -1395,7 +1395,7 @@ select option{background:var(--bg3)}
         <div class="shelf-books" id="shelf-books">
           <div class="book" id="sbook-journal" onclick="openBook('journal')">
             <div class="book-spine" style="background:var(--book-journal)">
-              <div class="book-label">🌸 memories</div>
+              <div class="book-label">✨ reflections</div>
             </div>
           </div>
           <div class="book" id="sbook-reading" onclick="openBook('reading')">
@@ -1946,7 +1946,7 @@ function renderJournal(c){
   if(!c)return;
   if(journalWriting){
     const ds=new Date().toLocaleDateString('en-GB',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-    c.innerHTML='<div class="shelf-content-title">🌸 memories</div>'
+    c.innerHTML='<div class="shelf-content-title">✨ reflections</div>'
       +'<div class="j-write-header"><span style="font-size:11px;color:var(--t3)">'+ds+'</span>'
       +'<button class="j-back" onclick="journalWriting=false;renderJournal(document.getElementById(\'shelf-content\'))">← back</button></div>'
       +'<textarea id="j-input" class="j-textarea" placeholder="what\'s on your mind right now..."></textarea>'
@@ -1960,10 +1960,10 @@ function renderJournal(c){
   const g=jGroups();
   const years=Object.keys(g).sort(function(a,b){return b-a;});
   const writeBtn='<button class="btn bp" onclick="journalWriting=true;renderJournal(document.getElementById(\'shelf-content\'))" style="font-size:11px;padding:5px 12px">+ write</button>';
-  const titleRow='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><div class="shelf-content-title">🌸 memories</div>'+writeBtn+'</div>';
+  const titleRow='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><div class="shelf-content-title">✨ reflections</div>'+writeBtn+'</div>';
   if(!years.length){
-    c.innerHTML='<div class="shelf-content-title">🌸 memories</div>'
-      +'<div class="pb-empty" style="margin-top:8px">your first entry is waiting 🌸<br>'
+    c.innerHTML='<div class="shelf-content-title">✨ reflections</div>'
+      +'<div class="pb-empty" style="margin-top:8px">your first reflection is waiting ✨<br>'
       +'<button class="btn-link" style="margin-top:8px" onclick="journalWriting=true;renderJournal(document.getElementById(\'shelf-content\'))">write your first one</button></div>';
     return;
   }
@@ -1974,7 +1974,7 @@ function renderJournal(c){
   if(!journalYear||!g[journalYear]){
     c.innerHTML=titleRow
       +'<div class="stab-row">'+yearTabs+'</div>'
-      +'<div style="margin-top:20px;text-align:center"><div style="font-size:22px;margin-bottom:8px">🌸</div><div style="font-size:12px;font-weight:600;color:var(--t2)">which year holds your memories?</div><div style="font-size:11px;color:var(--t4);margin-top:4px">tap a year above to open it</div></div>';
+      +'<div style="margin-top:20px;text-align:center"><div style="font-size:22px;margin-bottom:8px">✨</div><div style="font-size:12px;font-weight:600;color:var(--t2)">which year do you want to reflect on?</div><div style="font-size:11px;color:var(--t4);margin-top:4px">tap a year above to open it</div></div>';
     return;
   }
   const monthsInYear=Object.keys(g[journalYear]||{}).map(Number).sort(function(a,b){return b-a;});
@@ -1989,7 +1989,7 @@ function renderJournal(c){
     +'<div class="stab-row">'+yearTabs+'</div>'
     +(monthsInYear.length?'<div class="stab-sub-row">'+monthTabs+'</div>'
       +(journalMonth!==null?'<div class="j-entries">'+(entries||'<div class="j-empty">no entries this month yet</div>')+'</div>'
-        :'<div style="margin-top:20px;text-align:center"><div style="font-size:22px;margin-bottom:8px">💭</div><div style="font-size:12px;font-weight:600;color:var(--t2)">which month do you want to revisit?</div><div style="font-size:11px;color:var(--t4);margin-top:4px">each month is a little time capsule</div></div>')
+        :'<div style="margin-top:20px;text-align:center"><div style="font-size:22px;margin-bottom:8px">💭</div><div style="font-size:12px;font-weight:600;color:var(--t2)">what\'s been on your mind?</div><div style="font-size:11px;color:var(--t4);margin-top:4px">pick a month to open your reflections</div></div>')
       :'<div class="j-empty" style="margin-top:14px">no entries yet</div>');
 }
 function addJournalEntry(){
