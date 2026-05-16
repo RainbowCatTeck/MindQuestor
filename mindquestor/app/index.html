@@ -255,14 +255,21 @@ body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100v
 .rl-form{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap}
 .rl-form input{flex:1;min-width:120px;background:var(--bg3);border:1px solid var(--sf);border-radius:var(--rad-xs);color:var(--t);font-family:var(--font);font-size:12px;padding:7px 10px}
 .rl-form select{background:var(--bg3);border:1px solid var(--sf);border-radius:var(--rad-xs);color:var(--t);font-family:var(--font);font-size:12px;padding:7px 8px}
-.rl-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)}
-.rl-item:last-child{border-bottom:none}
-.rl-badge{font-size:10px;padding:2px 8px;border-radius:99px;flex-shrink:0}
-.rl-reading{background:rgba(52,211,153,.12);color:var(--teal);border:1px solid rgba(52,211,153,.25)}
-.rl-finished{background:var(--brand-soft);color:var(--brand);border:1px solid rgba(192,132,252,.25)}
-.rl-want{background:rgba(251,146,60,.1);color:var(--amber);border:1px solid rgba(251,146,60,.2)}
-.rl-title{font-size:12px;color:var(--t2);flex:1}
-.rl-author{font-size:10px;color:var(--t4)}
+.rl-card{background:var(--bg3);border:1px solid var(--sf);border-radius:var(--rad-s);padding:10px 12px;display:flex;align-items:flex-start;gap:10px;margin-bottom:6px;transition:border-color .15s}
+.rl-card:last-child{margin-bottom:0}
+.rl-card:hover{border-color:var(--sf2)}
+.rl-card-accent{width:3px;border-radius:3px;align-self:stretch;flex-shrink:0;min-height:32px}
+.rl-card-body{flex:1;min-width:0}
+.rl-card-title{font-size:12px;font-weight:600;color:var(--t);line-height:1.4;cursor:pointer;border-radius:2px;transition:color .12s;outline:none}
+.rl-card-title:hover{color:var(--brand)}
+.rl-card-title[contenteditable=true]{outline:1px dashed var(--sf2);padding:0 3px;cursor:text;color:var(--t)}
+.rl-card-author{font-size:10px;color:var(--t4);margin-top:1px}
+.rl-card-meta{margin-top:6px}
+.rl-badge{font-size:10px;padding:2px 8px;border-radius:99px;flex-shrink:0;cursor:pointer;font-family:var(--font);border:1px solid transparent;transition:filter .12s}
+.rl-badge:hover{filter:brightness(1.12)}
+.rl-reading{background:rgba(52,211,153,.12);color:var(--teal);border-color:rgba(52,211,153,.25)}
+.rl-finished{background:var(--brand-soft);color:var(--brand);border-color:rgba(192,132,252,.25)}
+.rl-want{background:rgba(251,146,60,.1);color:var(--amber);border-color:rgba(251,146,60,.2)}
 /* photobook */
 .pb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
 .pb-item{border-radius:var(--rad-s);overflow:hidden;aspect-ratio:1;background:var(--bg3);position:relative;cursor:default}
@@ -1393,7 +1400,7 @@ select option{background:var(--bg3)}
           </div>
           <div class="book" id="sbook-reading" onclick="openBook('reading')">
             <div class="book-spine" style="background:var(--book-readlist)">
-              <div class="book-label">📚 reading list</div>
+              <div class="book-label">📚 library</div>
             </div>
           </div>
           <div class="book" id="sbook-photo" onclick="openBook('photo')">
@@ -1930,7 +1937,16 @@ function jGroups(){
   });
   return g;
 }
-function toggleJournalYear(y){journalYear=journalYear===y?null:y;journalMonth=null;renderJournal(document.getElementById('shelf-content'));}
+function toggleJournalYear(y){
+  if(journalYear===y){journalYear=null;journalMonth=null;}
+  else{
+    journalYear=y;
+    const g=jGroups();
+    const months=Object.keys(g[y]||{}).map(Number).sort(function(a,b){return b-a;});
+    journalMonth=months.length?months[0]:null;
+  }
+  renderJournal(document.getElementById('shelf-content'));
+}
 function renderJournal(c){
   if(!c)return;
   if(journalWriting){
@@ -1967,16 +1983,18 @@ function renderJournal(c){
     return;
   }
   const monthsInYear=Object.keys(g[journalYear]||{}).map(Number).sort(function(a,b){return b-a;});
-  if(journalMonth===null||!g[journalYear][journalMonth])journalMonth=monthsInYear[0]??new Date().getMonth();
+  if(journalMonth!==null&&!g[journalYear][journalMonth])journalMonth=monthsInYear[0]??null;
   const monthTabs=monthsInYear.map(function(m){
-    return '<button class="stab-sub'+(m===journalMonth?' stab-active':'')+'" onclick="journalMonth='+m+';renderJournal(document.getElementById(\'shelf-content\'))">'+JMONTHS[m]+'</button>';
+    return '<button class="stab-sub'+(m===journalMonth?' stab-active':'')+'" onclick="journalMonth=journalMonth==='+m+'?null:'+m+';renderJournal(document.getElementById(\'shelf-content\'))">'+JMONTHS[m]+'</button>';
   }).join('');
-  const entries=(g[journalYear][journalMonth]||[]).map(function(e){
+  const entries=journalMonth!==null?(g[journalYear][journalMonth]||[]).map(function(e){
     return '<div class="j-entry"><button class="j-del" onclick="delJournalEntry('+e.id+')">×</button><div class="j-entry-date">'+esc(e.date)+'</div><div class="j-entry-text">'+esc(e.text)+'</div></div>';
-  }).join('');
+  }).join(''):'';
   c.innerHTML=titleRow
     +'<div class="stab-row">'+yearTabs+'</div>'
-    +(monthsInYear.length?'<div class="stab-sub-row">'+monthTabs+'</div><div class="j-entries">'+(entries||'<div class="j-empty">no entries this month yet</div>')+'</div>'
+    +(monthsInYear.length?'<div class="stab-sub-row">'+monthTabs+'</div>'
+      +(journalMonth!==null?'<div class="j-entries">'+(entries||'<div class="j-empty">no entries this month yet</div>')+'</div>'
+        :'<div class="j-empty" style="margin-top:14px;font-size:11px">pick a month to see your entries ↑</div>')
       :'<div class="j-empty" style="margin-top:14px">no entries yet</div>');
 }
 function addJournalEntry(){
@@ -2006,6 +2024,20 @@ const RL_BOOKS=[
 ];
 const RL_BADGES={want:'rl-want',reading:'rl-reading',done:'rl-finished'};
 const RL_LBLS={want:'📌 want to read',reading:'📖 reading',done:'✅ finished'};
+const RL_ACCENTS={want:'var(--amber)',reading:'var(--teal)',done:'var(--brand)'};
+function rlBookCard(b){
+  const cls=RL_BADGES[b.status]||'rl-want';
+  const lbl=RL_LBLS[b.status]||'';
+  const accent=RL_ACCENTS[b.status]||'var(--sf)';
+  return '<div class="rl-card">'
+    +'<div class="rl-card-accent" style="background:'+accent+'"></div>'
+    +'<div class="rl-card-body">'
+    +'<div class="rl-card-title" id="rl-title-'+b.id+'" onclick="renameBook('+b.id+')" title="click title to rename">'+esc(b.title)+'</div>'
+    +(b.author?'<div class="rl-card-author">by '+esc(b.author)+'</div>':'')
+    +'<div class="rl-card-meta"><button class="rl-badge '+cls+'" onclick="cycleBookStatus('+b.id+')" title="tap to cycle status">'+lbl+'</button></div>'
+    +'</div>'
+    +'<button class="j-del" onclick="delBook('+b.id+')">×</button></div>';
+}
 function renderReading(c){
   if(!c)return;
   const catTabs=RL_BOOKS.map(function(b){
@@ -2038,13 +2070,7 @@ function renderReading(c){
       const yearSubTabs=yKeys.map(function(y){
         return '<button class="stab-sub'+(rlOpenYear===y?' stab-active':'')+'" onclick="rlOpenYear=\''+y+'\';renderReading(document.getElementById(\'shelf-content\'))">'+y+'</button>';
       }).join('');
-      const items=yGroups[rlOpenYear].map(function(b){
-        const cls=RL_BADGES[b.status]||'rl-want';
-        const lbl=RL_LBLS[b.status]||'';
-        return '<div class="rl-item"><button class="rl-badge '+cls+'" onclick="cycleBookStatus('+b.id+')" title="tap to change status">'+lbl+'</button>'
-          +'<div><div class="rl-title">'+esc(b.title)+'</div>'+(b.author?'<div class="rl-author">'+esc(b.author)+'</div>':'')+'</div>'
-          +'<button class="j-del" onclick="delBook('+b.id+')">×</button></div>';
-      }).join('');
+      const items=yGroups[rlOpenYear].map(rlBookCard).join('');
       inner='<div class="stab-sub-row">'+yearSubTabs+'</div>'+(items||'<div class="j-empty">no books here yet</div>');
     }
   } else {
@@ -2052,16 +2078,10 @@ function renderReading(c){
     const addForm='<div class="rl-form"><input type="text" id="rl-title" placeholder="book title...">'
       +'<input type="text" id="rl-author" placeholder="author (optional)">'
       +'<button class="btn bgh" onclick="addBook()">+ add</button></div>';
-    const items=filtered.map(function(b){
-      const cls=RL_BADGES[b.status]||'rl-want';
-      const lbl=RL_LBLS[b.status]||'';
-      return '<div class="rl-item"><button class="rl-badge '+cls+'" onclick="cycleBookStatus('+b.id+')" title="tap to change status">'+lbl+'</button>'
-        +'<div><div class="rl-title">'+esc(b.title)+'</div>'+(b.author?'<div class="rl-author">'+esc(b.author)+'</div>':'')+'</div>'
-        +'<button class="j-del" onclick="delBook('+b.id+')">×</button></div>';
-    }).join('');
+    const items=filtered.map(rlBookCard).join('');
     inner=addForm+(items||'<div class="j-empty">no books here yet</div>');
   }
-  c.innerHTML='<div class="shelf-content-title">📚 reading list</div>'
+  c.innerHTML='<div class="shelf-content-title">📚 library</div>'
     +'<div class="shelf-content-sub">books you\'ve read, are reading, or want to read</div>'
     +'<div class="stab-row">'+catTabs+'</div>'
     +'<div style="margin-top:12px">'+inner+'</div>';
@@ -2091,6 +2111,27 @@ function cycleBookStatus(id){
   b.status=next;
   saveShelf();
   renderReading(document.getElementById('shelf-content'));
+}
+
+function renameBook(id){
+  const el=document.getElementById('rl-title-'+id);
+  if(!el||el.contentEditable==='true')return;
+  el.contentEditable='true';
+  el.focus();
+  const range=document.createRange();range.selectNodeContents(el);
+  const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);
+  const orig=el.textContent;
+  el.onblur=function(){
+    el.contentEditable='false';el.onblur=null;el.onkeydown=null;
+    const b=readingList.find(function(x){return x.id===id;});
+    const t=el.textContent.trim();
+    if(b&&t)b.title=t;else if(!t&&b)el.textContent=orig;
+    saveShelf();renderReading(document.getElementById('shelf-content'));
+  };
+  el.onkeydown=function(e){
+    if(e.key==='Enter'){e.preventDefault();el.blur();}
+    if(e.key==='Escape'){el.textContent=orig;el.blur();}
+  };
 }
 
 // ── PHOTOBOOK ──
