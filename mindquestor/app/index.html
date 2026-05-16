@@ -109,6 +109,11 @@
 body.gentle .hstreak{opacity:0!important;pointer-events:none}
 body.gentle #xp-val{display:none}
 body.gentle #hdr-xp-curr{display:none}
+/* ── AXIE LIGHT MODE ────────────────────────────────────────────────────────── */
+/* SVG presentation attrs have low specificity — CSS rules override them */
+[data-theme="light"] #axie-head-svg [fill="#c084fc"]{fill:#4c1d95}
+[data-theme="light"] #axie-head-svg [stroke="#c084fc"]{stroke:#4c1d95}
+[data-theme="light"] #axie-head-svg{filter:drop-shadow(0 3px 10px rgba(60,20,120,.35))}
 
 body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100vh;font-size:14px;line-height:1.6}
 .app{max-width:980px;margin:0 auto;padding:16px 14px 100px}
@@ -163,12 +168,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100v
 .emo-title{font-size:11px;font-weight:700;color:var(--t3);margin-bottom:10px;letter-spacing:.04em}
 .emo-display{display:none;align-items:center;gap:8px;margin-bottom:12px;background:var(--bg3);border-radius:var(--rad-s);padding:9px 13px}
 .emo-display.visible{display:flex}
-.emo-display-chip{font-size:13px;font-weight:700;padding:3px 11px;border-radius:99px;color:#000;flex-shrink:0}
+.emo-display-chip{font-size:13px;font-weight:700;padding:3px 11px;border-radius:99px;color:var(--t);flex-shrink:0}
 .emo-display-label{font-size:11px;color:var(--t3);flex:1}
 .emo-clear{background:none;border:none;color:var(--t4);font-size:12px;cursor:pointer;padding:2px 7px;border-radius:4px;font-family:var(--font)}
 .emo-clear:hover{color:var(--danger)}
 .emo-core-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px}
-.emo-core-btn{background:var(--bg3);border:2px solid transparent;border-radius:var(--rad-s);padding:9px 7px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);transition:all .15s;text-align:center;line-height:1.3}
+.emo-core-btn{background:var(--bg3);border:2px solid transparent;border-radius:var(--rad-s);padding:9px 7px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);transition:all .15s;text-align:center;line-height:1.3;color:var(--t)}
 .emo-core-btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
 .emo-core-btn.selected{border-color:currentColor;box-shadow:0 0 0 2px currentColor}
 .emo-sub-wrap{display:none;flex-wrap:wrap;gap:6px;animation:fadeIn .18s ease}
@@ -777,7 +782,7 @@ select option{background:var(--bg3)}
   <div class="logo-wrap">
     <div style="display:flex;align-items:center;gap:12px">
       <!-- AXIE — brand mascot, header -->
-      <svg onclick="showAxieGreeting()" title="axie 🌸"
+      <svg id="axie-head-svg" onclick="showAxieGreeting()" title="axie 🌸"
         viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"
         style="width:52px;height:52px;flex-shrink:0;cursor:pointer;filter:drop-shadow(0 3px 10px rgba(192,132,252,.3));animation:float-idle 3s ease-in-out infinite">
         <!-- gills left -->
@@ -2792,9 +2797,10 @@ function inferNameFromUrl(u){try{return new URL(u).hostname.replace('www.','')}c
 function addCustomQuickLink(){const n=document.getElementById('cname').value.trim();let u=document.getElementById('curl').value.trim();if(!u)return;if(!/^https?:\/\//i.test(u))u='https://'+u;if(allQuickLinks().some(x=>x.url===u))return;const cat=document.getElementById('ccat').value||'other';const emo=document.getElementById('cemo').value.trim();const finalName=n||inferNameFromUrl(u);customLinks.push({name:finalName,url:u,cat:cat,emoji:emo,icon:''});quickChosen.push({id:Date.now()+Math.random(),name:finalName,url:u,cat:cat,emoji:emo,icon:''});document.getElementById('cname').value='';document.getElementById('curl').value='';document.getElementById('cemo').value='';saveQuickHub();renderSettingsLinks();renderLinkOrder();renderQuickLinksHeader()}
 // ── EMOTION WHEEL ────────────────────────────────────────────────────────────
 // 3-level emotion wheel: core → secondary (emoji+words) → specific
-// color/text = light-mode (pastels on white); dc/dt = dark-mode (deep bg, light text)
+// Emotion colour palette — medium-tone, non-stereotypical, works on both light & dark.
+// Text colour is handled by CSS var(--t) on .emo-core-btn, not set per-emotion.
 const EMOTION_WHEEL={
-  happy:{label:'happy',emoji:'😊',color:'#fde68a',text:'#78350f',dc:'#78350f',dt:'#fef3c7',subs:{
+  happy:{label:'happy',emoji:'😊',color:'#c49a5a',subs:{
     joyful:   {emoji:'😄',words:['elated','delighted','overjoyed','blissful']},
     playful:  {emoji:'😜',words:['silly','goofy','creative','lighthearted']},
     excited:  {emoji:'🤩',words:['thrilled','eager','energized','enthusiastic']},
@@ -2802,7 +2808,7 @@ const EMOTION_WHEEL={
     grateful: {emoji:'🙏',words:['thankful','appreciative','touched','lucky']},
     proud:    {emoji:'🥰',words:['accomplished','confident','capable','worthy']},
   }},
-  sad:{label:'sad',emoji:'😢',color:'#bfdbfe',text:'#1e3a5f',dc:'#1e3a5f',dt:'#dbeafe',subs:{
+  sad:{label:'sad',emoji:'😢',color:'#7a8fb5',subs:{
     lonely:       {emoji:'😔',words:['isolated','disconnected','unseen','left out']},
     grieving:     {emoji:'💔',words:['heartbroken','mourning','bereft','devastated']},
     depressed:    {emoji:'😞',words:['hopeless','empty','numb','hollow']},
@@ -2810,26 +2816,26 @@ const EMOTION_WHEEL={
     vulnerable:   {emoji:'🥺',words:['exposed','fragile','tender','raw']},
     disappointed: {emoji:'😕',words:['let down','defeated','discouraged','deflated']},
   }},
-  disgust:{label:'disgust',emoji:'😖',color:'#ddd6fe',text:'#3b0764',dc:'#3b0764',dt:'#ede9fe',subs:{
+  disgust:{label:'disgust',emoji:'😖',color:'#7a9e80',subs:{
     disapproving: {emoji:'🙄',words:['critical','judgemental','contemptuous','dismissive']},
     ashamed:      {emoji:'😳',words:['embarrassed','mortified','self-conscious','flustered']},
     avoidant:     {emoji:'😶',words:['withdrawn','shut down','detached','distant']},
     revolted:     {emoji:'🤢',words:['repulsed','sickened','grossed out','averse']},
   }},
-  anger:{label:'anger',emoji:'😠',color:'#fecaca',text:'#7f1d1d',dc:'#7f1d1d',dt:'#fee2e2',subs:{
+  anger:{label:'anger',emoji:'😠',color:'#c07a68',subs:{
     frustrated: {emoji:'😤',words:['agitated','irritated','tense','annoyed']},
     resentful:  {emoji:'😒',words:['bitter','envious','slighted','jealous']},
     hurt:       {emoji:'💔',words:['betrayed','wounded','abandoned','let down']},
     furious:    {emoji:'🤬',words:['enraged','livid','outraged','explosive']},
     threatened: {emoji:'😰',words:['unsafe','violated','on edge','defensive']},
   }},
-  fear:{label:'fear',emoji:'😨',color:'#bbf7d0',text:'#14532d',dc:'#14532d',dt:'#d1fae5',subs:{
+  fear:{label:'fear',emoji:'😨',color:'#8090c8',subs:{
     anxious:     {emoji:'😰',words:['worried','uneasy','apprehensive','on edge']},
     overwhelmed: {emoji:'😵',words:['flooded','overloaded','scattered','too much']},
     insecure:    {emoji:'😟',words:['self-doubt','inadequate','uncertain','not enough']},
     scared:      {emoji:'😱',words:['terrified','panicked','frozen','dread']},
   }},
-  surprise:{label:'surprise',emoji:'😲',color:'#a5f3fc',text:'#164e63',dc:'#164e63',dt:'#cffafe',subs:{
+  surprise:{label:'surprise',emoji:'😲',color:'#7a9eaa',subs:{
     confused:  {emoji:'🤔',words:['puzzled','bewildered','lost','uncertain']},
     amazed:    {emoji:'🤩',words:['awestruck','astonished','in awe','wonder']},
     startled:  {emoji:'😯',words:['shocked','jolted','off guard','disoriented']},
@@ -2838,24 +2844,22 @@ const EMOTION_WHEEL={
 };
 // Body-sensation guide for emotion identification (helps with alexithymia)
 const EMO_HELP=[
-  {key:'happy',  emoji:'😊',color:'#fde68a',text:'#78350f',dc:'#78350f',dt:'#fef3c7',cue:'things feel good, open, going well',    sense:'warm chest · light feeling · relaxed · smiling easily'},
-  {key:'sad',    emoji:'😢',color:'#bfdbfe',text:'#1e3a5f',dc:'#1e3a5f',dt:'#dbeafe',cue:'something is missing, lost, or hurting', sense:'heavy · tired · tight throat · hollow feeling inside'},
-  {key:'disgust',emoji:'😖',color:'#ddd6fe',text:'#3b0764',dc:'#3b0764',dt:'#ede9fe',cue:'something feels wrong, off, or bad',     sense:'stomach turning · wanting to pull away · face tension'},
-  {key:'anger',  emoji:'😠',color:'#fecaca',text:'#7f1d1d',dc:'#7f1d1d',dt:'#fee2e2',cue:'a boundary was crossed, something unfair',sense:'hot or tight chest · rising energy · clenched jaw'},
-  {key:'fear',   emoji:'😨',color:'#bbf7d0',text:'#14532d',dc:'#14532d',dt:'#d1fae5',cue:'uncertain, unsafe, or unknown ahead',    sense:'fluttery stomach · tight chest · frozen or wanting to flee'},
-  {key:'surprise',emoji:'😲',color:'#a5f3fc',text:'#164e63',dc:'#164e63',dt:'#cffafe',cue:'something unexpected happened',          sense:'wide + alert · spinning · may shift quickly into other feelings'},
+  {key:'happy',   emoji:'😊',color:'#c49a5a',cue:'things feel good, open, going well',     sense:'warm chest · light feeling · relaxed · smiling easily'},
+  {key:'sad',     emoji:'😢',color:'#7a8fb5',cue:'something is missing, lost, or hurting',  sense:'heavy · tired · tight throat · hollow feeling inside'},
+  {key:'disgust', emoji:'😖',color:'#7a9e80',cue:'something feels wrong, off, or bad',      sense:'stomach turning · wanting to pull away · face tension'},
+  {key:'anger',   emoji:'😠',color:'#c07a68',cue:'a boundary was crossed, something unfair',sense:'hot or tight chest · rising energy · clenched jaw'},
+  {key:'fear',    emoji:'😨',color:'#8090c8',cue:'uncertain, unsafe, or unknown ahead',     sense:'fluttery stomach · tight chest · frozen or wanting to flee'},
+  {key:'surprise',emoji:'😲',color:'#7a9eaa',cue:'something unexpected happened',           sense:'wide + alert · spinning · may shift quickly into other feelings'},
 ];
 
 let emotionCore='',emotionSub='',emotionSpec='';
 
 function renderEmotionWheel(){
   const grid=document.getElementById('emo-core-grid');if(!grid)return;
-  grid.innerHTML=Object.entries(EMOTION_WHEEL).map(([k,v])=>{
-    const bg=isDarkMode?(v.dc||v.color):v.color;
-    const tx=isDarkMode?(v.dt||v.text):v.text;
-    return `<button class="emo-core-btn${emotionCore===k?' selected':''}" onclick="selectEmotionCore('${k}')"
-      style="background:${bg};color:${tx}">${v.emoji}<br><span style="font-size:10px">${v.label}</span></button>`;
-  }).join('');
+  grid.innerHTML=Object.entries(EMOTION_WHEEL).map(([k,v])=>
+    `<button class="emo-core-btn${emotionCore===k?' selected':''}" onclick="selectEmotionCore('${k}')"
+      style="background:${v.color}">${v.emoji}<br><span style="font-size:10px">${v.label}</span></button>`
+  ).join('');
   renderEmotionSubs();
   renderEmotionSpec();
   renderEmotionDisplay();
@@ -2900,8 +2904,8 @@ function renderEmotionDisplay(){
   if(!emotionCore){disp.classList.remove('visible');return;}
   const v=EMOTION_WHEEL[emotionCore];
   chip.textContent=v.emoji+' '+(emotionSpec||emotionSub||v.label);
-  chip.style.background=isDarkMode?(v.dc||v.color):v.color;
-  chip.style.color=isDarkMode?(v.dt||v.text):v.text;
+  chip.style.background=v.color;
+  chip.style.color='';
   lbl.textContent=v.label+(emotionSub?' › '+emotionSub:'')+(emotionSpec?' › '+emotionSpec:'');
   disp.classList.add('visible');
 }
@@ -2921,15 +2925,13 @@ function toggleEmoHelp(){
 }
 function renderEmoHelp(){
   const body=document.getElementById('emo-help-body');if(!body)return;
-  body.innerHTML=EMO_HELP.map(e=>{
-    const bg=isDarkMode?(e.dc||e.color):e.color;
-    const tx=isDarkMode?(e.dt||e.text):e.text;
-    return `<div class="emo-help-row" onclick="selectEmotionCore('${e.key}')" style="background:${bg}33">
-      <div class="emo-help-name" style="background:${bg};color:${tx}">${e.emoji} ${e.key}</div>
-      <div class="emo-help-cue" style="color:${tx}">${e.cue}</div>
+  body.innerHTML=EMO_HELP.map(e=>
+    `<div class="emo-help-row" onclick="selectEmotionCore('${e.key}')" style="background:${e.color}44">
+      <div class="emo-help-name" style="background:${e.color}">${e.emoji} ${e.key}</div>
+      <div class="emo-help-cue">${e.cue}</div>
       <div class="emo-help-sense">${e.sense}</div>
-    </div>`;
-  }).join('');
+    </div>`
+  ).join('');
 }
 
 function saveEmotion(){
