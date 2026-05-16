@@ -51,6 +51,16 @@
   /* shadows */
   --shadow:0 4px 24px rgba(0,0,0,.45);
   --shadow-s:0 2px 10px rgba(0,0,0,.3);
+
+  /* header */
+  --hdr-bg:rgba(22,18,31,.97);
+  --hdr-shadow:0 2px 24px rgba(0,0,0,.5);
+
+  /* shelf / book spines */
+  --shelf-wood:linear-gradient(180deg,#5c3a1a 0%,#3d2208 100%);
+  --book-journal:linear-gradient(135deg,#3d1f5a,#2d1548);
+  --book-readlist:linear-gradient(135deg,#3d2008,#2a1505);
+  --book-photo:linear-gradient(135deg,#0d3d2e,#092918);
 }
 
 /* ── LIGHT THEME ───────────────────────────────────────────────────────────── */
@@ -86,6 +96,14 @@
   --danger:#dc2626;
   --shadow:0 4px 24px rgba(80,40,160,.18);
   --shadow-s:0 2px 10px rgba(80,40,160,.12);
+  /* header */
+  --hdr-bg:rgba(176,155,240,.97);
+  --hdr-shadow:0 2px 24px rgba(80,50,180,.18);
+  /* shelf / book spines — lighter, readable on lavender bg */
+  --shelf-wood:linear-gradient(180deg,#b08050 0%,#8b6035 100%);
+  --book-journal:linear-gradient(135deg,#7c3aed,#6d28d9);
+  --book-readlist:linear-gradient(135deg,#c2723a,#a05e2a);
+  --book-photo:linear-gradient(135deg,#059669,#047857);
 }
 /* ── GENTLE MODE ───────────────────────────────────────────────────────────── */
 body.gentle .hstreak{opacity:0!important;pointer-events:none}
@@ -181,7 +199,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100v
 .shelf-scene{display:flex;flex-direction:column;gap:20px}
 .shelf-rack{display:flex;flex-direction:column;gap:0}
 .shelf-books{display:flex;gap:10px;align-items:flex-end;padding:12px 16px 0;overflow-x:auto}
-.shelf-plank{height:14px;background:linear-gradient(180deg,#5c3a1a 0%,#3d2208 100%);border-radius:3px;box-shadow:0 5px 14px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08)}
+.shelf-plank{height:14px;background:var(--shelf-wood);border-radius:3px;box-shadow:0 5px 14px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.1)}
 .book{display:flex;flex-direction:column;align-items:center;cursor:pointer;transition:transform .2s;flex-shrink:0}
 .book:hover .book-spine{transform:translateY(-8px)}
 .book.selected .book-spine{transform:translateY(-10px)}
@@ -239,7 +257,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100v
 .pb-del:hover{background:var(--danger)}
 .pb-mini-shelf{display:flex;flex-direction:column;gap:0}
 .pb-mini-books{display:flex;gap:7px;align-items:flex-end;padding:8px 10px 0;flex-wrap:wrap}
-.pb-mini-plank{height:9px;background:linear-gradient(180deg,#5c3a1a 0%,#3d2208 100%);border-radius:2px;box-shadow:0 3px 8px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07);margin-bottom:16px}
+.pb-mini-plank{height:9px;background:var(--shelf-wood);border-radius:2px;box-shadow:0 3px 8px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);margin-bottom:16px}
 .pb-mbook{display:flex;flex-direction:column;align-items:center;cursor:pointer;transition:transform .2s}
 .pb-mbook:hover .pb-mspine,.pb-mbook.pb-open .pb-mspine{transform:translateY(-6px)}
 .pb-mspine{width:38px;height:90px;border-radius:3px 2px 2px 3px;display:flex;align-items:center;justify-content:center;box-shadow:-2px 3px 7px rgba(0,0,0,.4),inset 1px 0 3px rgba(255,255,255,.07);transition:transform .2s;position:relative}
@@ -726,7 +744,7 @@ select option{background:var(--bg3)}
 
 
 /* ── FLOATING HEADER ─────────────────────────────────────────────── */
-.hdr-float{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(22,18,31,.97);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:10px 14px 0;box-shadow:0 2px 24px rgba(0,0,0,.5)}
+.hdr-float{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--hdr-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:10px 14px 0;box-shadow:var(--hdr-shadow)}
 /* remove margins inside float — spacing handled by float padding */
 .hdr-float .hdr{margin-bottom:0;border-bottom:none;padding-bottom:6px}
 .hdr-float .hdr-xp-bar{margin-bottom:0;border:none;background:transparent;padding:0 0 8px;box-shadow:none}
@@ -1347,17 +1365,17 @@ select option{background:var(--bg3)}
       <div class="shelf-rack">
         <div class="shelf-books" id="shelf-books">
           <div class="book" id="sbook-journal" onclick="openBook('journal')">
-            <div class="book-spine" style="background:linear-gradient(135deg,#3d1f5a,#2d1548)">
+            <div class="book-spine" style="background:var(--book-journal)">
               <div class="book-label">📔 journal</div>
             </div>
           </div>
           <div class="book" id="sbook-reading" onclick="openBook('reading')">
-            <div class="book-spine" style="background:linear-gradient(135deg,#3d2008,#2a1505)">
+            <div class="book-spine" style="background:var(--book-readlist)">
               <div class="book-label">📚 reading list</div>
             </div>
           </div>
           <div class="book" id="sbook-photo" onclick="openBook('photo')">
-            <div class="book-spine" style="background:linear-gradient(135deg,#0d3d2e,#092918)">
+            <div class="book-spine" style="background:var(--book-photo)">
               <div class="book-label">📷 photobook</div>
             </div>
           </div>
@@ -1908,7 +1926,7 @@ function renderJournal(c){
     }
     years.forEach(function(y,i){
       const count=Object.values(g[y]).flat().length;
-      const col=PB_COLORS[i%PB_COLORS.length];
+      const col=bookCol(i);
       books+='<div class="pb-mbook" onclick="journalYear=\''+y+'\';renderJournal(document.getElementById(\'shelf-content\'))">'
         +'<div class="pb-mspine" style="background:'+col+'">'
         +'<div class="pb-mlabel">'+y+'<br><span style="font-size:7px;opacity:.7">'+count+' entr'+(count!==1?'ies':'y')+'</span></div>'
@@ -1958,9 +1976,9 @@ function delJournalEntry(id){
 // ── READING LIST ──
 let rlOpenStatus=null,rlOpenYear=null;
 const RL_BOOKS=[
-  {key:'want',label:'📌 want to read',col:'linear-gradient(135deg,#3d2008,#2a1505)'},
-  {key:'reading',label:'📖 reading',col:'linear-gradient(135deg,#0d3d2e,#092918)'},
-  {key:'done',label:'✅ finished',col:'linear-gradient(135deg,#3d1f5a,#2d1548)'},
+  {key:'want',  label:'📌 want to read',dc:'linear-gradient(135deg,#3d2008,#2a1505)',lc:'linear-gradient(135deg,#c2723a,#a05e2a)'},
+  {key:'reading',label:'📖 reading',    dc:'linear-gradient(135deg,#0d3d2e,#092918)',lc:'linear-gradient(135deg,#059669,#047857)'},
+  {key:'done',  label:'✅ finished',    dc:'linear-gradient(135deg,#3d1f5a,#2d1548)',lc:'linear-gradient(135deg,#7c3aed,#6d28d9)'},
 ];
 const RL_BADGES={want:'rl-want',reading:'rl-reading',done:'rl-finished'};
 const RL_LBLS={want:'📌 want to read',reading:'📖 reading',done:'✅ finished'};
@@ -1972,7 +1990,7 @@ function renderReading(c){
     const books=RL_BOOKS.map(function(b){
       const count=readingList.filter(function(r){return r.status===b.key;}).length;
       return '<div class="pb-mbook" onclick="rlOpenStatus=\''+b.key+'\';rlOpenYear=null;renderReading(document.getElementById(\'shelf-content\'))">'
-        +'<div class="pb-mspine" style="background:'+b.col+'">'
+        +'<div class="pb-mspine" style="background:'+(isDarkMode?b.dc:b.lc)+'">'
         +'<div class="pb-mlabel">'+b.label.replace(/📌|📖|✅/g,'').trim()
         +'<br><span style="font-size:7px;opacity:.7">'+count+' book'+(count!==1?'s':'')+'</span></div>'
         +'</div></div>';
@@ -2002,7 +2020,7 @@ function renderReading(c){
     var yKeys=Object.keys(yGroups).sort(function(a,b){return b-a;});
     var yBooks=yKeys.map(function(y,i){
       var cnt=yGroups[y].length;
-      var col=PB_COLORS[i%PB_COLORS.length];
+      var col=bookCol(i);
       return '<div class="pb-mbook" onclick="rlOpenYear=\''+y+'\';renderReading(document.getElementById(\'shelf-content\'))">'
         +'<div class="pb-mspine" style="background:'+col+'">'
         +'<div class="pb-mlabel">'+y+'<br><span style="font-size:7px;opacity:.7">'+cnt+' book'+(cnt!==1?'s':'')+'</span></div>'
@@ -2094,7 +2112,7 @@ function delFromPhotobook(id){
   renderPhotobook(document.getElementById('shelf-content'));
 }
 let pbOpenMonth=null;
-const PB_COLORS=[
+const PB_COLORS_DARK=[
   "linear-gradient(135deg,#3d1f5a,#2d1548)",
   "linear-gradient(135deg,#0d3d2e,#092918)",
   "linear-gradient(135deg,#3d2008,#2a1505)",
@@ -2102,6 +2120,15 @@ const PB_COLORS=[
   "linear-gradient(135deg,#2e1a3d,#1e0f2b)",
   "linear-gradient(135deg,#1a3d2e,#0e2419)",
 ];
+const PB_COLORS_LIGHT=[
+  "linear-gradient(135deg,#7c3aed,#6d28d9)",
+  "linear-gradient(135deg,#059669,#047857)",
+  "linear-gradient(135deg,#c2723a,#a05e2a)",
+  "linear-gradient(135deg,#1d4ed8,#1e40af)",
+  "linear-gradient(135deg,#9333ea,#7e22ce)",
+  "linear-gradient(135deg,#0891b2,#0e7490)",
+];
+function bookCol(i){const p=isDarkMode?PB_COLORS_DARK:PB_COLORS_LIGHT;return p[i%p.length];}
 function renderPhotobook(c){
   if(!c)return;
   if(!photobookItems.length){
@@ -2137,7 +2164,7 @@ function renderPhotobook(c){
     // shelf view — show month books
     pbOpenMonth=null;
     const books=monthKeys.map(function(key,i){
-      const col=PB_COLORS[i%PB_COLORS.length];
+      const col=bookCol(i);
       const count=groups[key].length;
       return '<div class="pb-mbook" onclick="pbOpenMonth=\''+key+'\';renderPhotobook(document.getElementById(\'shelf-content\'))">'
         +'<div class="pb-mspine" style="background:'+col+'">'
@@ -2765,8 +2792,9 @@ function inferNameFromUrl(u){try{return new URL(u).hostname.replace('www.','')}c
 function addCustomQuickLink(){const n=document.getElementById('cname').value.trim();let u=document.getElementById('curl').value.trim();if(!u)return;if(!/^https?:\/\//i.test(u))u='https://'+u;if(allQuickLinks().some(x=>x.url===u))return;const cat=document.getElementById('ccat').value||'other';const emo=document.getElementById('cemo').value.trim();const finalName=n||inferNameFromUrl(u);customLinks.push({name:finalName,url:u,cat:cat,emoji:emo,icon:''});quickChosen.push({id:Date.now()+Math.random(),name:finalName,url:u,cat:cat,emoji:emo,icon:''});document.getElementById('cname').value='';document.getElementById('curl').value='';document.getElementById('cemo').value='';saveQuickHub();renderSettingsLinks();renderLinkOrder();renderQuickLinksHeader()}
 // ── EMOTION WHEEL ────────────────────────────────────────────────────────────
 // 3-level emotion wheel: core → secondary (emoji+words) → specific
+// color/text = light-mode (pastels on white); dc/dt = dark-mode (deep bg, light text)
 const EMOTION_WHEEL={
-  happy:{label:'happy',emoji:'😊',color:'#fde68a',text:'#78350f',subs:{
+  happy:{label:'happy',emoji:'😊',color:'#fde68a',text:'#78350f',dc:'#78350f',dt:'#fef3c7',subs:{
     joyful:   {emoji:'😄',words:['elated','delighted','overjoyed','blissful']},
     playful:  {emoji:'😜',words:['silly','goofy','creative','lighthearted']},
     excited:  {emoji:'🤩',words:['thrilled','eager','energized','enthusiastic']},
@@ -2774,7 +2802,7 @@ const EMOTION_WHEEL={
     grateful: {emoji:'🙏',words:['thankful','appreciative','touched','lucky']},
     proud:    {emoji:'🥰',words:['accomplished','confident','capable','worthy']},
   }},
-  sad:{label:'sad',emoji:'😢',color:'#bfdbfe',text:'#1e3a5f',subs:{
+  sad:{label:'sad',emoji:'😢',color:'#bfdbfe',text:'#1e3a5f',dc:'#1e3a5f',dt:'#dbeafe',subs:{
     lonely:       {emoji:'😔',words:['isolated','disconnected','unseen','left out']},
     grieving:     {emoji:'💔',words:['heartbroken','mourning','bereft','devastated']},
     depressed:    {emoji:'😞',words:['hopeless','empty','numb','hollow']},
@@ -2782,26 +2810,26 @@ const EMOTION_WHEEL={
     vulnerable:   {emoji:'🥺',words:['exposed','fragile','tender','raw']},
     disappointed: {emoji:'😕',words:['let down','defeated','discouraged','deflated']},
   }},
-  disgust:{label:'disgust',emoji:'😖',color:'#ddd6fe',text:'#3b0764',subs:{
+  disgust:{label:'disgust',emoji:'😖',color:'#ddd6fe',text:'#3b0764',dc:'#3b0764',dt:'#ede9fe',subs:{
     disapproving: {emoji:'🙄',words:['critical','judgemental','contemptuous','dismissive']},
     ashamed:      {emoji:'😳',words:['embarrassed','mortified','self-conscious','flustered']},
     avoidant:     {emoji:'😶',words:['withdrawn','shut down','detached','distant']},
     revolted:     {emoji:'🤢',words:['repulsed','sickened','grossed out','averse']},
   }},
-  anger:{label:'anger',emoji:'😠',color:'#fecaca',text:'#7f1d1d',subs:{
+  anger:{label:'anger',emoji:'😠',color:'#fecaca',text:'#7f1d1d',dc:'#7f1d1d',dt:'#fee2e2',subs:{
     frustrated: {emoji:'😤',words:['agitated','irritated','tense','annoyed']},
     resentful:  {emoji:'😒',words:['bitter','envious','slighted','jealous']},
     hurt:       {emoji:'💔',words:['betrayed','wounded','abandoned','let down']},
     furious:    {emoji:'🤬',words:['enraged','livid','outraged','explosive']},
     threatened: {emoji:'😰',words:['unsafe','violated','on edge','defensive']},
   }},
-  fear:{label:'fear',emoji:'😨',color:'#bbf7d0',text:'#14532d',subs:{
+  fear:{label:'fear',emoji:'😨',color:'#bbf7d0',text:'#14532d',dc:'#14532d',dt:'#d1fae5',subs:{
     anxious:     {emoji:'😰',words:['worried','uneasy','apprehensive','on edge']},
     overwhelmed: {emoji:'😵',words:['flooded','overloaded','scattered','too much']},
     insecure:    {emoji:'😟',words:['self-doubt','inadequate','uncertain','not enough']},
     scared:      {emoji:'😱',words:['terrified','panicked','frozen','dread']},
   }},
-  surprise:{label:'surprise',emoji:'😲',color:'#a5f3fc',text:'#164e63',subs:{
+  surprise:{label:'surprise',emoji:'😲',color:'#a5f3fc',text:'#164e63',dc:'#164e63',dt:'#cffafe',subs:{
     confused:  {emoji:'🤔',words:['puzzled','bewildered','lost','uncertain']},
     amazed:    {emoji:'🤩',words:['awestruck','astonished','in awe','wonder']},
     startled:  {emoji:'😯',words:['shocked','jolted','off guard','disoriented']},
@@ -2810,21 +2838,24 @@ const EMOTION_WHEEL={
 };
 // Body-sensation guide for emotion identification (helps with alexithymia)
 const EMO_HELP=[
-  {key:'happy',  emoji:'😊',color:'#fde68a',text:'#78350f',cue:'things feel good, open, going well',    sense:'warm chest · light feeling · relaxed · smiling easily'},
-  {key:'sad',    emoji:'😢',color:'#bfdbfe',text:'#1e3a5f',cue:'something is missing, lost, or hurting', sense:'heavy · tired · tight throat · hollow feeling inside'},
-  {key:'disgust',emoji:'😖',color:'#ddd6fe',text:'#3b0764',cue:'something feels wrong, off, or bad',     sense:'stomach turning · wanting to pull away · face tension'},
-  {key:'anger',  emoji:'😠',color:'#fecaca',text:'#7f1d1d',cue:'a boundary was crossed, something unfair',sense:'hot or tight chest · rising energy · clenched jaw'},
-  {key:'fear',   emoji:'😨',color:'#bbf7d0',text:'#14532d',cue:'uncertain, unsafe, or unknown ahead',    sense:'fluttery stomach · tight chest · frozen or wanting to flee'},
-  {key:'surprise',emoji:'😲',color:'#a5f3fc',text:'#164e63',cue:'something unexpected happened',         sense:'wide + alert · spinning · may shift quickly into other feelings'},
+  {key:'happy',  emoji:'😊',color:'#fde68a',text:'#78350f',dc:'#78350f',dt:'#fef3c7',cue:'things feel good, open, going well',    sense:'warm chest · light feeling · relaxed · smiling easily'},
+  {key:'sad',    emoji:'😢',color:'#bfdbfe',text:'#1e3a5f',dc:'#1e3a5f',dt:'#dbeafe',cue:'something is missing, lost, or hurting', sense:'heavy · tired · tight throat · hollow feeling inside'},
+  {key:'disgust',emoji:'😖',color:'#ddd6fe',text:'#3b0764',dc:'#3b0764',dt:'#ede9fe',cue:'something feels wrong, off, or bad',     sense:'stomach turning · wanting to pull away · face tension'},
+  {key:'anger',  emoji:'😠',color:'#fecaca',text:'#7f1d1d',dc:'#7f1d1d',dt:'#fee2e2',cue:'a boundary was crossed, something unfair',sense:'hot or tight chest · rising energy · clenched jaw'},
+  {key:'fear',   emoji:'😨',color:'#bbf7d0',text:'#14532d',dc:'#14532d',dt:'#d1fae5',cue:'uncertain, unsafe, or unknown ahead',    sense:'fluttery stomach · tight chest · frozen or wanting to flee'},
+  {key:'surprise',emoji:'😲',color:'#a5f3fc',text:'#164e63',dc:'#164e63',dt:'#cffafe',cue:'something unexpected happened',          sense:'wide + alert · spinning · may shift quickly into other feelings'},
 ];
 
 let emotionCore='',emotionSub='',emotionSpec='';
 
 function renderEmotionWheel(){
   const grid=document.getElementById('emo-core-grid');if(!grid)return;
-  grid.innerHTML=Object.entries(EMOTION_WHEEL).map(([k,v])=>
-    `<button class="emo-core-btn${emotionCore===k?' selected':''}" onclick="selectEmotionCore('${k}')"
-      style="background:${v.color};color:${v.text}">${v.emoji}<br><span style="font-size:10px">${v.label}</span></button>`).join('');
+  grid.innerHTML=Object.entries(EMOTION_WHEEL).map(([k,v])=>{
+    const bg=isDarkMode?(v.dc||v.color):v.color;
+    const tx=isDarkMode?(v.dt||v.text):v.text;
+    return `<button class="emo-core-btn${emotionCore===k?' selected':''}" onclick="selectEmotionCore('${k}')"
+      style="background:${bg};color:${tx}">${v.emoji}<br><span style="font-size:10px">${v.label}</span></button>`;
+  }).join('');
   renderEmotionSubs();
   renderEmotionSpec();
   renderEmotionDisplay();
@@ -2869,7 +2900,8 @@ function renderEmotionDisplay(){
   if(!emotionCore){disp.classList.remove('visible');return;}
   const v=EMOTION_WHEEL[emotionCore];
   chip.textContent=v.emoji+' '+(emotionSpec||emotionSub||v.label);
-  chip.style.background=v.color;chip.style.color=v.text;
+  chip.style.background=isDarkMode?(v.dc||v.color):v.color;
+  chip.style.color=isDarkMode?(v.dt||v.text):v.text;
   lbl.textContent=v.label+(emotionSub?' › '+emotionSub:'')+(emotionSpec?' › '+emotionSpec:'');
   disp.classList.add('visible');
 }
@@ -2889,12 +2921,15 @@ function toggleEmoHelp(){
 }
 function renderEmoHelp(){
   const body=document.getElementById('emo-help-body');if(!body)return;
-  body.innerHTML=EMO_HELP.map(e=>
-    `<div class="emo-help-row" onclick="selectEmotionCore('${e.key}')" style="background:${e.color}22">
-      <div class="emo-help-name" style="background:${e.color};color:${e.text}">${e.emoji} ${e.key}</div>
-      <div class="emo-help-cue" style="color:${e.text}">${e.cue}</div>
+  body.innerHTML=EMO_HELP.map(e=>{
+    const bg=isDarkMode?(e.dc||e.color):e.color;
+    const tx=isDarkMode?(e.dt||e.text):e.text;
+    return `<div class="emo-help-row" onclick="selectEmotionCore('${e.key}')" style="background:${bg}33">
+      <div class="emo-help-name" style="background:${bg};color:${tx}">${e.emoji} ${e.key}</div>
+      <div class="emo-help-cue" style="color:${tx}">${e.cue}</div>
       <div class="emo-help-sense">${e.sense}</div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function saveEmotion(){
