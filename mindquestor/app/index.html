@@ -55,20 +55,37 @@
 
 /* ── LIGHT THEME ───────────────────────────────────────────────────────────── */
 [data-theme="light"]{
-  --bg0:#f5f0ff;
-  --bg:#faf7ff;
-  --bg2:#f0eaff;
-  --bg3:#e8e0f8;
-  --bg4:#ddd5f0;
-  --sf:#c9bde6;
-  --sf2:#b8a8d8;
-  --border:rgba(100,70,180,.13);
-  --t:#1a0f2e;
-  --t2:#3d2a5c;
-  --t3:#6b4f8b;
-  --t4:#9b7fc0;
-  --shadow:0 4px 24px rgba(100,70,180,.12);
-  --shadow-s:0 2px 10px rgba(100,70,180,.09);
+  /* backgrounds — clear lavender, not near-white */
+  --bg0:#ddd3f8;
+  --bg:#e8e0ff;
+  --bg2:#dfd6fc;
+  --bg3:#d1c6f5;
+  --bg4:#c2b5ec;
+  --sf:#a899da;
+  --sf2:#9285cc;
+  --border:rgba(90,55,180,.2);
+  /* text — deep purple on lavender */
+  --t:#160d2e;
+  --t2:#30215a;
+  --t3:#5c4285;
+  --t4:#8b6db5;
+  /* brand — darken for contrast on light bg (original #c084fc is too pale) */
+  --brand:#7c3aed;
+  --brand-soft:rgba(124,58,237,.15);
+  --brand-glow:rgba(124,58,237,.25);
+  /* accent colours — slightly richer for light mode */
+  --teal:#059669;
+  --teal-soft:rgba(5,150,105,.13);
+  --indigo:#4f46e5;
+  --indigo-soft:rgba(79,70,229,.13);
+  --amber:#d97706;
+  --amber-soft:rgba(217,119,6,.13);
+  --pink:#db2777;
+  --pink-soft:rgba(219,39,119,.13);
+  --gold:#b45309;
+  --danger:#dc2626;
+  --shadow:0 4px 24px rgba(80,40,160,.18);
+  --shadow-s:0 2px 10px rgba(80,40,160,.12);
 }
 /* ── GENTLE MODE ───────────────────────────────────────────────────────────── */
 body.gentle .hstreak{opacity:0!important;pointer-events:none}
@@ -501,6 +518,14 @@ select option{background:var(--bg3)}
 .hdel:hover{color:var(--danger)}
 .hmove{background:none;border:none;color:var(--t4);cursor:pointer;font-size:10px;font-family:var(--font);padding:2px 4px;border-radius:4px;line-height:1;transition:color .15s;display:flex;flex-direction:column;gap:1px}
 .hmove:hover{color:var(--brand)}.hmove:disabled{opacity:.2;cursor:default}
+/* ── QUICK LINK REORDER ─────────────────────────────────────────────────────── */
+.lorder-list{display:flex;flex-direction:column;gap:5px;margin-top:8px}
+.lorder-item{display:flex;align-items:center;gap:7px;background:var(--bg3);border-radius:var(--rad-s);padding:5px 8px;font-size:11px;color:var(--t2)}
+.lorder-moves{display:flex;flex-direction:column;gap:1px;flex-shrink:0}
+.lorder-move{background:none;border:none;color:var(--t4);cursor:pointer;font-size:10px;padding:1px 4px;border-radius:3px;font-family:var(--font);line-height:1;transition:color .15s}
+.lorder-move:hover{color:var(--brand)}.lorder-move:disabled{opacity:.2;cursor:default}
+.lorder-del{background:none;border:none;color:var(--t4);cursor:pointer;font-size:14px;padding:0 3px;margin-left:auto;flex-shrink:0;border-radius:3px;transition:color .15s;line-height:1}
+.lorder-del:hover{color:var(--danger)}
 .hright{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .hdone-badge{font-size:14px;line-height:1}
 .hitem-done{border-color:rgba(52,211,153,.22)!important;background:rgba(52,211,153,.04)!important}
@@ -1473,6 +1498,11 @@ select option{background:var(--bg3)}
           <div class="set-title">🔗 quick links in header</div>
           <div class="set-sub">choose the links you want next to goblin tools</div>
           <div class="set-list" id="set-link-list"></div>
+        </div>
+        <div class="set-card">
+          <div class="set-title">↕ reorder chosen links</div>
+          <div class="set-sub">drag order = left-to-right in header · <button class="btn-link" onclick="groupLinksByCategory()">group by category</button></div>
+          <div class="lorder-list" id="link-order-list"></div>
         </div>
         <div class="set-card">
           <div class="set-title">➕ custom link</div>
@@ -2627,7 +2657,7 @@ function switchSettingsSection(id,el){document.querySelectorAll('.set-section').
 let isDarkMode=true,isGentleMode=false;
 function initAppearance(){
   isDarkMode=localStorage.getItem('mq-dark-mode')!=='false';
-  isGentleMode=localStorage.getItem('mq-gentle-mode')==='true';
+  isGentleMode=localStorage.getItem('mq-gentle-mode')!=='false';
   applyTheme();applyGentleMode();
   document.getElementById('theme-toggle')?.classList.toggle('on',!isDarkMode);
   document.getElementById('gentle-toggle')?.classList.toggle('on',isGentleMode);
@@ -2697,11 +2727,42 @@ let visionItems=[];
 let userName='';
 function allQuickLinks(){return[...Object.values(QUICK_LINKS).flat(),...customLinks]}
 function linkChecked(url){return quickChosen.some(x=>x.url===url)}
-function toggleQuickLink(name,url,checked,cat='other',emoji='',icon=''){if(checked){if(!linkChecked(url))quickChosen.push({id:Date.now()+Math.random(),name,url,cat,emoji,icon})}else{quickChosen=quickChosen.filter(x=>x.url!==url)}saveQuickHub();renderQuickLinksHeader()}
+function toggleQuickLink(name,url,checked,cat='other',emoji='',icon=''){if(checked){if(!linkChecked(url))quickChosen.push({id:Date.now()+Math.random(),name,url,cat,emoji,icon})}else{quickChosen=quickChosen.filter(x=>x.url!==url)}saveQuickHub();renderQuickLinksHeader();renderLinkOrder()}
 function renderSettingsLinks(){const el=document.getElementById('set-link-list');const cats=['email','calendar','music','notes','ai','inspo','other'];let html='';for(const cat of cats){const built=QUICK_LINKS[cat]||[];const custom=customLinks.filter(x=>(x.cat||'other')===cat);const items=[...built,...custom];if(items.length===0)continue;html+=`<div class="set-sub" style="margin:4px 0">${cat}</div>`;html+=items.map((x,i)=>`<label class="set-item"><input type="checkbox" ${linkChecked(x.url)?'checked':''} data-cat="${cat}" data-idx="${i}" class="set-link-check"><span>${x.emoji?`<span class="chip-emo">${x.emoji}</span> `:'' }${esc(x.name)}</span><span class="tag ${cat}">${cat}</span><span style="font-size:10px;color:var(--t3);margin-left:auto">${esc(x.url.replace('https://',''))}</span></label>`).join('')}el.innerHTML=html||'<div class="hempty">no links yet</div>';el.querySelectorAll('.set-link-check').forEach(ch=>ch.addEventListener('change',function(){const cat=this.dataset.cat;const idx=parseInt(this.dataset.idx)||0;const src=[...(QUICK_LINKS[cat]||[]),...customLinks.filter(x=>(x.cat||'other')===cat)];const item=src&&src[idx];if(item)toggleQuickLink(item.name,item.url,this.checked,item.cat||cat,item.emoji||'',item.icon||'')}))}
 function renderQuickLinksHeader(){const box=document.getElementById('head-links');if(quickChosen.length===0){box.innerHTML='';return}box.innerHTML=quickChosen.map(x=>`<a class="head-chip ${(x.cat||'other')}" href="${x.url}" target="_blank"><span class="chip-emo">${x.emoji||'🔗'}</span>${esc(x.name)} ↗</a>`).join('')}
+function renderLinkOrder(){
+  const el=document.getElementById('link-order-list');if(!el)return;
+  if(!quickChosen.length){el.innerHTML='<div class="hempty" style="font-size:11px">no links chosen yet — tick some above</div>';return;}
+  el.innerHTML=quickChosen.map((x,i)=>`
+    <div class="lorder-item">
+      <div class="lorder-moves">
+        <button class="lorder-move" onclick="moveQuickLink(${i},-1)" ${i===0?'disabled':''}>▲</button>
+        <button class="lorder-move" onclick="moveQuickLink(${i},1)" ${i===quickChosen.length-1?'disabled':''}>▼</button>
+      </div>
+      <span>${x.emoji||'🔗'}</span>
+      <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(x.name)}</span>
+      <span class="tag ${x.cat||'other'}" style="flex-shrink:0">${x.cat||'other'}</span>
+      <button class="lorder-del" onclick="removeQuickLink(${i})" title="remove from header">×</button>
+    </div>`).join('');
+}
+function moveQuickLink(i,dir){
+  const j=i+dir;if(j<0||j>=quickChosen.length)return;
+  [quickChosen[i],quickChosen[j]]=[quickChosen[j],quickChosen[i]];
+  renderLinkOrder();renderQuickLinksHeader();saveQuickHub();
+}
+function removeQuickLink(i){
+  quickChosen.splice(i,1);
+  renderLinkOrder();renderSettingsLinks();renderQuickLinksHeader();saveQuickHub();
+}
+function groupLinksByCategory(){
+  const cats=['email','calendar','music','notes','ai','inspo','other'];
+  const grouped=[];
+  for(const cat of cats)grouped.push(...quickChosen.filter(x=>(x.cat||'other')===cat));
+  quickChosen=grouped;
+  renderLinkOrder();renderQuickLinksHeader();saveQuickHub();
+}
 function inferNameFromUrl(u){try{return new URL(u).hostname.replace('www.','')}catch(e){return u}}
-function addCustomQuickLink(){const n=document.getElementById('cname').value.trim();let u=document.getElementById('curl').value.trim();if(!u)return;if(!/^https?:\/\//i.test(u))u='https://'+u;if(allQuickLinks().some(x=>x.url===u))return;const cat=document.getElementById('ccat').value||'other';const emo=document.getElementById('cemo').value.trim();const finalName=n||inferNameFromUrl(u);customLinks.push({name:finalName,url:u,cat:cat,emoji:emo,icon:''});quickChosen.push({id:Date.now()+Math.random(),name:finalName,url:u,cat:cat,emoji:emo,icon:''});document.getElementById('cname').value='';document.getElementById('curl').value='';document.getElementById('cemo').value='';saveQuickHub();renderSettingsLinks();renderQuickLinksHeader()}
+function addCustomQuickLink(){const n=document.getElementById('cname').value.trim();let u=document.getElementById('curl').value.trim();if(!u)return;if(!/^https?:\/\//i.test(u))u='https://'+u;if(allQuickLinks().some(x=>x.url===u))return;const cat=document.getElementById('ccat').value||'other';const emo=document.getElementById('cemo').value.trim();const finalName=n||inferNameFromUrl(u);customLinks.push({name:finalName,url:u,cat:cat,emoji:emo,icon:''});quickChosen.push({id:Date.now()+Math.random(),name:finalName,url:u,cat:cat,emoji:emo,icon:''});document.getElementById('cname').value='';document.getElementById('curl').value='';document.getElementById('cemo').value='';saveQuickHub();renderSettingsLinks();renderLinkOrder();renderQuickLinksHeader()}
 // ── EMOTION WHEEL ────────────────────────────────────────────────────────────
 // 3-level emotion wheel: core → secondary (emoji+words) → specific
 const EMOTION_WHEEL={
@@ -3216,7 +3277,7 @@ renderPlannerRecs();
 renderHabitRecs();
 loadQuickHub();
 renderQList();renderTL();renderHabits();renderCustomTemplates();
-renderSettingsLinks();
+renderSettingsLinks();renderLinkOrder();
 renderQuickLinksHeader();
 renderVisionBoard();
 renderNeeds();
