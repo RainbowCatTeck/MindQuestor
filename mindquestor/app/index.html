@@ -73,7 +73,7 @@
 /* ── GENTLE MODE ───────────────────────────────────────────────────────────── */
 body.gentle .hstreak{opacity:0!important;pointer-events:none}
 body.gentle #xp-val{display:none}
-body.gentle #hdr-xp-curr,body.gentle #hdr-xp-h,body.gentle #hdr-xp-t,body.gentle .xp-h-lbl{display:none}
+body.gentle #hdr-xp-curr{display:none}
 
 body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100vh;font-size:14px;line-height:1.6}
 .app{max-width:980px;margin:0 auto;padding:16px 14px 100px}
@@ -141,6 +141,21 @@ body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100v
 .emo-sub-chip{background:var(--bg3);border:1px solid var(--sf);border-radius:99px;padding:4px 11px;font-size:11px;cursor:pointer;font-family:var(--font);color:var(--t2);transition:all .12s}
 .emo-sub-chip:hover{background:var(--bg4);border-color:var(--sf2);color:var(--t)}
 .emo-sub-chip.selected{font-weight:700;border-color:var(--brand);color:var(--brand)}
+.emo-sub-label{font-size:10px;font-weight:700;color:var(--t4);letter-spacing:.04em;margin-top:10px;margin-bottom:4px;display:block}
+.emo-spec-wrap{display:none;flex-wrap:wrap;gap:5px;animation:fadeIn .18s ease}
+.emo-spec-wrap.open{display:flex}
+.emo-spec-chip{background:var(--bg3);border:1px dashed var(--sf);border-radius:99px;padding:3px 10px;font-size:10.5px;cursor:pointer;font-family:var(--font);color:var(--t3);transition:all .12s}
+.emo-spec-chip:hover{background:var(--bg4);color:var(--t2)}
+.emo-spec-chip.selected{font-weight:700;border-style:solid;border-color:var(--brand);color:var(--brand)}
+.emo-help-toggle{background:none;border:1px dashed var(--sf);border-radius:var(--rad-s);color:var(--t4);font-size:11px;cursor:pointer;padding:7px 12px;font-family:var(--font);width:100%;text-align:left;margin-top:11px;transition:color .15s}
+.emo-help-toggle:hover{color:var(--t3);border-color:var(--sf2)}
+.emo-help-body{display:none;margin-top:8px;flex-direction:column;gap:5px}
+.emo-help-body.open{display:flex}
+.emo-help-row{border-radius:var(--rad-s);padding:8px 10px;cursor:pointer;display:grid;grid-template-columns:76px 1fr;gap:3px 10px;align-items:start;transition:filter .12s;border:1px solid transparent}
+.emo-help-row:hover{filter:brightness(1.08);border-color:var(--sf)}
+.emo-help-name{font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;white-space:nowrap;text-align:center;grid-row:1/3;display:flex;align-items:center;justify-content:center}
+.emo-help-cue{font-size:11px;color:var(--t2);font-weight:600;line-height:1.3}
+.emo-help-sense{font-size:10.5px;color:var(--t4);font-style:italic;line-height:1.4}
 .psn-wrap{display:flex;gap:7px;margin-bottom:14px}
 .psn-btn{background:var(--bg3);border:1px solid var(--sf);border-radius:99px;color:var(--t3);font-family:var(--font);font-size:12px;padding:6px 16px;cursor:pointer;transition:all .15s}
 .psn-btn.psn-active{background:var(--brand-soft);border-color:var(--brand);color:var(--brand);font-weight:700}
@@ -797,7 +812,7 @@ select option{background:var(--bg3)}
 <div class="hdr-xp-bar">
   <div class="hdr-xp-lv" id="hdr-xp-lv">Level 1</div>
   <div class="hdr-xp-track"><div class="hdr-xp-fill" id="hdr-xp-fill" style="width:0%"></div></div>
-  <div class="hdr-xp-lbl"><span id="hdr-xp-curr">0</span>/100 xp &nbsp;·&nbsp; <span style="color:var(--brand)">🎮 <span id="hdr-xp-h">0</span></span> &nbsp;·&nbsp; <span style="color:var(--indigo)">⚔️ <span id="hdr-xp-t">0</span></span></div>
+  <div class="hdr-xp-lbl"><span id="hdr-xp-curr">0 / 100 xp</span></div>
 </div>
 </div><!-- /hdr-float -->
 
@@ -1267,6 +1282,9 @@ select option{background:var(--bg3)}
     </div>
     <div class="emo-core-grid" id="emo-core-grid"></div>
     <div class="emo-sub-wrap" id="emo-sub-wrap"></div>
+    <div class="emo-spec-wrap" id="emo-spec-wrap"></div>
+    <button class="emo-help-toggle" id="emo-help-toggle" onclick="toggleEmoHelp()">🔍 not sure what you're feeling?</button>
+    <div class="emo-help-body" id="emo-help-body"></div>
   </div>
 
   <!-- sub nav -->
@@ -2444,16 +2462,12 @@ function renderXPBar(){
   const lvl=info.level,cur=info.cur,needed=info.needed;
   // habits tab XP display
   const el=document.getElementById('xp-lvl');if(el)el.textContent='level '+lvl;
-  const ev=document.getElementById('xp-val');if(ev)ev.textContent=cur+' / '+needed+' xp to next · habits: '+xpHabits+' · tasks: '+xpTasks;
+  const ev=document.getElementById('xp-val');if(ev)ev.textContent=cur+' / '+needed+' xp';
   const ef=document.getElementById('xp-fill');if(ef)ef.style.width=Math.min(100,Math.round(cur/needed*100))+'%';
-  const xh=document.getElementById('xp-h');if(xh)xh.textContent=xpHabits;
-  const xt=document.getElementById('xp-t');if(xt)xt.textContent=xpTasks;
   // header XP bar
   const hlv=document.getElementById('hdr-xp-lv');if(hlv)hlv.textContent='Level '+lvl;
   const hfi=document.getElementById('hdr-xp-fill');if(hfi)hfi.style.width=Math.min(100,Math.round(cur/needed*100))+'%';
-  const hcu=document.getElementById('hdr-xp-curr');if(hcu)hcu.textContent=cur+'/'+needed;
-  const hhb=document.getElementById('hdr-xp-h');if(hhb)hhb.textContent=xpHabits;
-  const hht=document.getElementById('hdr-xp-t');if(hht)hht.textContent=xpTasks;
+  const hcu=document.getElementById('hdr-xp-curr');if(hcu)hcu.textContent=cur+' / '+needed+' xp';
 }
 
 function autoSchedule(){
@@ -2689,44 +2703,103 @@ function renderQuickLinksHeader(){const box=document.getElementById('head-links'
 function inferNameFromUrl(u){try{return new URL(u).hostname.replace('www.','')}catch(e){return u}}
 function addCustomQuickLink(){const n=document.getElementById('cname').value.trim();let u=document.getElementById('curl').value.trim();if(!u)return;if(!/^https?:\/\//i.test(u))u='https://'+u;if(allQuickLinks().some(x=>x.url===u))return;const cat=document.getElementById('ccat').value||'other';const emo=document.getElementById('cemo').value.trim();const finalName=n||inferNameFromUrl(u);customLinks.push({name:finalName,url:u,cat:cat,emoji:emo,icon:''});quickChosen.push({id:Date.now()+Math.random(),name:finalName,url:u,cat:cat,emoji:emo,icon:''});document.getElementById('cname').value='';document.getElementById('curl').value='';document.getElementById('cemo').value='';saveQuickHub();renderSettingsLinks();renderQuickLinksHeader()}
 // ── EMOTION WHEEL ────────────────────────────────────────────────────────────
+// 3-level emotion wheel: core → secondary (emoji+words) → specific
 const EMOTION_WHEEL={
-  happy:{label:'Happy',emoji:'😊',color:'#fde68a',text:'#78350f',
-    subs:['joyful','interested','proud','accepted','powerful','peaceful','intimate','optimistic','playful','sensitive','hopeful','loving','courageous','fulfilled','inspired']},
-  sad:{label:'Sad',emoji:'😢',color:'#bfdbfe',text:'#1e3a5f',
-    subs:['lonely','bored','depressed','despair','abandoned','guilty','ignored','victimised','powerless','vulnerable','inferior','empty','isolated','apathetic','indifferent']},
-  disgust:{label:'Disgust',emoji:'😣',color:'#ddd6fe',text:'#3b0764',
-    subs:['disapproving','disappointed','awful','avoidant','hesitant','remorseful','ashamed','judgmental','loathing','revolted']},
-  anger:{label:'Anger',emoji:'😠',color:'#fecaca',text:'#7f1d1d',
-    subs:['frustrated','distant','critical','hateful','mad','hurt','threatened','violated','resentful','jealous','furious','provoked','irritated','withdrawn','suspicious']},
-  fear:{label:'Fear',emoji:'😨',color:'#bbf7d0',text:'#14532d',
-    subs:['scared','anxious','insecure','overwhelmed','worried','frightened','terrified','shocked','dismayed','rejected','submissive','humiliated']},
-  surprise:{label:'Surprise',emoji:'😲',color:'#a5f3fc',text:'#164e63',
-    subs:['confused','amazed','excited','startled','awe','eager','disillusioned','perplexed','astonished','energetic']},
+  happy:{label:'happy',emoji:'😊',color:'#fde68a',text:'#78350f',subs:{
+    joyful:   {emoji:'😄',words:['elated','delighted','overjoyed','blissful']},
+    playful:  {emoji:'😜',words:['silly','goofy','creative','lighthearted']},
+    excited:  {emoji:'🤩',words:['thrilled','eager','energized','enthusiastic']},
+    content:  {emoji:'😌',words:['satisfied','peaceful','comfortable','at ease']},
+    grateful: {emoji:'🙏',words:['thankful','appreciative','touched','lucky']},
+    proud:    {emoji:'🥰',words:['accomplished','confident','capable','worthy']},
+  }},
+  sad:{label:'sad',emoji:'😢',color:'#bfdbfe',text:'#1e3a5f',subs:{
+    lonely:       {emoji:'😔',words:['isolated','disconnected','unseen','left out']},
+    grieving:     {emoji:'💔',words:['heartbroken','mourning','bereft','devastated']},
+    depressed:    {emoji:'😞',words:['hopeless','empty','numb','hollow']},
+    guilty:       {emoji:'😣',words:['ashamed','remorseful','regretful','at fault']},
+    vulnerable:   {emoji:'🥺',words:['exposed','fragile','tender','raw']},
+    disappointed: {emoji:'😕',words:['let down','defeated','discouraged','deflated']},
+  }},
+  disgust:{label:'disgust',emoji:'😖',color:'#ddd6fe',text:'#3b0764',subs:{
+    disapproving: {emoji:'🙄',words:['critical','judgemental','contemptuous','dismissive']},
+    ashamed:      {emoji:'😳',words:['embarrassed','mortified','self-conscious','flustered']},
+    avoidant:     {emoji:'😶',words:['withdrawn','shut down','detached','distant']},
+    revolted:     {emoji:'🤢',words:['repulsed','sickened','grossed out','averse']},
+  }},
+  anger:{label:'anger',emoji:'😠',color:'#fecaca',text:'#7f1d1d',subs:{
+    frustrated: {emoji:'😤',words:['agitated','irritated','tense','annoyed']},
+    resentful:  {emoji:'😒',words:['bitter','envious','slighted','jealous']},
+    hurt:       {emoji:'💔',words:['betrayed','wounded','abandoned','let down']},
+    furious:    {emoji:'🤬',words:['enraged','livid','outraged','explosive']},
+    threatened: {emoji:'😰',words:['unsafe','violated','on edge','defensive']},
+  }},
+  fear:{label:'fear',emoji:'😨',color:'#bbf7d0',text:'#14532d',subs:{
+    anxious:     {emoji:'😰',words:['worried','uneasy','apprehensive','on edge']},
+    overwhelmed: {emoji:'😵',words:['flooded','overloaded','scattered','too much']},
+    insecure:    {emoji:'😟',words:['self-doubt','inadequate','uncertain','not enough']},
+    scared:      {emoji:'😱',words:['terrified','panicked','frozen','dread']},
+  }},
+  surprise:{label:'surprise',emoji:'😲',color:'#a5f3fc',text:'#164e63',subs:{
+    confused:  {emoji:'🤔',words:['puzzled','bewildered','lost','uncertain']},
+    amazed:    {emoji:'🤩',words:['awestruck','astonished','in awe','wonder']},
+    startled:  {emoji:'😯',words:['shocked','jolted','off guard','disoriented']},
+    curious:   {emoji:'🧐',words:['intrigued','questioning','exploring','interested']},
+  }},
 };
-let emotionCore='',emotionSub='';
+// Body-sensation guide for emotion identification (helps with alexithymia)
+const EMO_HELP=[
+  {key:'happy',  emoji:'😊',color:'#fde68a',text:'#78350f',cue:'things feel good, open, going well',    sense:'warm chest · light feeling · relaxed · smiling easily'},
+  {key:'sad',    emoji:'😢',color:'#bfdbfe',text:'#1e3a5f',cue:'something is missing, lost, or hurting', sense:'heavy · tired · tight throat · hollow feeling inside'},
+  {key:'disgust',emoji:'😖',color:'#ddd6fe',text:'#3b0764',cue:'something feels wrong, off, or bad',     sense:'stomach turning · wanting to pull away · face tension'},
+  {key:'anger',  emoji:'😠',color:'#fecaca',text:'#7f1d1d',cue:'a boundary was crossed, something unfair',sense:'hot or tight chest · rising energy · clenched jaw'},
+  {key:'fear',   emoji:'😨',color:'#bbf7d0',text:'#14532d',cue:'uncertain, unsafe, or unknown ahead',    sense:'fluttery stomach · tight chest · frozen or wanting to flee'},
+  {key:'surprise',emoji:'😲',color:'#a5f3fc',text:'#164e63',cue:'something unexpected happened',         sense:'wide + alert · spinning · may shift quickly into other feelings'},
+];
+
+let emotionCore='',emotionSub='',emotionSpec='';
+
 function renderEmotionWheel(){
-  const grid=document.getElementById('emo-core-grid');
-  if(!grid)return;
+  const grid=document.getElementById('emo-core-grid');if(!grid)return;
   grid.innerHTML=Object.entries(EMOTION_WHEEL).map(([k,v])=>
     `<button class="emo-core-btn${emotionCore===k?' selected':''}" onclick="selectEmotionCore('${k}')"
-      style="background:${v.color};color:${v.text}">${v.emoji} ${v.label}</button>`).join('');
+      style="background:${v.color};color:${v.text}">${v.emoji}<br><span style="font-size:10px">${v.label}</span></button>`).join('');
   renderEmotionSubs();
+  renderEmotionSpec();
   renderEmotionDisplay();
 }
 function selectEmotionCore(core){
-  emotionCore=core;emotionSub='';
-  renderEmotionWheel();
-  saveEmotion();
+  emotionCore=core;emotionSub='';emotionSpec='';
+  // close help panel when a core is selected
+  const hb=document.getElementById('emo-help-body');
+  const ht=document.getElementById('emo-help-toggle');
+  if(hb)hb.classList.remove('open');
+  if(ht)ht.textContent='🔍 not sure what you\'re feeling?';
+  emoHelpOpen=false;
+  renderEmotionWheel();saveEmotion();
 }
 function renderEmotionSubs(){
   const wrap=document.getElementById('emo-sub-wrap');if(!wrap)return;
-  if(!emotionCore){wrap.className='emo-sub-wrap';return;}
+  if(!emotionCore){wrap.className='emo-sub-wrap';wrap.innerHTML='';return;}
   const v=EMOTION_WHEEL[emotionCore];
   wrap.className='emo-sub-wrap open';
-  wrap.innerHTML=v.subs.map(s=>
-    `<button class="emo-sub-chip${emotionSub===s?' selected':''}" onclick="selectEmotionSub('${s}')">${s}</button>`).join('');
+  wrap.innerHTML=Object.entries(v.subs).map(([s,d])=>
+    `<button class="emo-sub-chip${emotionSub===s?' selected':''}" onclick="selectEmotionSub('${s}')">${d.emoji} ${s}</button>`).join('');
 }
-function selectEmotionSub(sub){emotionSub=sub;renderEmotionSubs();renderEmotionDisplay();saveEmotion();}
+function selectEmotionSub(sub){emotionSub=sub;emotionSpec='';renderEmotionSubs();renderEmotionSpec();renderEmotionDisplay();saveEmotion();}
+function renderEmotionSpec(){
+  const wrap=document.getElementById('emo-spec-wrap');if(!wrap)return;
+  if(!emotionCore||!emotionSub){wrap.className='emo-spec-wrap';wrap.innerHTML='';return;}
+  const words=(EMOTION_WHEEL[emotionCore]?.subs[emotionSub]?.words)||[];
+  wrap.className='emo-spec-wrap open';
+  wrap.innerHTML=words.map((w,i)=>
+    `<button class="emo-spec-chip${emotionSpec===w?' selected':''}" onclick="selectEmotionSpec(${i})">${w}</button>`).join('');
+}
+function selectEmotionSpec(idx){
+  const words=(EMOTION_WHEEL[emotionCore]?.subs[emotionSub]?.words)||[];
+  emotionSpec=words[idx]||'';
+  renderEmotionSpec();renderEmotionDisplay();saveEmotion();
+}
 function renderEmotionDisplay(){
   const disp=document.getElementById('emo-display');
   const chip=document.getElementById('emo-chip');
@@ -2734,15 +2807,38 @@ function renderEmotionDisplay(){
   if(!disp||!chip||!lbl)return;
   if(!emotionCore){disp.classList.remove('visible');return;}
   const v=EMOTION_WHEEL[emotionCore];
-  chip.textContent=v.emoji+' '+(emotionSub||v.label);
+  chip.textContent=v.emoji+' '+(emotionSpec||emotionSub||v.label);
   chip.style.background=v.color;chip.style.color=v.text;
-  lbl.textContent=emotionSub?v.label+' · '+emotionSub:v.label;
+  lbl.textContent=v.label+(emotionSub?' › '+emotionSub:'')+(emotionSpec?' › '+emotionSpec:'');
   disp.classList.add('visible');
 }
-function clearEmotion(){emotionCore='';emotionSub='';renderEmotionWheel();saveEmotion();}
+function clearEmotion(){emotionCore='';emotionSub='';emotionSpec='';renderEmotionWheel();saveEmotion();}
+
+let emoHelpOpen=false;
+function toggleEmoHelp(){
+  emoHelpOpen=!emoHelpOpen;
+  const body=document.getElementById('emo-help-body');
+  const btn=document.getElementById('emo-help-toggle');
+  if(body){
+    body.classList.toggle('open',emoHelpOpen);
+    // lazy-render on first open
+    if(emoHelpOpen&&!body.children.length)renderEmoHelp();
+  }
+  if(btn)btn.textContent=emoHelpOpen?'▲ hide guide':'🔍 not sure what you\'re feeling?';
+}
+function renderEmoHelp(){
+  const body=document.getElementById('emo-help-body');if(!body)return;
+  body.innerHTML=EMO_HELP.map(e=>
+    `<div class="emo-help-row" onclick="selectEmotionCore('${e.key}')" style="background:${e.color}22">
+      <div class="emo-help-name" style="background:${e.color};color:${e.text}">${e.emoji} ${e.key}</div>
+      <div class="emo-help-cue" style="color:${e.text}">${e.cue}</div>
+      <div class="emo-help-sense">${e.sense}</div>
+    </div>`).join('');
+}
+
 function saveEmotion(){
   const d=JSON.parse(localStorage.getItem('mq-profile-meta')||'{}');
-  d.emotionCore=emotionCore;d.emotionSub=emotionSub;
+  d.emotionCore=emotionCore;d.emotionSub=emotionSub;d.emotionSpec=emotionSpec;
   localStorage.setItem('mq-profile-meta',JSON.stringify(d));
 }
 
@@ -2755,6 +2851,7 @@ function saveProfileMeta(){
   d.hyper=document.getElementById("pcurr-hyper")?.value||"";
   d.emotionCore=emotionCore||"";
   d.emotionSub=emotionSub||"";
+  d.emotionSpec=emotionSpec||"";
   localStorage.setItem("mq-profile-meta",JSON.stringify(d));
 }
 function loadProfileMeta(){
@@ -2770,6 +2867,7 @@ function loadProfileMeta(){
   // restore emotion
   emotionCore=d.emotionCore||"";
   emotionSub=d.emotionSub||"";
+  emotionSpec=d.emotionSpec||"";
   renderEmotionWheel();
 }
 function uploadProfilePic(){document.getElementById("profile-pic-input").click();}
