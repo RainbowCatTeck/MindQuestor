@@ -114,6 +114,9 @@ body.gentle #hdr-xp-curr{display:none}
 [data-theme="light"] #axie-head-svg [fill="#c084fc"]{fill:#4c1d95}
 [data-theme="light"] #axie-head-svg [stroke="#c084fc"]{stroke:#4c1d95}
 [data-theme="light"] #axie-head-svg{filter:drop-shadow(0 3px 10px rgba(60,20,120,.35))}
+/* ── EMOTION WHEEL THEME TUNING ────────────────────────────────────────────── */
+[data-theme="dark"] .emo-core-btn{filter:brightness(1.25)}
+[data-theme="light"] .emo-core-btn{filter:brightness(0.8) saturate(1.15)}
 
 body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100vh;font-size:14px;line-height:1.6}
 .app{max-width:980px;margin:0 auto;padding:16px 14px 100px}
@@ -187,13 +190,22 @@ body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100v
 .emo-spec-chip{background:var(--bg3);border:1px dashed var(--sf);border-radius:99px;padding:3px 10px;font-size:10.5px;cursor:pointer;font-family:var(--font);color:var(--t3);transition:all .12s}
 .emo-spec-chip:hover{background:var(--bg4);color:var(--t2)}
 .emo-spec-chip.selected{font-weight:700;border-style:solid;border-color:var(--brand);color:var(--brand)}
+/* ── SHELF INDEX TABS ─────────────────────────────────────────────────────────── */
+.stab-row{display:flex;flex-wrap:wrap;gap:4px;padding-bottom:0;border-bottom:2px solid var(--border);align-items:flex-end;margin-bottom:0}
+.stab{position:relative;bottom:-2px;padding:5px 13px 7px;border-radius:6px 6px 0 0;font-size:11px;font-weight:700;cursor:pointer;border:1px solid rgba(0,0,0,.18);border-bottom:none;color:rgba(255,255,255,.92);text-shadow:0 1px 2px rgba(0,0,0,.35);transition:filter .12s,transform .12s;white-space:nowrap;font-family:var(--font);line-height:1}
+.stab:hover{filter:brightness(1.1);transform:translateY(-3px)}
+.stab.stab-active{z-index:1;transform:translateY(-3px);box-shadow:0 -4px 12px rgba(0,0,0,.15)}
+.stab-sub-row{display:flex;flex-wrap:wrap;gap:3px;margin:12px 0 10px}
+.stab-sub{background:var(--bg3);border:1px solid var(--sf);border-radius:var(--rad-xs);color:var(--t3);font-family:var(--font);font-size:10px;padding:3px 9px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.stab-sub:hover{background:var(--bg4);color:var(--t)}
+.stab-sub.stab-active{background:var(--brand-soft);border-color:var(--brand);color:var(--brand);font-weight:700}
 .emo-help-toggle{background:none;border:1px dashed var(--sf);border-radius:var(--rad-s);color:var(--t4);font-size:11px;cursor:pointer;padding:7px 12px;font-family:var(--font);width:100%;text-align:left;margin-top:11px;transition:color .15s}
 .emo-help-toggle:hover{color:var(--t3);border-color:var(--sf2)}
 .emo-help-body{display:none;margin-top:8px;flex-direction:column;gap:5px}
 .emo-help-body.open{display:flex}
 .emo-help-row{border-radius:var(--rad-s);padding:8px 10px;cursor:pointer;display:grid;grid-template-columns:76px 1fr;gap:3px 10px;align-items:start;transition:filter .12s;border:1px solid transparent}
 .emo-help-row:hover{filter:brightness(1.08);border-color:var(--sf)}
-.emo-help-name{font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;white-space:nowrap;text-align:center;grid-row:1/3;display:flex;align-items:center;justify-content:center}
+.emo-help-name{font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;white-space:nowrap;text-align:center;grid-row:1/3;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.95)}
 .emo-help-cue{font-size:11px;color:var(--t2);font-weight:600;line-height:1.3}
 .emo-help-sense{font-size:10.5px;color:var(--t4);font-style:italic;line-height:1.4}
 .psn-wrap{display:flex;gap:7px;margin-bottom:14px}
@@ -549,6 +561,10 @@ select option{background:var(--bg3)}
 .lorder-move:hover{color:var(--brand)}.lorder-move:disabled{opacity:.2;cursor:default}
 .lorder-del{background:none;border:none;color:var(--t4);cursor:pointer;font-size:14px;padding:0 3px;margin-left:auto;flex-shrink:0;border-radius:3px;transition:color .15s;line-height:1}
 .lorder-del:hover{color:var(--danger)}
+.lorder-drag{cursor:grab;color:var(--sf2);font-size:14px;flex-shrink:0;padding:0 3px;user-select:none;line-height:1}
+.lorder-drag:active{cursor:grabbing}
+.lorder-item.dragging{opacity:.35;background:var(--bg2)}
+.lorder-item.drag-over{outline:2px dashed var(--brand);background:var(--brand-soft)}
 .hright{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .hdone-badge{font-size:14px;line-height:1}
 .hitem-done{border-color:rgba(52,211,153,.22)!important;background:rgba(52,211,153,.04)!important}
@@ -1445,6 +1461,9 @@ select option{background:var(--bg3)}
       <button class="set-nav-item" onclick="switchSettingsSection('transfer',this)">
         <span class="set-nav-icon">📦</span><span>data backup</span>
       </button>
+      <button class="set-nav-item" onclick="switchSettingsSection('reset',this)">
+        <span class="set-nav-icon">🔄</span><span>reset</span>
+      </button>
     </nav>
 
     <!-- ── CONTENT PANELS ── -->
@@ -1499,6 +1518,14 @@ select option{background:var(--bg3)}
           <p style="font-size:11px;color:var(--t3);line-height:1.6;margin:6px 0 10px">restore from a mindquestor .json backup. this will overwrite your current data — make sure to export first if you want to keep it.</p>
           <button class="btn bgh" onclick="importAllData()" style="font-size:12px;width:100%">📥 import backup file</button>
           <input type="file" id="import-file" accept=".json" style="display:none" onchange="handleImportFile(this)">
+        </div>
+      </div>
+      <!-- RESET -->
+      <div class="set-section" id="set-sec-reset">
+        <div class="set-card" style="border-color:rgba(220,38,38,.35)">
+          <div class="set-title" style="color:var(--danger)">🔄 restore defaults</div>
+          <p style="font-size:11px;color:var(--t3);line-height:1.6;margin:6px 0 10px">wipes all your quests, habits, journal entries, shelf, profile, and settings — completely fresh start. make sure to export a backup first if you want to keep your data.</p>
+          <button class="btn" onclick="resetAllData()" style="font-size:12px;width:100%;background:transparent;border:1px solid var(--danger);color:var(--danger)">🔄 restore defaults &amp; clear all data</button>
         </div>
       </div>
 
@@ -1904,7 +1931,6 @@ function jGroups(){
 }
 function renderJournal(c){
   if(!c)return;
-  // write mode
   if(journalWriting){
     const ds=new Date().toLocaleDateString('en-GB',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
     c.innerHTML='<div class="shelf-content-title">📔 journal</div>'
@@ -1920,45 +1946,31 @@ function renderJournal(c){
   }
   const g=jGroups();
   const years=Object.keys(g).sort(function(a,b){return b-a;});
-  // year shelf view
-  if(!journalYear){
-    let books='';
-    if(!years.length){
-      c.innerHTML='<div class="shelf-content-title">📔 journal</div>'
-        +'<div class="pb-empty" style="margin-top:8px">your first entry is waiting 🌸<br>'
-        +'<button class="btn-link" style="margin-top:8px" onclick="journalWriting=true;renderJournal(document.getElementById(\'shelf-content\'))">write your first one</button></div>';
-      return;
-    }
-    years.forEach(function(y,i){
-      const count=Object.values(g[y]).flat().length;
-      const col=bookCol(i);
-      books+='<div class="pb-mbook" onclick="journalYear=\''+y+'\';renderJournal(document.getElementById(\'shelf-content\'))">'
-        +'<div class="pb-mspine" style="background:'+col+'">'
-        +'<div class="pb-mlabel">'+y+'<br><span style="font-size:7px;opacity:.7">'+count+' entr'+(count!==1?'ies':'y')+'</span></div>'
-        +'</div></div>';
-    });
+  const writeBtn='<button class="btn bp" onclick="journalWriting=true;renderJournal(document.getElementById(\'shelf-content\'))" style="font-size:11px;padding:5px 12px">+ write</button>';
+  const titleRow='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><div class="shelf-content-title">📔 journal</div>'+writeBtn+'</div>';
+  if(!years.length){
     c.innerHTML='<div class="shelf-content-title">📔 journal</div>'
-      +'<div style="display:flex;justify-content:flex-end;margin-bottom:10px">'
-      +'<button class="btn bp" onclick="journalWriting=true;renderJournal(document.getElementById(\'shelf-content\'))" style="font-size:11px;padding:5px 12px">+ write</button></div>'
-      +'<div class="pb-mini-shelf"><div class="pb-mini-books">'+books+'</div><div class="pb-mini-plank"></div></div>';
+      +'<div class="pb-empty" style="margin-top:8px">your first entry is waiting 🌸<br>'
+      +'<button class="btn-link" style="margin-top:8px" onclick="journalWriting=true;renderJournal(document.getElementById(\'shelf-content\'))">write your first one</button></div>';
     return;
   }
-  // year open — show month tabs + entries
+  if(!journalYear||!g[journalYear])journalYear=years[0];
+  const yearTabs=years.map(function(y,i){
+    const col=bookCol(i);
+    return '<button class="stab'+(journalYear===y?' stab-active':'')+'" onclick="journalYear=\''+y+'\';journalMonth=null;renderJournal(document.getElementById(\'shelf-content\'))" style="background:'+col+'">'+y+'</button>';
+  }).join('');
   const monthsInYear=Object.keys(g[journalYear]||{}).map(Number).sort(function(a,b){return b-a;});
   if(journalMonth===null||!g[journalYear][journalMonth])journalMonth=monthsInYear[0]??new Date().getMonth();
   const monthTabs=monthsInYear.map(function(m){
-    return '<button class="j-month-btn'+(m===journalMonth?' active':'')+'" onclick="journalMonth='+m+';renderJournal(document.getElementById(\'shelf-content\'))">'+JMONTHS[m]+'</button>';
+    return '<button class="stab-sub'+(m===journalMonth?' stab-active':'')+'" onclick="journalMonth='+m+';renderJournal(document.getElementById(\'shelf-content\'))">'+JMONTHS[m]+'</button>';
   }).join('');
   const entries=(g[journalYear][journalMonth]||[]).map(function(e){
     return '<div class="j-entry"><button class="j-del" onclick="delJournalEntry('+e.id+')">×</button><div class="j-entry-date">'+esc(e.date)+'</div><div class="j-entry-text">'+esc(e.text)+'</div></div>';
   }).join('');
-  c.innerHTML='<div class="shelf-content-title">📔 journal</div>'
-    +'<div class="j-header">'
-    +'<div class="j-years"><button class="j-back" onclick="journalYear=null;journalMonth=null;renderJournal(document.getElementById(\'shelf-content\'))">← all years</button>'
-    +'<span style="font-size:13px;font-weight:700;color:var(--t);margin-left:10px">'+journalYear+'</span></div>'
-    +'<button class="btn bp" onclick="journalWriting=true;renderJournal(document.getElementById(\'shelf-content\'))" style="font-size:11px;padding:5px 12px">+ write</button></div>'
-    +(monthsInYear.length?'<div class="j-months">'+monthTabs+'</div><div class="j-entries">'+(entries||'<div class="j-empty">no entries this month yet</div>')+'</div>'
-      :'<div class="j-empty">no entries yet</div>');
+  c.innerHTML=titleRow
+    +'<div class="stab-row">'+yearTabs+'</div>'
+    +(monthsInYear.length?'<div class="stab-sub-row">'+monthTabs+'</div><div class="j-entries">'+(entries||'<div class="j-empty">no entries this month yet</div>')+'</div>'
+      :'<div class="j-empty" style="margin-top:14px">no entries yet</div>');
 }
 function addJournalEntry(){
   const el=document.getElementById('j-input');
@@ -1989,86 +2001,57 @@ const RL_BADGES={want:'rl-want',reading:'rl-reading',done:'rl-finished'};
 const RL_LBLS={want:'📌 want to read',reading:'📖 reading',done:'✅ finished'};
 function renderReading(c){
   if(!c)return;
-  // ── main shelf ──
-  if(!rlOpenStatus){
-    rlOpenYear=null;
-    const books=RL_BOOKS.map(function(b){
-      const count=readingList.filter(function(r){return r.status===b.key;}).length;
-      return '<div class="pb-mbook" onclick="rlOpenStatus=\''+b.key+'\';rlOpenYear=null;renderReading(document.getElementById(\'shelf-content\'))">'
-        +'<div class="pb-mspine" style="background:'+(isDarkMode?b.dc:b.lc)+'">'
-        +'<div class="pb-mlabel">'+b.label.replace(/📌|📖|✅/g,'').trim()
-        +'<br><span style="font-size:7px;opacity:.7">'+count+' book'+(count!==1?'s':'')+'</span></div>'
-        +'</div></div>';
-    }).join('');
-    c.innerHTML='<div class="shelf-content-title">📚 reading list</div>'
-      +'<div class="shelf-content-sub">books you\'ve read, are reading, or want to read</div>'
-      +'<div class="pb-mini-shelf"><div class="pb-mini-books">'+books+'</div><div class="pb-mini-plank"></div></div>';
-    return;
-  }
-  // ── finished → year shelf ──
-  if(rlOpenStatus==='done'&&!rlOpenYear){
-    var finished=readingList.filter(function(b){return b.status==='done';});
-    if(!finished.length){
-      c.innerHTML='<div class="shelf-content-title">📚 reading list</div>'
-        +'<div class="j-header"><button class="j-back" onclick="rlOpenStatus=null;renderReading(document.getElementById(\'shelf-content\'))">← all</button>'
-        +'<span style="font-size:13px;font-weight:700;color:var(--t);margin-left:10px">✅ finished</span></div>'
-        +'<div class="pb-empty">no finished books yet<br><span style="font-size:10px">mark a book as finished and it\'ll appear here</span></div>';
-      return;
-    }
-    var yGroups={};
+  if(!rlOpenStatus)rlOpenStatus='want';
+  const catTabs=RL_BOOKS.map(function(b){
+    const col=isDarkMode?b.dc:b.lc;
+    const cnt=readingList.filter(function(r){return r.status===b.key;}).length;
+    return '<button class="stab'+(rlOpenStatus===b.key?' stab-active':'')+'" onclick="rlOpenStatus=\''+b.key+'\';rlOpenYear=null;renderReading(document.getElementById(\'shelf-content\'))" style="background:'+col+'">'+b.label.replace(/📌|📖|✅/g,'').trim()+' <span style="opacity:.7;font-weight:400">('+cnt+')</span></button>';
+  }).join('');
+  let inner='';
+  if(rlOpenStatus==='done'){
+    const finished=readingList.filter(function(b){return b.status==='done';});
+    const yGroups={};
     finished.forEach(function(b){
       var ts=b.completedAt||b.id;
       var y=new Date(ts).getFullYear().toString();
       if(!yGroups[y])yGroups[y]=[];
       yGroups[y].push(b);
     });
-    var yKeys=Object.keys(yGroups).sort(function(a,b){return b-a;});
-    var yBooks=yKeys.map(function(y,i){
-      var cnt=yGroups[y].length;
-      var col=bookCol(i);
-      return '<div class="pb-mbook" onclick="rlOpenYear=\''+y+'\';renderReading(document.getElementById(\'shelf-content\'))">'
-        +'<div class="pb-mspine" style="background:'+col+'">'
-        +'<div class="pb-mlabel">'+y+'<br><span style="font-size:7px;opacity:.7">'+cnt+' book'+(cnt!==1?'s':'')+'</span></div>'
-        +'</div></div>';
-    }).join('');
-    c.innerHTML='<div class="shelf-content-title">📚 reading list</div>'
-      +'<div class="j-header"><button class="j-back" onclick="rlOpenStatus=null;renderReading(document.getElementById(\'shelf-content\'))">← all</button>'
-      +'<span style="font-size:13px;font-weight:700;color:var(--t);margin-left:10px">✅ finished</span></div>'
-      +'<div class="pb-mini-shelf"><div class="pb-mini-books">'+yBooks+'</div><div class="pb-mini-plank"></div></div>';
-    return;
-  }
-  // ── finished year open OR want/reading open ──
-  var filtered=readingList.filter(function(b){
-    if(rlOpenStatus==='done'&&rlOpenYear){
-      var ts=b.completedAt||b.id;
-      return b.status==='done'&&new Date(ts).getFullYear().toString()===rlOpenYear;
+    const yKeys=Object.keys(yGroups).sort(function(a,b){return b-a;});
+    if(!yKeys.length){
+      inner='<div class="j-empty">no finished books yet<br><span style="font-size:10px">mark a book as finished and it\'ll appear here</span></div>';
+    } else {
+      if(!rlOpenYear||!yGroups[rlOpenYear])rlOpenYear=yKeys[0];
+      const yearSubTabs=yKeys.map(function(y){
+        return '<button class="stab-sub'+(rlOpenYear===y?' stab-active':'')+'" onclick="rlOpenYear=\''+y+'\';renderReading(document.getElementById(\'shelf-content\'))">'+y+'</button>';
+      }).join('');
+      const items=yGroups[rlOpenYear].map(function(b){
+        const cls=RL_BADGES[b.status]||'rl-want';
+        const lbl=RL_LBLS[b.status]||'';
+        return '<div class="rl-item"><button class="rl-badge '+cls+'" onclick="cycleBookStatus('+b.id+')" title="tap to change status">'+lbl+'</button>'
+          +'<div><div class="rl-title">'+esc(b.title)+'</div>'+(b.author?'<div class="rl-author">'+esc(b.author)+'</div>':'')+'</div>'
+          +'<button class="j-del" onclick="delBook('+b.id+')">×</button></div>';
+      }).join('');
+      inner='<div class="stab-sub-row">'+yearSubTabs+'</div>'+(items||'<div class="j-empty">no books here yet</div>');
     }
-    return b.status===rlOpenStatus;
-  });
-  var backLabel=rlOpenStatus==='done'&&rlOpenYear?'← '+rlOpenYear:'← all';
-  var backAction=rlOpenStatus==='done'&&rlOpenYear
-    ?'rlOpenYear=null;renderReading(document.getElementById(\'shelf-content\'))'
-    :'rlOpenStatus=null;renderReading(document.getElementById(\'shelf-content\'))';
-  var sectionTitle=rlOpenStatus==='done'&&rlOpenYear
-    ?'✅ finished in '+rlOpenYear
-    :RL_LBLS[rlOpenStatus];
-  var items=filtered.map(function(b){
-    var cls=RL_BADGES[b.status]||'rl-want';
-    var lbl=RL_LBLS[b.status]||'';
-    return '<div class="rl-item"><button class="rl-badge '+cls+'" onclick="cycleBookStatus('+b.id+')" title="tap to change status">'+lbl+'</button>'
-      +'<div><div class="rl-title">'+esc(b.title)+'</div>'+(b.author?'<div class="rl-author">'+esc(b.author)+'</div>':'')+'</div>'
-      +'<button class="j-del" onclick="delBook('+b.id+')">×</button></div>';
-  }).join('');
-  var addForm=rlOpenStatus!=='done'
-    ?'<div class="rl-form"><input type="text" id="rl-title" placeholder="book title...">'
+  } else {
+    const filtered=readingList.filter(function(b){return b.status===rlOpenStatus;});
+    const addForm='<div class="rl-form"><input type="text" id="rl-title" placeholder="book title...">'
       +'<input type="text" id="rl-author" placeholder="author (optional)">'
-      +'<button class="btn bgh" onclick="addBook()">+ add</button></div>'
-    :'';
+      +'<button class="btn bgh" onclick="addBook()">+ add</button></div>';
+    const items=filtered.map(function(b){
+      const cls=RL_BADGES[b.status]||'rl-want';
+      const lbl=RL_LBLS[b.status]||'';
+      return '<div class="rl-item"><button class="rl-badge '+cls+'" onclick="cycleBookStatus('+b.id+')" title="tap to change status">'+lbl+'</button>'
+        +'<div><div class="rl-title">'+esc(b.title)+'</div>'+(b.author?'<div class="rl-author">'+esc(b.author)+'</div>':'')+'</div>'
+        +'<button class="j-del" onclick="delBook('+b.id+')">×</button></div>';
+    }).join('');
+    inner=addForm+(items||'<div class="j-empty">no books here yet</div>');
+  }
   c.innerHTML='<div class="shelf-content-title">📚 reading list</div>'
-    +'<div class="j-header"><button class="j-back" onclick="'+backAction+'">'+backLabel+'</button>'
-    +'<span style="font-size:13px;font-weight:700;color:var(--t);margin-left:10px">'+sectionTitle+'</span></div>'
-    +addForm
-    +(items||'<div class="j-empty">no books here yet</div>');
+    +'<div class="shelf-content-sub">books you\'ve read, are reading, or want to read</div>'
+    +'<div class="stab-row">'+catTabs+'</div>'
+    +'<div style="margin-top:12px">'+inner+'</div>';
 }
 function addBook(){
   var t=(document.getElementById('rl-title').value||'').trim();
@@ -2143,7 +2126,6 @@ function renderPhotobook(c){
     pbOpenMonth=null;
     return;
   }
-  // group by month
   const groups={};
   photobookItems.forEach(function(p){
     const key=pbFmt(p.savedAt);
@@ -2151,35 +2133,20 @@ function renderPhotobook(c){
     groups[key].push(p);
   });
   const monthKeys=Object.keys(groups);
-  if(pbOpenMonth&&groups[pbOpenMonth]){
-    // month open — show images
-    const imgs=groups[pbOpenMonth].map(function(p){
-      return '<div class="pb-item"><img src="'+p.src+'" loading="lazy">'
-        +'<div class="pb-overlay"><button class="pb-del" onclick="delFromPhotobook('+p.id+')" title="remove from photobook">×</button></div></div>';
-    }).join('');
-    c.innerHTML='<div class="shelf-content-title">📷 photobook</div>'
-      +'<div class="pb-month-view">'
-      +'<div class="pb-month-header">'
-      +'<div class="pb-month-title">'+pbOpenMonth+'</div>'
-      +'<button class="pb-month-back" onclick="pbOpenMonth=null;renderPhotobook(document.getElementById(&quot;shelf-content&quot;))">← all albums</button>'
-      +'</div>'
-      +'<div class="pb-grid">'+imgs+'</div>'
-      +'</div>';
-  } else {
-    // shelf view — show month books
-    pbOpenMonth=null;
-    const books=monthKeys.map(function(key,i){
-      const col=bookCol(i);
-      const count=groups[key].length;
-      return '<div class="pb-mbook" onclick="pbOpenMonth=\''+key+'\';renderPhotobook(document.getElementById(\'shelf-content\'))">'
-        +'<div class="pb-mspine" style="background:'+col+'">'
-        +'<div class="pb-mlabel">'+key+'<br><span style="font-size:7px;opacity:.7">'+count+' photo'+( count!==1?'s':'')+'</span></div>'
-        +'</div></div>';
-    }).join('');
-    c.innerHTML='<div class="shelf-content-title">📷 photobook</div>'
-      +'<div class="shelf-content-sub">a visual journal of what you were pursuing — curated by you</div>'
-      +'<div class="pb-mini-shelf"><div class="pb-mini-books">'+books+'</div><div class="pb-mini-plank"></div></div>';
-  }
+  if(!pbOpenMonth||!groups[pbOpenMonth])pbOpenMonth=monthKeys[0];
+  const monthTabs=monthKeys.map(function(key,i){
+    const col=bookCol(i);
+    const cnt=groups[key].length;
+    return '<button class="stab'+(pbOpenMonth===key?' stab-active':'')+'" onclick="pbOpenMonth=\''+key+'\';renderPhotobook(document.getElementById(\'shelf-content\'))" style="background:'+col+'">'+key+' <span style="opacity:.7;font-weight:400">('+cnt+')</span></button>';
+  }).join('');
+  const imgs=groups[pbOpenMonth].map(function(p){
+    return '<div class="pb-item"><img src="'+p.src+'" loading="lazy">'
+      +'<div class="pb-overlay"><button class="pb-del" onclick="delFromPhotobook('+p.id+')" title="remove from photobook">×</button></div></div>';
+  }).join('');
+  c.innerHTML='<div class="shelf-content-title">📷 photobook</div>'
+    +'<div class="shelf-content-sub">a visual journal of what you were pursuing — curated by you</div>'
+    +'<div class="stab-row">'+monthTabs+'</div>'
+    +'<div style="margin-top:12px"><div class="pb-grid">'+imgs+'</div></div>';
 }
 
 // ===================== DAY CONFIG =====================
@@ -2766,7 +2733,12 @@ function renderLinkOrder(){
   const el=document.getElementById('link-order-list');if(!el)return;
   if(!quickChosen.length){el.innerHTML='<div class="hempty" style="font-size:11px">no links chosen yet — tick some above</div>';return;}
   el.innerHTML=quickChosen.map((x,i)=>`
-    <div class="lorder-item">
+    <div class="lorder-item" draggable="true"
+      ondragstart="lorderDragStart(event,${i})"
+      ondragover="lorderDragOver(event,${i})"
+      ondrop="lorderDrop(event,${i})"
+      ondragend="lorderDragEnd()">
+      <span class="lorder-drag" title="drag to reorder">⠿</span>
       <div class="lorder-moves">
         <button class="lorder-move" onclick="moveQuickLink(${i},-1)" ${i===0?'disabled':''}>▲</button>
         <button class="lorder-move" onclick="moveQuickLink(${i},1)" ${i===quickChosen.length-1?'disabled':''}>▼</button>
@@ -2777,6 +2749,19 @@ function renderLinkOrder(){
       <button class="lorder-del" onclick="removeQuickLink(${i})" title="remove from header">×</button>
     </div>`).join('');
 }
+let lorderDragIdx=null;
+function lorderDragStart(e,i){lorderDragIdx=i;setTimeout(()=>{const el=e.target.closest('.lorder-item');if(el)el.classList.add('dragging');},0);}
+function lorderDragOver(e,i){e.preventDefault();const items=document.querySelectorAll('.lorder-item');items.forEach((el,idx)=>el.classList.toggle('drag-over',idx===i&&i!==lorderDragIdx));}
+function lorderDrop(e,toIdx){
+  e.preventDefault();
+  if(lorderDragIdx===null||lorderDragIdx===toIdx){lorderDragIdx=null;return;}
+  const from=lorderDragIdx;
+  const item=quickChosen.splice(from,1)[0];
+  quickChosen.splice(from<toIdx?toIdx-1:toIdx,0,item);
+  renderLinkOrder();renderQuickLinksHeader();saveQuickHub();
+  lorderDragIdx=null;
+}
+function lorderDragEnd(){lorderDragIdx=null;document.querySelectorAll('.lorder-item').forEach(el=>el.classList.remove('dragging','drag-over'));}
 function moveQuickLink(i,dir){
   const j=i+dir;if(j<0||j>=quickChosen.length)return;
   [quickChosen[i],quickChosen[j]]=[quickChosen[j],quickChosen[i]];
@@ -3411,6 +3396,18 @@ function handleImportFile(input){
   };
   reader.onerror=function(){showNotif('⚠️ could not read file — try again');};
   reader.readAsText(file);
+}
+function resetAllData(){
+  if(!confirm('this will delete all your data — quests, habits, journal, everything. cannot be undone. are you sure?'))return;
+  if(!confirm('last chance — completely reset MindQuestor to factory defaults. everything will be gone.'))return;
+  ['mq-journal','mq-reading','mq-photobook',
+    'mq-profile-meta','mq-profile-pic','mq-profile-banner',
+    'fb-note','fb-links','fb-custom-links','fb-vision',
+    'fb-username','fb-needs','fb-period','fb-builtin-over',
+    'fb-phase-meta','fb-motivations','fb-removed-vision',
+    'fb-quests','fb-habits','fb-blocks','fb-templates',
+    'fb-xp-h','fb-xp-t','mq-whimsy','mq-gentle-mode','mq-theme'].forEach(k=>localStorage.removeItem(k));
+  location.reload();
 }
 </script>
 <button class="scroll-top" id="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="back to top">↑</button>
