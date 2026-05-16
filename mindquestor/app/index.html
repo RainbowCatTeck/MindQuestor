@@ -53,6 +53,28 @@
   --shadow-s:0 2px 10px rgba(0,0,0,.3);
 }
 
+/* ── LIGHT THEME ───────────────────────────────────────────────────────────── */
+[data-theme="light"]{
+  --bg0:#f5f0ff;
+  --bg:#faf7ff;
+  --bg2:#f0eaff;
+  --bg3:#e8e0f8;
+  --bg4:#ddd5f0;
+  --sf:#c9bde6;
+  --sf2:#b8a8d8;
+  --border:rgba(100,70,180,.13);
+  --t:#1a0f2e;
+  --t2:#3d2a5c;
+  --t3:#6b4f8b;
+  --t4:#9b7fc0;
+  --shadow:0 4px 24px rgba(100,70,180,.12);
+  --shadow-s:0 2px 10px rgba(100,70,180,.09);
+}
+/* ── GENTLE MODE ───────────────────────────────────────────────────────────── */
+body.gentle .hstreak{opacity:0!important;pointer-events:none}
+body.gentle #xp-val{display:none}
+body.gentle #hdr-xp-curr,body.gentle #hdr-xp-h,body.gentle #hdr-xp-t,body.gentle .xp-h-lbl{display:none}
+
 body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100vh;font-size:14px;line-height:1.6}
 .app{max-width:980px;margin:0 auto;padding:16px 14px 100px}
 
@@ -69,7 +91,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100v
 .head-links{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center}
 .head-chip{display:inline-flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--sf);border-radius:var(--rad-s);padding:6px 12px;font-size:12px;text-decoration:none;transition:border-color .15s,background .15s}
 .head-chip:hover{background:var(--bg4);border-color:var(--sf2)}
-.head-chip.email{color:var(--indigo)}.head-chip.calendar{color:var(--teal)}.head-chip.music{color:var(--brand)}.head-chip.notes{color:var(--amber)}.head-chip.ai{color:var(--gold)}.head-chip.other{color:var(--t2)}
+.head-chip.email{color:var(--indigo)}.head-chip.calendar{color:var(--teal)}.head-chip.music{color:var(--brand)}.head-chip.notes{color:var(--amber)}.head-chip.ai{color:var(--gold)}.head-chip.inspo{color:var(--pink)}.head-chip.other{color:var(--t2)}
 .chip-ico{width:13px;height:13px;border-radius:3px;object-fit:contain;filter:brightness(1.1)}
 .chip-emo{font-size:13px;line-height:1;flex-shrink:0}
 .glink{display:flex;align-items:center;gap:7px;background:var(--amber-soft);border:1px solid rgba(251,146,60,.3);border-radius:var(--rad-s);padding:8px 13px;color:var(--amber);font-family:var(--font);font-size:12px;text-decoration:none;transition:background .15s}
@@ -101,6 +123,24 @@ body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100v
 .pcurr-lbl{font-size:10px;font-weight:700;color:var(--t3);margin-bottom:5px;display:flex;align-items:center;gap:4px}
 .pcurr-in{background:none;border:none;color:var(--t);font-family:var(--font);font-size:12px;width:100%;outline:none;padding:0;line-height:1.5}
 .pcurr-in::placeholder{color:var(--t4)}
+/* ── emotion wheel ── */
+.emo-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad);padding:14px 16px;margin-bottom:14px}
+.emo-title{font-size:11px;font-weight:700;color:var(--t3);margin-bottom:10px;letter-spacing:.04em}
+.emo-display{display:none;align-items:center;gap:8px;margin-bottom:12px;background:var(--bg3);border-radius:var(--rad-s);padding:9px 13px}
+.emo-display.visible{display:flex}
+.emo-display-chip{font-size:13px;font-weight:700;padding:3px 11px;border-radius:99px;color:#000;flex-shrink:0}
+.emo-display-label{font-size:11px;color:var(--t3);flex:1}
+.emo-clear{background:none;border:none;color:var(--t4);font-size:12px;cursor:pointer;padding:2px 7px;border-radius:4px;font-family:var(--font)}
+.emo-clear:hover{color:var(--danger)}
+.emo-core-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px}
+.emo-core-btn{background:var(--bg3);border:2px solid transparent;border-radius:var(--rad-s);padding:9px 7px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);transition:all .15s;text-align:center;line-height:1.3}
+.emo-core-btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.emo-core-btn.selected{border-color:currentColor;box-shadow:0 0 0 2px currentColor}
+.emo-sub-wrap{display:none;flex-wrap:wrap;gap:6px;animation:fadeIn .18s ease}
+.emo-sub-wrap.open{display:flex}
+.emo-sub-chip{background:var(--bg3);border:1px solid var(--sf);border-radius:99px;padding:4px 11px;font-size:11px;cursor:pointer;font-family:var(--font);color:var(--t2);transition:all .12s}
+.emo-sub-chip:hover{background:var(--bg4);border-color:var(--sf2);color:var(--t)}
+.emo-sub-chip.selected{font-weight:700;border-color:var(--brand);color:var(--brand)}
 .psn-wrap{display:flex;gap:7px;margin-bottom:14px}
 .psn-btn{background:var(--bg3);border:1px solid var(--sf);border-radius:99px;color:var(--t3);font-family:var(--font);font-size:12px;padding:6px 16px;cursor:pointer;transition:all .15s}
 .psn-btn.psn-active{background:var(--brand-soft);border-color:var(--brand);color:var(--brand);font-weight:700}
@@ -444,6 +484,8 @@ select option{background:var(--bg3)}
 .hstreak{font-size:10px;color:var(--amber);white-space:nowrap;font-weight:700}
 .hdel{background:none;border:none;color:var(--t4);cursor:pointer;font-size:15px;font-family:var(--font);padding:2px 5px;border-radius:4px;transition:color .15s}
 .hdel:hover{color:var(--danger)}
+.hmove{background:none;border:none;color:var(--t4);cursor:pointer;font-size:10px;font-family:var(--font);padding:2px 4px;border-radius:4px;line-height:1;transition:color .15s;display:flex;flex-direction:column;gap:1px}
+.hmove:hover{color:var(--brand)}.hmove:disabled{opacity:.2;cursor:default}
 .hright{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .hdone-badge{font-size:14px;line-height:1}
 .hitem-done{border-color:rgba(52,211,153,.22)!important;background:rgba(52,211,153,.04)!important}
@@ -537,7 +579,7 @@ select option{background:var(--bg3)}
 .set-item:hover{border-color:var(--sf2)}
 .set-item input{accent-color:var(--teal)}
 .set-item .tag{font-size:10px;padding:2px 7px;border-radius:99px;border:1px solid var(--sf);color:var(--t3)}
-.tag.email{color:var(--indigo)}.tag.calendar{color:var(--teal)}.tag.music{color:var(--brand)}.tag.notes{color:var(--amber)}.tag.ai{color:var(--gold)}
+.tag.email{color:var(--indigo)}.tag.calendar{color:var(--teal)}.tag.music{color:var(--brand)}.tag.notes{color:var(--amber)}.tag.ai{color:var(--gold)}.tag.inspo{color:var(--pink)}
 .qadd-form{display:flex;flex-direction:column;gap:8px}
 .qfield{display:flex;flex-direction:column;gap:4px}
 .qfield label{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.5px}
@@ -785,6 +827,7 @@ select option{background:var(--bg3)}
   <button class="tbtn" onclick="switchTab('planner',this)">⚔️ campaign</button>
   <button class="tbtn" onclick="switchTab('habits',this)">🎮 mini games</button>
   <button class="tbtn" onclick="switchTab('dopa',this)">🍽 dopa-menu</button>
+  <button class="tbtn" onclick="switchTab('whimsy',this)">🌀 whimsy</button>
 </div>
 
 <!-- ===== TIMERS ===== -->
@@ -1129,6 +1172,41 @@ select option{background:var(--bg3)}
   </div>
 </div>
 
+<!-- ===== WHIMSY ===== -->
+<div class="tpanel" id="tab-whimsy">
+  <div style="display:flex;flex-direction:column;gap:14px">
+
+    <!-- today's whimsy -->
+    <div class="set-card" style="text-align:center;padding:22px 20px">
+      <div style="font-size:12px;font-weight:700;color:var(--t3);letter-spacing:.05em;margin-bottom:8px">🌸 today's whimsy act</div>
+      <div id="daily-whimsy-text" style="font-size:15px;color:var(--t);font-weight:600;line-height:1.5;margin-bottom:8px"></div>
+      <div style="font-size:10px;color:var(--t4)">changes at midnight · no pressure — it's just a gentle idea 💜</div>
+    </div>
+
+    <!-- dice row -->
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      <div class="dice-card" style="width:170px;flex:0 0 170px">
+        <div style="font-size:13px;font-weight:700;color:var(--t);text-align:center">feeling overwhelmed?</div>
+        <div style="font-size:11px;color:var(--t3);text-align:center">roll for a tiny joyful act</div>
+        <div class="dice-face" id="whimsy-dice" onclick="rollWhimsy()">🌀</div>
+        <div class="dice-result" id="whimsy-res">tap the dice for a random whimsy ✨</div>
+      </div>
+
+      <!-- add custom whimsy -->
+      <div class="set-card" style="flex:1">
+        <div class="set-title">✨ your whimsy ideas</div>
+        <div class="set-sub">add tiny joyful acts that work for you — they'll join the dice pool too</div>
+        <div class="madd" style="margin-top:10px;margin-bottom:8px">
+          <input type="text" id="whimsy-in" placeholder="e.g. look at your favourite plant..." maxlength="80">
+          <button class="btn bgh" style="font-size:11px;padding:5px 8px" onclick="addWhimsy()">+</button>
+        </div>
+        <div id="whimsy-list"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <!-- ===== PROFILE ===== -->
 <div class="tpanel" id="tab-profile">
 
@@ -1177,6 +1255,18 @@ select option{background:var(--bg3)}
       <div class="pcurr-lbl">🧠 current hyperfixation</div>
       <input class="pcurr-in" id="pcurr-hyper" placeholder="what has your whole brain right now..." onblur="saveProfileMeta()">
     </div>
+  </div>
+
+  <!-- emotion wheel -->
+  <div class="emo-card">
+    <div class="emo-title">💛 how are you feeling right now?</div>
+    <div class="emo-display" id="emo-display">
+      <div class="emo-display-chip" id="emo-chip"></div>
+      <div class="emo-display-label" id="emo-label"></div>
+      <button class="emo-clear" onclick="clearEmotion()">clear</button>
+    </div>
+    <div class="emo-core-grid" id="emo-core-grid"></div>
+    <div class="emo-sub-wrap" id="emo-sub-wrap"></div>
   </div>
 
   <!-- sub nav -->
@@ -1283,6 +1373,9 @@ select option{background:var(--bg3)}
       <button class="set-nav-item" onclick="switchSettingsSection('tracker',this)">
         <span class="set-nav-icon">🌊</span><span>flow tracker</span>
       </button>
+      <button class="set-nav-item" onclick="switchSettingsSection('appearance',this)">
+        <span class="set-nav-icon">🎨</span><span>appearance</span>
+      </button>
       <button class="set-nav-item" onclick="switchSettingsSection('transfer',this)">
         <span class="set-nav-icon">📦</span><span>data backup</span>
       </button>
@@ -1301,6 +1394,31 @@ select option{background:var(--bg3)}
             <button class="btn bgh" onclick="saveUserName()">save name</button>
           </div>
         </div>
+      </div>
+
+      <!-- APPEARANCE -->
+      <div class="set-section" id="set-sec-appearance">
+
+        <div class="set-card">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+            <div>
+              <div class="set-title">🌙 dark / light mode</div>
+              <div class="set-sub">switch between the default dark theme and a soft light theme</div>
+            </div>
+            <div class="tog-sw" id="theme-toggle" onclick="toggleTheme()" title="toggle light/dark mode"></div>
+          </div>
+        </div>
+
+        <div class="set-card">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+            <div>
+              <div class="set-title">🌿 gentle mode</div>
+              <div class="set-sub">hides streak counts and XP numbers — keeps progress visible without the pressure · good for bad brain days</div>
+            </div>
+            <div class="tog-sw" id="gentle-toggle" onclick="toggleGentleMode()" title="toggle gentle mode"></div>
+          </div>
+        </div>
+
       </div>
 
       <!-- TRANSFER & BACKUP -->
@@ -2307,29 +2425,33 @@ function resetCustomRoutines(){
 
 // ── XP SYSTEM (dual: habits + planner tasks) ──────────────────────────────────
 let xpHabits=0,xpTasks=0;
+// gentle scaling: level n needs 100+(n-1)*50 XP to advance
+function getXPInfo(total){let lvl=1,rem=total;while(true){const need=100+(lvl-1)*50;if(rem<need)return{level:lvl,cur:rem,needed:need};rem-=need;lvl++;}}
 function gainXP(source,amount){
+  const before=getXPInfo(xpHabits+xpTasks).level;
   if(source==='habit')xpHabits+=amount;
   if(source==='task')xpTasks+=amount;
+  const after=getXPInfo(xpHabits+xpTasks).level;
   const toast=document.getElementById('xp-toast');
-  toast.textContent='+'+amount+' xp ⚡';
+  if(after>before){toast.textContent='⭐ level up! you\'re level '+after+'!';toast.style.background='var(--amber-soft)';toast.style.color='var(--amber)'}
+  else{toast.textContent='✨ xp gained!';toast.style.background='';toast.style.color=''}
   toast.classList.add('show');
-  setTimeout(()=>toast.classList.remove('show'),1400);
+  setTimeout(()=>toast.classList.remove('show'),1800);
   renderXPBar();
 }
 function renderXPBar(){
-  const total=xpHabits+xpTasks;
-  const lvl=Math.floor(total/100)+1;
-  const cur=total%100;
+  const info=getXPInfo(xpHabits+xpTasks);
+  const lvl=info.level,cur=info.cur,needed=info.needed;
   // habits tab XP display
   const el=document.getElementById('xp-lvl');if(el)el.textContent='level '+lvl;
-  const ev=document.getElementById('xp-val');if(ev)ev.textContent=cur+' / 100 xp · habits: '+xpHabits+' · tasks: '+xpTasks;
-  const ef=document.getElementById('xp-fill');if(ef)ef.style.width=cur+'%';
+  const ev=document.getElementById('xp-val');if(ev)ev.textContent=cur+' / '+needed+' xp to next · habits: '+xpHabits+' · tasks: '+xpTasks;
+  const ef=document.getElementById('xp-fill');if(ef)ef.style.width=Math.min(100,Math.round(cur/needed*100))+'%';
   const xh=document.getElementById('xp-h');if(xh)xh.textContent=xpHabits;
   const xt=document.getElementById('xp-t');if(xt)xt.textContent=xpTasks;
   // header XP bar
   const hlv=document.getElementById('hdr-xp-lv');if(hlv)hlv.textContent='Level '+lvl;
-  const hfi=document.getElementById('hdr-xp-fill');if(hfi)hfi.style.width=cur+'%';
-  const hcu=document.getElementById('hdr-xp-curr');if(hcu)hcu.textContent=cur;
+  const hfi=document.getElementById('hdr-xp-fill');if(hfi)hfi.style.width=Math.min(100,Math.round(cur/needed*100))+'%';
+  const hcu=document.getElementById('hdr-xp-curr');if(hcu)hcu.textContent=cur+'/'+needed;
   const hhb=document.getElementById('hdr-xp-h');if(hhb)hhb.textContent=xpHabits;
   const hht=document.getElementById('hdr-xp-t');if(hht)hht.textContent=xpTasks;
 }
@@ -2486,6 +2608,30 @@ function renderNeedDots(elId,count,goal){const el=document.getElementById(elId);
 function periodPhaseKey(day){if(day<=5)return'p1';if(day<=13)return'p2';if(day<=16)return'p3';return'p4'}
 function shiftPeriodDay(d){periodTracker.day=Math.max(1,Math.min(periodTracker.cycle,periodTracker.day+d));renderNeeds();saveQuickHub()}
 function switchSettingsSection(id,el){document.querySelectorAll('.set-section').forEach(s=>s.classList.remove('sn-active'));document.querySelectorAll('.set-nav-item').forEach(b=>b.classList.remove('sn-active'));const sec=document.getElementById('set-sec-'+id);if(sec)sec.classList.add('sn-active');if(el)el.classList.add('sn-active');}
+
+// ── APPEARANCE (theme + gentle mode) ─────────────────────────────────────────
+let isDarkMode=true,isGentleMode=false;
+function initAppearance(){
+  isDarkMode=localStorage.getItem('mq-dark-mode')!=='false';
+  isGentleMode=localStorage.getItem('mq-gentle-mode')==='true';
+  applyTheme();applyGentleMode();
+  document.getElementById('theme-toggle')?.classList.toggle('on',!isDarkMode);
+  document.getElementById('gentle-toggle')?.classList.toggle('on',isGentleMode);
+}
+function toggleTheme(){
+  isDarkMode=!isDarkMode;
+  localStorage.setItem('mq-dark-mode',isDarkMode);
+  applyTheme();
+  document.getElementById('theme-toggle')?.classList.toggle('on',!isDarkMode);
+}
+function applyTheme(){document.documentElement.setAttribute('data-theme',isDarkMode?'dark':'light');}
+function toggleGentleMode(){
+  isGentleMode=!isGentleMode;
+  localStorage.setItem('mq-gentle-mode',isGentleMode);
+  applyGentleMode();
+  document.getElementById('gentle-toggle')?.classList.toggle('on',isGentleMode);
+}
+function applyGentleMode(){document.body.classList.toggle('gentle',isGentleMode);}
 function toggleCyclePopup(){const p=document.getElementById('cycle-pop');p.classList.toggle('show')}
 function renderPeriodVis(){const el=document.getElementById('p-vis');if(!el)return;el.innerHTML='';const total=Math.min(periodTracker.cycle,32);for(let i=1;i<=total;i++){const dot=document.createElement('div');dot.className='need-dot'+(i<=periodTracker.day?' on':'');dot.style.background=i<=periodTracker.day?'#2dd4bf':'var(--sf2)';dot.style.borderRadius='50%';el.appendChild(dot)}}
 function saveTrackerSettings(){const n=(document.getElementById('tr-name').value||'').trim();const e=(document.getElementById('tr-emo').value||'').trim();periodTracker.name=n||'flow tracker';periodTracker.emoji=e||'🌊';renderNeeds();saveQuickHub()}
@@ -2495,8 +2641,9 @@ function renderNeeds(){document.getElementById('w-goal').value=needs.water.goal;
 document.getElementById('hadd-in').addEventListener('keydown',e=>{if(e.key==='Enter')addHabit()})
 function toggleHabit(id){const h=habits.find(x=>x.id===id);if(h){const wasUndone=!h.done;h.done=!h.done;if(wasUndone)gainXP('habit',20);}renderHabits();saveQuickHub()}
 function delHabit(id){habits=habits.filter(x=>x.id!==id);renderHabits();saveQuickHub()}
+function moveHabit(id,dir){const i=habits.findIndex(x=>x.id===id);if(i<0)return;const j=i+dir;if(j<0||j>=habits.length)return;[habits[i],habits[j]]=[habits[j],habits[i]];renderHabits();saveQuickHub()}
 function resetDay(){habits.forEach(h=>{if(h.done){h.streak++;h.history=[...h.history.slice(1),1]}else{h.history=[...h.history.slice(1),0]}h.done=false});renderHabits();saveQuickHub()}
-function renderHabits(){const done=habits.filter(h=>h.done).length,total=habits.length;const stats=document.getElementById('hstats');if(stats)stats.innerHTML=total?`<div style="display:flex;align-items:center;gap:10px"><div style="font-size:28px;font-weight:700;color:var(--brand)">${done}/${total}</div><div style="font-size:12px;color:var(--t3)">${Math.round(done/total*100)}% done today</div></div>`:'';const week=document.getElementById('hweek');if(!week)return;if(!habits.length){week.innerHTML='<div class="hempty">add habits on the left! 🌟</div>';renderXPBar();return;}week.innerHTML=habits.map(h=>`<div class="hitem ${h.done?'hitem-done':''}" style="gap:7px"><div class="hcheck ${h.done?'done':''}" onclick="toggleHabit(${h.id})">${h.done?'✓':''}</div><span style="font-size:12px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;${h.done?'text-decoration:line-through;color:var(--t3);':'color:var(--t2);'}">${esc(h.name)}</span><div style="display:flex;gap:3px;align-items:center">${h.history.map(p=>`<div class="hpip ${p?'done':''}" style="width:13px;height:10px"></div>`).join('')}</div><span class="hstreak" style="${h.streak===0?'opacity:.35':''}">${h.streak>0?'🔥'+h.streak:'—'}</span><button class="hdel" onclick="delHabit(${h.id})">×</button></div>`).join('');renderXPBar()}
+function renderHabits(){const done=habits.filter(h=>h.done).length,total=habits.length;const stats=document.getElementById('hstats');if(stats)stats.innerHTML=total?`<div style="display:flex;align-items:center;gap:10px"><div style="font-size:28px;font-weight:700;color:var(--brand)">${done}/${total}</div><div style="font-size:12px;color:var(--t3)">${Math.round(done/total*100)}% done today</div></div>`:'';const week=document.getElementById('hweek');if(!week)return;if(!habits.length){week.innerHTML='<div class="hempty">add habits on the left! 🌟</div>';renderXPBar();return;}week.innerHTML=habits.map((h,idx)=>`<div class="hitem ${h.done?'hitem-done':''}" style="gap:7px"><div style="display:flex;flex-direction:column;gap:1px;flex-shrink:0"><button class="hmove" onclick="moveHabit(${h.id},-1)" ${idx===0?'disabled':''} title="move up">▲</button><button class="hmove" onclick="moveHabit(${h.id},1)" ${idx===habits.length-1?'disabled':''} title="move down">▼</button></div><div class="hcheck ${h.done?'done':''}" onclick="toggleHabit(${h.id})">${h.done?'✓':''}</div><span style="font-size:12px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;${h.done?'text-decoration:line-through;color:var(--t3);':'color:var(--t2);'}">${esc(h.name)}</span><div style="display:flex;gap:3px;align-items:center">${h.history.map(p=>`<div class="hpip ${p?'done':''}" style="width:13px;height:10px"></div>`).join('')}</div><span class="hstreak" style="${h.streak===0?'opacity:.35':''}">${h.streak>0?'🔥'+h.streak:'—'}</span><button class="hdel" onclick="delHabit(${h.id})">×</button></div>`).join('');renderXPBar()}
 
 // ===================== QUICK HUB =====================
 const QUICK_LINKS={
@@ -2522,10 +2669,12 @@ const QUICK_LINKS={
     {name:'Claude',url:'https://claude.ai',cat:'ai',emoji:'🧠'},
     {name:'Cursor',url:'https://cursor.com',cat:'ai',emoji:'⚡'}
   ],
-  social:[
-    {name:'Pinterest',url:'https://pinterest.com',cat:'social',emoji:'📌'},
-    {name:'Instagram',url:'https://instagram.com',cat:'social',emoji:'📸'},
-    {name:'Tumblr',url:'https://tumblr.com',cat:'social',emoji:'🌀'}
+  inspo:[
+    {name:'Pinterest',url:'https://pinterest.com',cat:'inspo',emoji:'📌'},
+    {name:'Tumblr',url:'https://tumblr.com',cat:'inspo',emoji:'🌀'},
+    {name:'WeHeartIt',url:'https://weheartit.com',cat:'inspo',emoji:'🤍'},
+    {name:'Behance',url:'https://www.behance.net',cat:'inspo',emoji:'🎨'},
+    {name:'Are.na',url:'https://www.are.na',cat:'inspo',emoji:'🔮'}
   ]
 };
 let quickChosen=[];
@@ -2535,18 +2684,77 @@ let userName='';
 function allQuickLinks(){return[...Object.values(QUICK_LINKS).flat(),...customLinks]}
 function linkChecked(url){return quickChosen.some(x=>x.url===url)}
 function toggleQuickLink(name,url,checked,cat='other',emoji='',icon=''){if(checked){if(!linkChecked(url))quickChosen.push({id:Date.now()+Math.random(),name,url,cat,emoji,icon})}else{quickChosen=quickChosen.filter(x=>x.url!==url)}saveQuickHub();renderQuickLinksHeader()}
-function renderSettingsLinks(){const el=document.getElementById('set-link-list');const cats=['email','calendar','music','notes','ai','other'];let html='';for(const cat of cats){const built=QUICK_LINKS[cat]||[];const custom=customLinks.filter(x=>(x.cat||'other')===cat);const items=[...built,...custom];if(items.length===0)continue;html+=`<div class="set-sub" style="margin:4px 0">${cat}</div>`;html+=items.map((x,i)=>`<label class="set-item"><input type="checkbox" ${linkChecked(x.url)?'checked':''} data-cat="${cat}" data-idx="${i}" class="set-link-check"><span>${x.emoji?`<span class="chip-emo">${x.emoji}</span> `:'' }${esc(x.name)}</span><span class="tag ${cat}">${cat}</span><span style="font-size:10px;color:var(--t3);margin-left:auto">${esc(x.url.replace('https://',''))}</span></label>`).join('')}el.innerHTML=html||'<div class="hempty">no links yet</div>';el.querySelectorAll('.set-link-check').forEach(ch=>ch.addEventListener('change',function(){const cat=this.dataset.cat;const idx=parseInt(this.dataset.idx)||0;const src=[...(QUICK_LINKS[cat]||[]),...customLinks.filter(x=>(x.cat||'other')===cat)];const item=src&&src[idx];if(item)toggleQuickLink(item.name,item.url,this.checked,item.cat||cat,item.emoji||'',item.icon||'')}))}
+function renderSettingsLinks(){const el=document.getElementById('set-link-list');const cats=['email','calendar','music','notes','ai','inspo','other'];let html='';for(const cat of cats){const built=QUICK_LINKS[cat]||[];const custom=customLinks.filter(x=>(x.cat||'other')===cat);const items=[...built,...custom];if(items.length===0)continue;html+=`<div class="set-sub" style="margin:4px 0">${cat}</div>`;html+=items.map((x,i)=>`<label class="set-item"><input type="checkbox" ${linkChecked(x.url)?'checked':''} data-cat="${cat}" data-idx="${i}" class="set-link-check"><span>${x.emoji?`<span class="chip-emo">${x.emoji}</span> `:'' }${esc(x.name)}</span><span class="tag ${cat}">${cat}</span><span style="font-size:10px;color:var(--t3);margin-left:auto">${esc(x.url.replace('https://',''))}</span></label>`).join('')}el.innerHTML=html||'<div class="hempty">no links yet</div>';el.querySelectorAll('.set-link-check').forEach(ch=>ch.addEventListener('change',function(){const cat=this.dataset.cat;const idx=parseInt(this.dataset.idx)||0;const src=[...(QUICK_LINKS[cat]||[]),...customLinks.filter(x=>(x.cat||'other')===cat)];const item=src&&src[idx];if(item)toggleQuickLink(item.name,item.url,this.checked,item.cat||cat,item.emoji||'',item.icon||'')}))}
 function renderQuickLinksHeader(){const box=document.getElementById('head-links');if(quickChosen.length===0){box.innerHTML='';return}box.innerHTML=quickChosen.map(x=>`<a class="head-chip ${(x.cat||'other')}" href="${x.url}" target="_blank"><span class="chip-emo">${x.emoji||'🔗'}</span>${esc(x.name)} ↗</a>`).join('')}
 function inferNameFromUrl(u){try{return new URL(u).hostname.replace('www.','')}catch(e){return u}}
 function addCustomQuickLink(){const n=document.getElementById('cname').value.trim();let u=document.getElementById('curl').value.trim();if(!u)return;if(!/^https?:\/\//i.test(u))u='https://'+u;if(allQuickLinks().some(x=>x.url===u))return;const cat=document.getElementById('ccat').value||'other';const emo=document.getElementById('cemo').value.trim();const finalName=n||inferNameFromUrl(u);customLinks.push({name:finalName,url:u,cat:cat,emoji:emo,icon:''});quickChosen.push({id:Date.now()+Math.random(),name:finalName,url:u,cat:cat,emoji:emo,icon:''});document.getElementById('cname').value='';document.getElementById('curl').value='';document.getElementById('cemo').value='';saveQuickHub();renderSettingsLinks();renderQuickLinksHeader()}
+// ── EMOTION WHEEL ────────────────────────────────────────────────────────────
+const EMOTION_WHEEL={
+  happy:{label:'Happy',emoji:'😊',color:'#fde68a',text:'#78350f',
+    subs:['joyful','interested','proud','accepted','powerful','peaceful','intimate','optimistic','playful','sensitive','hopeful','loving','courageous','fulfilled','inspired']},
+  sad:{label:'Sad',emoji:'😢',color:'#bfdbfe',text:'#1e3a5f',
+    subs:['lonely','bored','depressed','despair','abandoned','guilty','ignored','victimised','powerless','vulnerable','inferior','empty','isolated','apathetic','indifferent']},
+  disgust:{label:'Disgust',emoji:'😣',color:'#ddd6fe',text:'#3b0764',
+    subs:['disapproving','disappointed','awful','avoidant','hesitant','remorseful','ashamed','judgmental','loathing','revolted']},
+  anger:{label:'Anger',emoji:'😠',color:'#fecaca',text:'#7f1d1d',
+    subs:['frustrated','distant','critical','hateful','mad','hurt','threatened','violated','resentful','jealous','furious','provoked','irritated','withdrawn','suspicious']},
+  fear:{label:'Fear',emoji:'😨',color:'#bbf7d0',text:'#14532d',
+    subs:['scared','anxious','insecure','overwhelmed','worried','frightened','terrified','shocked','dismayed','rejected','submissive','humiliated']},
+  surprise:{label:'Surprise',emoji:'😲',color:'#a5f3fc',text:'#164e63',
+    subs:['confused','amazed','excited','startled','awe','eager','disillusioned','perplexed','astonished','energetic']},
+};
+let emotionCore='',emotionSub='';
+function renderEmotionWheel(){
+  const grid=document.getElementById('emo-core-grid');
+  if(!grid)return;
+  grid.innerHTML=Object.entries(EMOTION_WHEEL).map(([k,v])=>
+    `<button class="emo-core-btn${emotionCore===k?' selected':''}" onclick="selectEmotionCore('${k}')"
+      style="background:${v.color};color:${v.text}">${v.emoji} ${v.label}</button>`).join('');
+  renderEmotionSubs();
+  renderEmotionDisplay();
+}
+function selectEmotionCore(core){
+  emotionCore=core;emotionSub='';
+  renderEmotionWheel();
+  saveEmotion();
+}
+function renderEmotionSubs(){
+  const wrap=document.getElementById('emo-sub-wrap');if(!wrap)return;
+  if(!emotionCore){wrap.className='emo-sub-wrap';return;}
+  const v=EMOTION_WHEEL[emotionCore];
+  wrap.className='emo-sub-wrap open';
+  wrap.innerHTML=v.subs.map(s=>
+    `<button class="emo-sub-chip${emotionSub===s?' selected':''}" onclick="selectEmotionSub('${s}')">${s}</button>`).join('');
+}
+function selectEmotionSub(sub){emotionSub=sub;renderEmotionSubs();renderEmotionDisplay();saveEmotion();}
+function renderEmotionDisplay(){
+  const disp=document.getElementById('emo-display');
+  const chip=document.getElementById('emo-chip');
+  const lbl=document.getElementById('emo-label');
+  if(!disp||!chip||!lbl)return;
+  if(!emotionCore){disp.classList.remove('visible');return;}
+  const v=EMOTION_WHEEL[emotionCore];
+  chip.textContent=v.emoji+' '+(emotionSub||v.label);
+  chip.style.background=v.color;chip.style.color=v.text;
+  lbl.textContent=emotionSub?v.label+' · '+emotionSub:v.label;
+  disp.classList.add('visible');
+}
+function clearEmotion(){emotionCore='';emotionSub='';renderEmotionWheel();saveEmotion();}
+function saveEmotion(){
+  const d=JSON.parse(localStorage.getItem('mq-profile-meta')||'{}');
+  d.emotionCore=emotionCore;d.emotionSub=emotionSub;
+  localStorage.setItem('mq-profile-meta',JSON.stringify(d));
+}
+
 function saveProfileMeta(){
-  const d={
-    quote:document.getElementById("profile-quote")?.value||"",
-    listen:document.getElementById("pcurr-listen")?.value||"",
-    enjoy:document.getElementById("pcurr-enjoy")?.value||"",
-    aspire:document.getElementById("pcurr-aspire")?.value||"",
-    hyper:document.getElementById("pcurr-hyper")?.value||"",
-  };
+  const d=JSON.parse(localStorage.getItem("mq-profile-meta")||"{}");
+  d.quote=document.getElementById("profile-quote")?.value||"";
+  d.listen=document.getElementById("pcurr-listen")?.value||"";
+  d.enjoy=document.getElementById("pcurr-enjoy")?.value||"";
+  d.aspire=document.getElementById("pcurr-aspire")?.value||"";
+  d.hyper=document.getElementById("pcurr-hyper")?.value||"";
+  d.emotionCore=emotionCore||"";
+  d.emotionSub=emotionSub||"";
   localStorage.setItem("mq-profile-meta",JSON.stringify(d));
 }
 function loadProfileMeta(){
@@ -2559,6 +2767,10 @@ function loadProfileMeta(){
     const el=document.getElementById(fields[k]);
     if(el&&d[k])el.value=d[k];
   });
+  // restore emotion
+  emotionCore=d.emotionCore||"";
+  emotionSub=d.emotionSub||"";
+  renderEmotionWheel();
 }
 function uploadProfilePic(){document.getElementById("profile-pic-input").click();}
 function applyProfilePic(inp){
@@ -2697,8 +2909,8 @@ function handleNotePaste(e,el){
     else saveNote();
   }
 }
-function saveQuickHub(){try{localStorage.setItem('fb-links',JSON.stringify(quickChosen));localStorage.setItem('fb-custom-links',JSON.stringify(customLinks));localStorage.setItem('fb-vision',JSON.stringify(visionItems));localStorage.setItem('fb-username',userName||'');localStorage.setItem('fb-needs',JSON.stringify(needs));localStorage.setItem('fb-period',JSON.stringify(periodTracker));localStorage.setItem('fb-builtin-over',JSON.stringify(builtinOverrides));localStorage.setItem('fb-phase-meta',JSON.stringify(phaseMeta));localStorage.setItem('fb-motivations',JSON.stringify(customMotivations));localStorage.setItem('fb-quests',JSON.stringify(quests));localStorage.setItem('fb-habits',JSON.stringify(habits));localStorage.setItem('fb-blocks',JSON.stringify(blocks));localStorage.setItem('fb-templates',JSON.stringify(customTemplates))}catch(e){showNotif('⚠️ storage full — clear some vision board images or browser data')}}
-function loadQuickHub(){try{quickChosen=JSON.parse(localStorage.getItem('fb-links')||'[]');customLinks=JSON.parse(localStorage.getItem('fb-custom-links')||'[]');visionItems=JSON.parse(localStorage.getItem('fb-vision')||'[]').map((v,i)=>({x:40+(i%4)*175,y:40+Math.floor(i/4)*175,w:180,h:155,z:10+i,...v}));vMaxZ=visionItems.length?Math.max(10,...visionItems.map(v=>v.z||10)):10;userName=localStorage.getItem('fb-username')||'';document.getElementById('uname').value=userName;const n=JSON.parse(localStorage.getItem('fb-needs')||'{}');if(n.water)needs.water={...needs.water,...n.water};if(n.sleep)needs.sleep={...needs.sleep,...n.sleep};if(n.food)needs.food={...needs.food,...n.food};const p=JSON.parse(localStorage.getItem('fb-period')||'{}');periodTracker={...periodTracker,...p};if(periodTracker.name==='blood sacrifice tracker'){periodTracker.name='flow tracker';periodTracker.emoji='🌊';}const pm=JSON.parse(localStorage.getItem('fb-phase-meta')||'{}');phaseMeta={...phaseMeta,...pm};customMotivations=JSON.parse(localStorage.getItem('fb-motivations')||'[]');builtinOverrides=JSON.parse(localStorage.getItem('fb-builtin-over')||'{}');quests=JSON.parse(localStorage.getItem('fb-quests')||'[]');habits=JSON.parse(localStorage.getItem('fb-habits')||'[]');const rawB=localStorage.getItem('fb-blocks');blocks=rawB?JSON.parse(rawB):[];customTemplates=JSON.parse(localStorage.getItem('fb-templates')||'[]')}catch(e){quickChosen=[];customLinks=[];visionItems=[];userName='';customMotivations=[];quests=[];habits=[];blocks=[];customTemplates=[]}}
+function saveQuickHub(){try{localStorage.setItem('fb-links',JSON.stringify(quickChosen));localStorage.setItem('fb-custom-links',JSON.stringify(customLinks));localStorage.setItem('fb-vision',JSON.stringify(visionItems));localStorage.setItem('fb-username',userName||'');localStorage.setItem('fb-needs',JSON.stringify(needs));localStorage.setItem('fb-period',JSON.stringify(periodTracker));localStorage.setItem('fb-builtin-over',JSON.stringify(builtinOverrides));localStorage.setItem('fb-phase-meta',JSON.stringify(phaseMeta));localStorage.setItem('fb-motivations',JSON.stringify(customMotivations));localStorage.setItem('fb-quests',JSON.stringify(quests));localStorage.setItem('fb-habits',JSON.stringify(habits));localStorage.setItem('fb-blocks',JSON.stringify(blocks));localStorage.setItem('fb-templates',JSON.stringify(customTemplates));localStorage.setItem('fb-xp-h',xpHabits);localStorage.setItem('fb-xp-t',xpTasks)}catch(e){showNotif('⚠️ storage full — clear some vision board images or browser data')}}
+function loadQuickHub(){try{quickChosen=JSON.parse(localStorage.getItem('fb-links')||'[]');customLinks=JSON.parse(localStorage.getItem('fb-custom-links')||'[]');visionItems=JSON.parse(localStorage.getItem('fb-vision')||'[]').map((v,i)=>({x:40+(i%4)*175,y:40+Math.floor(i/4)*175,w:180,h:155,z:10+i,...v}));vMaxZ=visionItems.length?Math.max(10,...visionItems.map(v=>v.z||10)):10;userName=localStorage.getItem('fb-username')||'';document.getElementById('uname').value=userName;const n=JSON.parse(localStorage.getItem('fb-needs')||'{}');if(n.water)needs.water={...needs.water,...n.water};if(n.sleep)needs.sleep={...needs.sleep,...n.sleep};if(n.food)needs.food={...needs.food,...n.food};const p=JSON.parse(localStorage.getItem('fb-period')||'{}');periodTracker={...periodTracker,...p};if(periodTracker.name==='blood sacrifice tracker'){periodTracker.name='flow tracker';periodTracker.emoji='🌊';}const pm=JSON.parse(localStorage.getItem('fb-phase-meta')||'{}');phaseMeta={...phaseMeta,...pm};customMotivations=JSON.parse(localStorage.getItem('fb-motivations')||'[]');builtinOverrides=JSON.parse(localStorage.getItem('fb-builtin-over')||'{}');quests=JSON.parse(localStorage.getItem('fb-quests')||'[]');habits=JSON.parse(localStorage.getItem('fb-habits')||'[]');const rawB=localStorage.getItem('fb-blocks');blocks=rawB?JSON.parse(rawB):[];customTemplates=JSON.parse(localStorage.getItem('fb-templates')||'[]');xpHabits=parseInt(localStorage.getItem('fb-xp-h')||'0');xpTasks=parseInt(localStorage.getItem('fb-xp-t')||'0')}catch(e){quickChosen=[];customLinks=[];visionItems=[];userName='';customMotivations=[];quests=[];habits=[];blocks=[];customTemplates=[];xpHabits=0;xpTasks=0}}
 
 // ===================== VISION BOARD =====================
 let vDrag=null,vDragOX=0,vDragOY=0,vResize=null,vResX=0,vResY=0,vResW=0,vResH=0,vMaxZ=10;
@@ -2820,12 +3032,88 @@ function delMenuItem(cat,id){menu[cat]=menu[cat].filter(x=>x.id!==id);renderMenu
 function renderMenu(cat){const el=document.getElementById('ml-'+cat);if(menu[cat].length===0){el.innerHTML=`<div class="mempty">${cat==='spe'?'add your bucket-list treats!':cat==='app'?'add some quick resets!':cat==='side'?'add some side dishes!':cat==='ent'?'add some main activities!':'add your guilty pleasures!'}</div>`;return}if(cat==='spe'){const sl=document.getElementById('ml-spe');sl.innerHTML=menu.spe.map(x=>`<div class="ds-item"><span>${esc(x.text)}</span><button class="mdel" onclick="delMenuItem('spe',${x.id})">×</button></div>`).join('');return}el.innerHTML=menu[cat].map(x=>`<div class="mitem"><span>${esc(x.text)}</span><button class="mdel" onclick="delMenuItem('${cat}',${x.id})">×</button></div>`).join('')}
 function rollDice(){const allItems=[];Object.entries(menu).forEach(([cat,items])=>items.forEach(x=>allItems.push({text:x.text,cat})));if(allItems.length===0){document.getElementById('dice-res').textContent='add some items to your menu first!';return}const dice=document.getElementById('dice');dice.classList.remove('roll');void dice.offsetWidth;dice.classList.add('roll');const faces=['🎲','⚄','⚅','⚃','⚂','⚁'];let i=0;const spin=setInterval(()=>{dice.textContent=faces[i%faces.length];i++},80);setTimeout(()=>{clearInterval(spin);const pick=allItems[Math.floor(Math.random()*allItems.length)];dice.textContent='🎲';document.getElementById('dice-res').innerHTML=`<strong>${esc(pick.text)}</strong>`;document.getElementById('dice-cat').textContent=catNames[pick.cat]},500)}
 
+// ===================== WHIMSY =====================
+const WHIMSY_BUILTIN=[
+  'watch a video of baby animals for 5 minutes 🐣',
+  'make something warm to drink and just sit with it ☕',
+  'put on your favourite song and do nothing but listen 🎵',
+  'draw whatever shape comes to mind first 🖊',
+  'look up the etymology of a word you like 📖',
+  'name 5 things you can see right now 👀',
+  'open a window and listen outside for 30 seconds 🌿',
+  'count how many colours are around you 🌈',
+  'send a small kind message to someone you appreciate 💌',
+  'look at pictures of something you love 💜',
+  'hold something soft or comforting for a minute 🧸',
+  'write one sentence about how you feel right now ✍️',
+  'look up tonight\'s constellation map 🌠',
+  'open a book you love and read one page 📚',
+  'find a nature live cam and watch it for 2 minutes 🌊',
+  'doodle something tiny — no rules, just marks 🖋',
+  'rearrange one small thing to somewhere nicer 🌸',
+  'close your eyes and notice 3 different sounds 🎶',
+  'find a meme that once made you laugh 😄',
+  'look at something far away through a window 🌤',
+  'hum or whistle your favourite song for a bit 🎼',
+  'look at or think about your favourite animal 🐾',
+  'read any poem out loud to yourself, even quietly 🌙',
+  'step outside or open a window for one slow breath 🌬',
+  'write 3 things that exist that you\'re glad exist 💛',
+  'watch a short satisfying video (sand art, oddly satisfying, etc.) 🎥',
+  'make a small list of things you find beautiful 🌺',
+  'look up what your name means — or pick a new meaning for it 🔮',
+  'spend 2 minutes looking at art you love 🎨',
+];
+let customWhimsy=[];
+function loadWhimsy(){
+  try{customWhimsy=JSON.parse(localStorage.getItem('mq-whimsy')||'[]')}
+  catch(e){customWhimsy=[]}
+  renderWhimsy();
+  renderDailyWhimsy();
+}
+function saveWhimsy(){localStorage.setItem('mq-whimsy',JSON.stringify(customWhimsy));}
+function allWhimsy(){return[...WHIMSY_BUILTIN,...customWhimsy.map(x=>x.text)];}
+function renderDailyWhimsy(){
+  const all=allWhimsy();
+  const dayIdx=Math.floor(Date.now()/86400000)%all.length;
+  const el=document.getElementById('daily-whimsy-text');
+  if(el)el.textContent=all[dayIdx]||'something small and joyful ✨';
+}
+function rollWhimsy(){
+  const all=allWhimsy();
+  if(!all.length)return;
+  const dice=document.getElementById('whimsy-dice');
+  dice.classList.remove('roll');void dice.offsetWidth;dice.classList.add('roll');
+  const faces=['🌀','✨','🌸','💛','🎲','🌈'];let i=0;
+  const spin=setInterval(()=>{dice.textContent=faces[i%faces.length];i++},80);
+  setTimeout(()=>{
+    clearInterval(spin);
+    dice.textContent='🌀';
+    const pick=all[Math.floor(Math.random()*all.length)];
+    document.getElementById('whimsy-res').innerHTML=`<strong>${esc(pick)}</strong>`;
+  },500);
+}
+function addWhimsy(){
+  const inp=document.getElementById('whimsy-in');
+  const t=(inp?.value||'').trim();if(!t)return;
+  customWhimsy.push({id:Date.now(),text:t});
+  inp.value='';
+  saveWhimsy();renderWhimsy();
+}
+function delWhimsy(id){customWhimsy=customWhimsy.filter(x=>x.id!==id);saveWhimsy();renderWhimsy();}
+function renderWhimsy(){
+  const el=document.getElementById('whimsy-list');if(!el)return;
+  if(!customWhimsy.length){el.innerHTML='<div class="mempty">add your own whimsy ideas above 🌙</div>';return;}
+  el.innerHTML=customWhimsy.map(x=>`<div class="mitem"><span>${esc(x.text)}</span><button class="mdel" onclick="delWhimsy(${x.id})">×</button></div>`).join('');
+}
+document.getElementById('whimsy-in')?.addEventListener('keydown',e=>{if(e.key==='Enter')addWhimsy();});
+
 // ===================== UTILS =====================
 function hLbl(h){if(h<1)return Math.round(h*60)+'min';if(Number.isInteger(h))return h+'h';return Math.floor(h)+'h '+Math.round((h-Math.floor(h))*60)+'min'}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 
 // ===================== INIT =====================
-updateDay();initPomo();initFree();updateAnimal();renderTL();renderHabits();renderCustomTemplates();renderBuiltinTemplates();renderXPBar();updateProfileHeader();loadProfileMeta();loadShelf();loadPhotobook();loadNote();
+initAppearance();updateDay();initPomo();initFree();updateAnimal();renderTL();renderHabits();renderCustomTemplates();renderBuiltinTemplates();renderXPBar();updateProfileHeader();loadProfileMeta();loadShelf();loadPhotobook();loadNote();loadWhimsy();
 renderPlannerRecs();
 renderHabitRecs();
 loadQuickHub();
@@ -2856,7 +3144,8 @@ function exportAllData(){
       'fb-note','fb-links','fb-custom-links','fb-vision',
       'fb-username','fb-needs','fb-period','fb-builtin-over',
       'fb-phase-meta','fb-motivations','fb-removed-vision',
-      'fb-quests','fb-habits','fb-blocks','fb-templates'];
+      'fb-quests','fb-habits','fb-blocks','fb-templates',
+      'fb-xp-h','fb-xp-t','mq-whimsy'];
     const lsData={};
     LS_KEYS.forEach(k=>{const v=localStorage.getItem(k);if(v!=null)lsData[k]=v;});
     const payload={
