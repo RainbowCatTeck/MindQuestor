@@ -2002,6 +2002,7 @@ function addJournalEntry(){
   journalMonth=now.getMonth();
   journalWriting=false;
   saveShelf();
+  showNotif('✨ reflection saved 💭');
   renderJournal(document.getElementById('shelf-content'));
 }
 function delJournalEntry(id){
@@ -2090,6 +2091,7 @@ function addBook(){
   document.getElementById('rl-title').value='';
   document.getElementById('rl-author').value='';
   saveShelf();
+  showNotif('📚 added to your library!');
   renderReading(document.getElementById('shelf-content'));
 }
 function delBook(id){
@@ -2105,6 +2107,8 @@ function cycleBookStatus(id){
   else if(b.status==='done')delete b.completedAt;
   b.status=next;
   saveShelf();
+  const statusMsg={want:'📌 moved to want to read',reading:'📖 now reading!',done:'✅ finished! great work 💜'};
+  showNotif(statusMsg[next]||'status updated');
   renderReading(document.getElementById('shelf-content'));
 }
 
@@ -2120,7 +2124,7 @@ function renameBook(id){
     el.contentEditable='false';el.onblur=null;el.onkeydown=null;
     const b=readingList.find(function(x){return x.id===id;});
     const t=el.textContent.trim();
-    if(b&&t)b.title=t;else if(!t&&b)el.textContent=orig;
+    if(b&&t){if(t!==orig){b.title=t;showNotif('✏️ renamed!');}}else if(!t&&b)el.textContent=orig;
     saveShelf();renderReading(document.getElementById('shelf-content'));
   };
   el.onkeydown=function(e){
@@ -2697,7 +2701,7 @@ const RECOMMENDED_HABITS=[
   '🧹 tidy one small thing',
   '📖 read for 10 min',
 ];
-function addHabit(){const n=document.getElementById('hadd-in').value.trim();if(!n)return;habits.push({id:Date.now(),name:n,done:false,streak:0,history:[0,0,0,0,0,0,0]});document.getElementById('hadd-in').value='';renderHabits();saveQuickHub()}
+function addHabit(){const n=document.getElementById('hadd-in').value.trim();if(!n)return;habits.push({id:Date.now(),name:n,done:false,streak:0,history:[0,0,0,0,0,0,0]});document.getElementById('hadd-in').value='';renderHabits();saveQuickHub();showNotif('🎮 quest added!');}
 function addRecommendedHabit(idx){const n=RECOMMENDED_HABITS[idx];if(!n)return;if(habits.some(h=>h.name.toLowerCase()===n.toLowerCase()))return;habits.push({id:Date.now()+Math.random(),name:n,done:false,streak:0,history:[0,0,0,0,0,0,0]});renderHabits();saveQuickHub()}
 function renderHabitRecs(){const el=document.getElementById('habit-recs');if(!el)return;el.innerHTML=RECOMMENDED_HABITS.map((h,i)=>`<button class="rec-pill" onclick="addRecommendedHabit(${i})">+ ${esc(h)}</button>`).join('')}
 function setNeedGoal(k,v){const g=Math.max(1,parseInt(v)||1);needs[k].goal=g;if(needs[k].count>g)needs[k].count=g;renderNeeds();saveQuickHub()}
@@ -2840,7 +2844,7 @@ function groupLinksByCategory(){
   renderLinkOrder();renderQuickLinksHeader();saveQuickHub();
 }
 function inferNameFromUrl(u){try{return new URL(u).hostname.replace('www.','')}catch(e){return u}}
-function addCustomQuickLink(){const n=document.getElementById('cname').value.trim();let u=document.getElementById('curl').value.trim();if(!u)return;if(!/^https?:\/\//i.test(u))u='https://'+u;if(allQuickLinks().some(x=>x.url===u))return;const cat=document.getElementById('ccat').value||'other';const emo=document.getElementById('cemo').value.trim();const finalName=n||inferNameFromUrl(u);customLinks.push({name:finalName,url:u,cat:cat,emoji:emo,icon:''});quickChosen.push({id:Date.now()+Math.random(),name:finalName,url:u,cat:cat,emoji:emo,icon:''});document.getElementById('cname').value='';document.getElementById('curl').value='';document.getElementById('cemo').value='';saveQuickHub();renderSettingsLinks();renderLinkOrder();renderQuickLinksHeader()}
+function addCustomQuickLink(){const n=document.getElementById('cname').value.trim();let u=document.getElementById('curl').value.trim();if(!u)return;if(!/^https?:\/\//i.test(u))u='https://'+u;if(allQuickLinks().some(x=>x.url===u))return;const cat=document.getElementById('ccat').value||'other';const emo=document.getElementById('cemo').value.trim();const finalName=n||inferNameFromUrl(u);customLinks.push({name:finalName,url:u,cat:cat,emoji:emo,icon:''});quickChosen.push({id:Date.now()+Math.random(),name:finalName,url:u,cat:cat,emoji:emo,icon:''});document.getElementById('cname').value='';document.getElementById('curl').value='';document.getElementById('cemo').value='';saveQuickHub();renderSettingsLinks();renderLinkOrder();renderQuickLinksHeader();showNotif('🔗 link added to header!');}
 // ── EMOTION WHEEL ────────────────────────────────────────────────────────────
 // 3-level emotion wheel: core → secondary (emoji+words) → specific
 // Emotion colour palette — medium-tone, non-stereotypical, works on both light & dark.
@@ -3072,10 +3076,10 @@ function toggleBST(){bstEnabled=!bstEnabled;periodTracker.enabled=bstEnabled;ren
 function renderBSTState(){const wrap=document.getElementById('tracker-wrap');const settTog=document.getElementById('settings-bst-toggle');const settContent=document.getElementById('tracker-settings-content');if(wrap)wrap.style.display=bstEnabled?'':'none';if(settTog)settTog.className='tog-sw'+(bstEnabled?' on':'');if(settContent)settContent.style.display=bstEnabled?'':'none';}
 function setHeaderOffset(){const hf=document.getElementById('hdr-float');if(hf&&document.querySelector('.app')){document.querySelector('.app').style.paddingTop=(hf.offsetHeight+10)+'px'}}
 function allMotivations(){return[...DEFAULT_MOTIVATIONS,...customMotivations]}
-function addMotivation(){const v=(document.getElementById('moti-in').value||'').trim();if(!v)return;customMotivations.push(v);document.getElementById('moti-in').value='';renderMotivations();saveQuickHub()}
+function addMotivation(){const v=(document.getElementById('moti-in').value||'').trim();if(!v)return;customMotivations.push(v);document.getElementById('moti-in').value='';renderMotivations();saveQuickHub();showNotif('💬 message added!');}
 function delMotivation(i){customMotivations.splice(i,1);renderMotivations();saveQuickHub()}
 function renderMotivations(){const el=document.getElementById('moti-list');if(!el)return;el.innerHTML=customMotivations.length?customMotivations.map((m,i)=>`<div class="set-item"><span>${esc(m)}</span><button class="mdel" onclick="delMotivation(${i})">×</button></div>`).join(''):'<div class="hempty" style="padding:5px 0">using default companion messages</div>'}
-function saveUserName(){userName=(document.getElementById('uname').value||'').trim();saveQuickHub();updateGreeting()}
+function saveUserName(){userName=(document.getElementById('uname').value||'').trim();saveQuickHub();updateGreeting();showNotif('👋 name saved!');}
 // ── NOTE RICH TEXT ──
 let noteCols=false;
 function getNoteData(){
