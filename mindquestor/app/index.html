@@ -440,7 +440,7 @@ select option{background:var(--bg3)}
 .pbtn.sel-fetch{background:rgba(251,146,60,.13);border-color:var(--amber);color:var(--amber);font-weight:700}
 .pbtn.sel-delivery{background:rgba(52,211,153,.12);border-color:var(--teal);color:var(--teal);font-weight:700}
 .pbtn.sel-side{background:rgba(100,100,120,.14);border-color:var(--sf2);color:var(--t2);font-weight:700}
-.qlist{display:flex;flex-direction:column;gap:5px;max-height:280px;overflow-y:auto}
+.qlist{display:flex;flex-direction:column;gap:5px}
 .qitem{background:var(--bg3);border:1px solid var(--sf);border-radius:var(--rad-s);padding:9px 12px;display:flex;align-items:center;gap:8px;cursor:grab;transition:border-color .15s}
 .qitem:hover{border-color:var(--sf2)}
 .qitem:active{cursor:grabbing}
@@ -553,8 +553,11 @@ select option{background:var(--bg3)}
 .hadd{display:flex;gap:7px}
 .hadd input{flex:1}
 .hlist{display:flex;flex-direction:column;gap:6px;max-height:320px;overflow-y:auto}
-.hitem{display:flex;align-items:center;gap:9px;background:var(--bg3);border:1px solid var(--sf);border-radius:var(--rad-s);padding:9px 12px;transition:border-color .15s}
+.hitem{display:flex;align-items:center;gap:7px;background:var(--bg3);border:1px solid var(--sf);border-radius:var(--rad-s);padding:9px 10px;transition:border-color .15s;min-width:0}
 .hitem:hover{border-color:var(--sf2)}
+.hitem-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.hitem-name{font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.3}
+.hpips-row{display:flex;gap:3px;align-items:center}
 .hcheck{width:21px;height:21px;border-radius:5px;border:2px solid var(--sf2);background:transparent;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .2s}
 .hcheck.done{background:var(--teal);border-color:var(--teal);color:#071a11;box-shadow:0 0 8px rgba(52,211,153,.35)}
 .hname{flex:1;font-size:13px;color:var(--t)}
@@ -1099,14 +1102,14 @@ select option{background:var(--bg3)}
           </div>
         </div>
         <button class="btn bp" onclick="addQuest()" style="width:100%">+ add quest</button>
+        <div style="display:flex;gap:7px;margin-top:2px"><button class="btn bp" onclick="autoSchedule()" style="flex:1;font-size:12px">✨ auto-schedule</button><button class="btn bgh" onclick="clearQuests()" style="font-size:12px">clear</button></div>
       </div>
       <div class="qlist" id="qlist"><div class="hempty">no quests yet — add some above!</div></div>
       <div class="rec-wrap">
         <div class="rec-title">💡 quest suggestions</div>
         <div class="rec-list" id="planner-recs"></div>
       </div>
-      <div class="qnote">🤖 hit <strong>auto-schedule</strong> to arrange your campaign. main → escort → fetch → delivery → side, scheduled around your nap.</div>
-      <div style="display:flex;gap:7px"><button class="btn bp" onclick="autoSchedule()" style="flex:1">✨ auto-schedule my day</button><button class="btn bgh" onclick="clearQuests()" style="font-size:12px">clear quests</button></div>
+      <div class="qnote">🤖 auto-schedule arranges your campaign. main → escort → fetch → delivery → side, timed around your nap.</div>
     </div>
     <!-- MIDDLE: routines -->
     <div class="rcol">
@@ -2758,7 +2761,7 @@ function toggleHabit(id){const h=habits.find(x=>x.id===id);if(h){const wasUndone
 function delHabit(id){habits=habits.filter(x=>x.id!==id);renderHabits();saveQuickHub()}
 function moveHabit(id,dir){const i=habits.findIndex(x=>x.id===id);if(i<0)return;const j=i+dir;if(j<0||j>=habits.length)return;[habits[i],habits[j]]=[habits[j],habits[i]];renderHabits();saveQuickHub()}
 function resetDay(){habits.forEach(h=>{if(h.done){h.streak++;h.history=[...h.history.slice(1),1]}else{h.history=[...h.history.slice(1),0]}h.done=false});renderHabits();saveQuickHub()}
-function renderHabits(){const done=habits.filter(h=>h.done).length,total=habits.length;const stats=document.getElementById('hstats');const sub=document.querySelector('.hcard-sub');if(sub)sub.innerHTML=isGentleMode?"check off today's quests &middot; your history is on the right":"check off today's quests &middot; streaks &amp; history on the right";if(stats)stats.innerHTML=total?`<div style="display:flex;align-items:center;gap:10px"><div style="font-size:28px;font-weight:700;color:var(--brand)">${done}/${total}</div>${isGentleMode?'':`<div style="font-size:12px;color:var(--t3)">${Math.round(done/total*100)}% done today</div>`}</div>`:'';const week=document.getElementById('hweek');if(!week)return;if(!habits.length){week.innerHTML='<div class="hempty">add quests on the left! 🌟</div>';renderXPBar();return;}week.innerHTML=habits.map((h,idx)=>`<div class="hitem ${h.done?'hitem-done':''}" style="gap:7px" draggable="true" ondragstart="habitDragStart(event,${idx})" ondragover="habitDragOver(event,${idx})" ondrop="habitDrop(event,${idx})" ondragend="habitDragEnd()"><span class="lorder-drag" title="drag to reorder">⠿</span><div style="display:flex;flex-direction:column;gap:1px;flex-shrink:0"><button class="hmove" onclick="moveHabit(${h.id},-1)" ${idx===0?'disabled':''} title="move up">▲</button><button class="hmove" onclick="moveHabit(${h.id},1)" ${idx===habits.length-1?'disabled':''} title="move down">▼</button></div><div class="hcheck ${h.done?'done':''}" onclick="toggleHabit(${h.id})">${h.done?'✓':''}</div><span style="font-size:12px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;${h.done?'text-decoration:line-through;color:var(--t3);':'color:var(--t2);'}">${esc(h.name)}</span><div style="display:flex;gap:3px;align-items:center">${h.history.map(p=>`<div class="hpip ${p?'done':''}" style="width:13px;height:10px"></div>`).join('')}</div><span class="hstreak" style="${h.streak===0?'opacity:.35':''}">${h.streak>0?'🔥'+h.streak:'—'}</span><button class="hdel" onclick="delHabit(${h.id})">×</button></div>`).join('');renderXPBar()}
+function renderHabits(){const done=habits.filter(h=>h.done).length,total=habits.length;const stats=document.getElementById('hstats');const sub=document.querySelector('.hcard-sub');if(sub)sub.innerHTML=isGentleMode?"check off today's quests &middot; your history is on the right":"check off today's quests &middot; streaks &amp; history on the right";if(stats)stats.innerHTML=total?`<div style="display:flex;align-items:center;gap:10px"><div style="font-size:28px;font-weight:700;color:var(--brand)">${done}/${total}</div>${isGentleMode?'':`<div style="font-size:12px;color:var(--t3)">${Math.round(done/total*100)}% done today</div>`}</div>`:'';const week=document.getElementById('hweek');if(!week)return;if(!habits.length){week.innerHTML='<div class="hempty">add quests on the left! 🌟</div>';renderXPBar();return;}week.innerHTML=habits.map((h,idx)=>`<div class="hitem ${h.done?'hitem-done':''}" draggable="true" ondragstart="habitDragStart(event,${idx})" ondragover="habitDragOver(event,${idx})" ondrop="habitDrop(event,${idx})" ondragend="habitDragEnd()"><span class="lorder-drag" title="drag to reorder">⠿</span><div style="display:flex;flex-direction:column;gap:1px;flex-shrink:0"><button class="hmove" onclick="moveHabit(${h.id},-1)" ${idx===0?'disabled':''} title="move up">▲</button><button class="hmove" onclick="moveHabit(${h.id},1)" ${idx===habits.length-1?'disabled':''} title="move down">▼</button></div><div class="hcheck ${h.done?'done':''}" onclick="toggleHabit(${h.id})">${h.done?'✓':''}</div><div class="hitem-body"><span class="hitem-name" style="${h.done?'text-decoration:line-through;color:var(--t3)':'color:var(--t2)'}">${esc(h.name)}</span><div class="hpips-row">${h.history.map(p=>`<div class="hpip ${p?'done':''}"></div>`).join('')}</div></div><span class="hstreak" style="${h.streak===0?'opacity:.35':''}">${h.streak>0?'🔥'+h.streak:'—'}</span><button class="hdel" onclick="delHabit(${h.id})">×</button></div>`).join('');renderXPBar()}
 
 let habitDragIdx=null;
 function habitDragStart(e,i){habitDragIdx=i;setTimeout(()=>{const el=e.target.closest('.hitem');if(el)el.classList.add('dragging');},0);}
