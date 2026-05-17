@@ -160,7 +160,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100v
 .profile-meta{font-size:11px;color:var(--t3);padding-left:104px;margin-top:1px;margin-bottom:14px}
 .profile-quote-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad);padding:14px 16px;margin-bottom:14px;position:relative}
 .profile-quote-text{font-size:13px;color:var(--t2);line-height:1.7;font-style:italic;width:100%;background:none;border:none;font-family:var(--font);resize:none;outline:none;cursor:pointer;padding:0;min-height:40px}
-.profile-quote-hint{font-size:9px;color:var(--t4);text-align:right;margin-top:4px}
+.profile-quote-hint{font-size:9px;color:var(--t4);text-align:right;margin-top:4px;display:flex;justify-content:flex-end;align-items:center;gap:6px}
+.pq-reset{background:none;border:none;font-size:9px;color:var(--t4);cursor:pointer;font-family:var(--font);padding:0;transition:color .12s}.pq-reset:hover{color:var(--brand)}
 .profile-curr-wrap{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 .pcurr{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad-s);padding:11px 13px}
 .pcurr-lbl{font-size:10px;font-weight:700;color:var(--t3);margin-bottom:5px;display:flex;align-items:center;gap:4px}
@@ -1323,8 +1324,8 @@ select option{background:var(--bg3)}
 
   <!-- daily quote -->
   <div class="profile-quote-wrap">
-    <textarea class="profile-quote-text" id="profile-quote" rows="2" placeholder="your daily quote..." onblur="saveProfileMeta()" oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'">somedays you don’t need to level up. Its okay to just log in and exist.</textarea>
-    <div class="profile-quote-hint">click to edit · auto-saves on blur</div>
+    <textarea class="profile-quote-text" id="profile-quote" rows="2" placeholder="your daily quote..." onblur="saveProfileMeta()" oninput="this.style.height=’auto’;this.style.height=this.scrollHeight+’px’">somedays you don’t need to level up. Its okay to just log in and exist.</textarea>
+    <div class="profile-quote-hint"><span>click to edit · auto-saves on blur</span><button class="pq-reset" onclick="resetProfileQuote()" title="reset to default quote">↺ reset</button></div>
   </div>
 
   <!-- currently section -->
@@ -2028,7 +2029,7 @@ function rlBookCard(b){
   const accent=RL_ACCENTS[b.status]||'var(--sf)';
   const statBtns=['want','reading','done'].map(function(s){
     const icons={want:'📌',reading:'📖',done:'✅'};
-    const lbls={want:'want',reading:'reading',done:'done'};
+    const lbls={want:'want',reading:'reading',done:'finished'};
     const on=b.status===s?' rl-sbt-on':'';
     return '<button class="rl-sbt'+on+'" data-s="'+s+'" onclick="setBookStatus('+b.id+',\''+s+'\')">'+icons[s]+' '+lbls[s]+'</button>';
   }).join('');
@@ -2119,7 +2120,7 @@ function setBookStatus(id,status){
   else if(b.status==='done')delete b.completedAt;
   b.status=status;
   saveShelf();
-  const statusMsg={want:'📌 want to read',reading:'📖 now reading!',done:'✅ finished! great work 💜'};
+  const statusMsg={want:'📌 saving that for later ✨',reading:'📖 now reading! enjoy the journey 💚',done:'✅ finished! amazing work 💜'};
   showNotif(statusMsg[status]||'status updated');
   renderReading(document.getElementById('shelf-content'));
 }
@@ -3002,6 +3003,15 @@ function saveEmotion(){
   localStorage.setItem('mq-profile-meta',JSON.stringify(d));
 }
 
+const DEFAULT_QUOTE="somedays you don't need to level up. Its okay to just log in and exist.";
+function resetProfileQuote(){
+  const q=document.getElementById('profile-quote');
+  if(!q)return;
+  q.value=DEFAULT_QUOTE;
+  q.style.height='auto';q.style.height=q.scrollHeight+'px';
+  saveProfileMeta();
+  showNotif('↺ quote reset 💜');
+}
 function saveProfileMeta(){
   const d=JSON.parse(localStorage.getItem("mq-profile-meta")||"{}");
   d.quote=document.getElementById("profile-quote")?.value||"";
@@ -3017,8 +3027,7 @@ function saveProfileMeta(){
 function loadProfileMeta(){
   const d=JSON.parse(localStorage.getItem("mq-profile-meta")||"{}");
   const q=document.getElementById("profile-quote");
-  if(q&&d.quote!==undefined)q.value=d.quote;
-  if(q)q.style.height="auto",q.style.height=q.scrollHeight+"px";
+  if(q){q.value=d.quote!==undefined&&d.quote!==''?d.quote:DEFAULT_QUOTE;q.style.height="auto";q.style.height=q.scrollHeight+"px";}
   const fields={listen:"pcurr-listen",enjoy:"pcurr-enjoy",aspire:"pcurr-aspire",hyper:"pcurr-hyper"};
   Object.keys(fields).forEach(function(k){
     const el=document.getElementById(fields[k]);
