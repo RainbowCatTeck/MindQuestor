@@ -455,6 +455,12 @@ select option{background:var(--bg3)}
 .qdel{background:none;border:none;color:var(--t4);cursor:pointer;font-size:15px;font-family:var(--font);padding:2px 5px;border-radius:4px;transition:color .15s}
 .qdel:hover{color:var(--danger)}
 .qnote{font-size:11px;color:var(--t3);background:var(--bg3);border-radius:var(--rad-s);padding:9px 11px;line-height:1.5;border-left:3px solid var(--brand);padding-left:12px}
+.qdur-bar{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:11px;color:var(--t3);background:var(--bg3);border-radius:var(--rad-s);padding:6px 10px}
+.qdur-bar strong{color:var(--t2);font-weight:600}
+.qdur-bar .qdb-over{color:var(--danger);font-weight:600}
+.tip-wrap{position:relative}
+.tip-wrap::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);background:var(--bg4);color:var(--t2);font-size:10px;padding:7px 10px;border-radius:var(--rad-s);border:1px solid var(--sf);white-space:normal;width:220px;text-align:center;line-height:1.5;pointer-events:none;opacity:0;transition:opacity .18s;z-index:50;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.tip-wrap:hover::after{opacity:1}
 .rec-wrap{background:var(--bg3);border:1px solid var(--sf);border-radius:var(--rad-s);padding:10px}
 .rec-title{font-size:10px;font-weight:700;color:var(--teal);margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px}
 .rec-list{display:flex;flex-wrap:wrap;gap:5px}
@@ -1088,6 +1094,7 @@ select option{background:var(--bg3)}
     <div class="qpanel">
       <div class="qpanel-title">📋 quest board</div>
       <div class="qpanel-sub">add tasks — auto-scheduled around your nap & sleep</div>
+      <div class="qdur-bar" id="qdur-bar" style="display:none"></div>
       <div class="qadd-form">
         <div class="qfield"><label>quest name</label><input type="text" id="qname" placeholder="e.g. reply to emails..." maxlength="60"></div>
         <div class="qfield"><label>duration</label><div style="display:flex;align-items:center;gap:6px"><input type="number" id="qdur-h" value="0" min="0" max="12" step="1" style="width:48px;padding:5px 6px"><span style="font-size:12px;color:var(--t3)">h</span><input type="number" id="qdur-m" value="30" min="0" max="55" step="5" style="width:48px;padding:5px 6px"><span style="font-size:12px;color:var(--t3)">min</span></div></div>
@@ -1102,14 +1109,18 @@ select option{background:var(--bg3)}
           </div>
         </div>
         <button class="btn bp" onclick="addQuest()" style="width:100%">+ add quest</button>
-        <div style="display:flex;gap:7px;margin-top:2px"><button class="btn bp" onclick="autoSchedule()" style="flex:1;font-size:12px">✨ auto-schedule</button><button class="btn bgh" onclick="clearQuests()" style="font-size:12px">clear</button></div>
+        <div style="display:flex;gap:7px;margin-top:2px">
+          <div class="tip-wrap" data-tip="arranges by priority: main → escort → fetch → delivery → side, timed around your nap" style="flex:1">
+            <button class="btn bp" onclick="autoSchedule()" style="width:100%;font-size:12px">✨ auto-schedule</button>
+          </div>
+          <button class="btn bgh" onclick="clearQuests()" style="font-size:12px">clear</button>
+        </div>
       </div>
       <div class="qlist" id="qlist"><div class="hempty">no quests yet — add some above!</div></div>
       <div class="rec-wrap">
         <div class="rec-title">💡 quest suggestions</div>
         <div class="rec-list" id="planner-recs"></div>
       </div>
-      <div class="qnote">🤖 auto-schedule arranges your campaign. main → escort → fetch → delivery → side, timed around your nap.</div>
     </div>
     <!-- MIDDLE: routines -->
     <div class="rcol">
@@ -2322,7 +2333,7 @@ function addQuest(){const n=document.getElementById('qname').value.trim();const 
 function addRecommendedQuest(idx){const q=RECOMMENDED_QUESTS[idx];if(!q)return;quests.push({id:Date.now()+Math.random(),name:q.name,dur:q.dur,pri:q.pri});renderQList();saveQuickHub()}
 function renderPlannerRecs(){const el=document.getElementById('planner-recs');if(!el)return;el.innerHTML=RECOMMENDED_QUESTS.map((q,i)=>{const e={main:'⚔️',escort:'🛡️',fetch:'🎒',delivery:'📦',side:'🗡️'}[q.pri]||'⚔️';return`<button class="rec-pill" onclick="addRecommendedQuest(${i})">${e} ${esc(q.name)} · ${hLbl(q.dur)}</button>`}).join('')}
 function delQuest(id){quests=quests.filter(q=>q.id!==id);renderQList();saveQuickHub()}
-function renderQList(){const el=document.getElementById('qlist');if(quests.length===0){el.innerHTML='<div class="hempty">no quests yet — add some above!</div>';return}const PRI={main:{cls:'qb-main',lbl:'⚔️ main'},escort:{cls:'qb-escort',lbl:'🛡️ escort'},fetch:{cls:'qb-fetch',lbl:'🎒 fetch'},delivery:{cls:'qb-delivery',lbl:'📦 delivery'},side:{cls:'qb-side',lbl:'🗡️ side'}};el.innerHTML=quests.map(q=>{const p=PRI[q.pri]||PRI.main;const badge=q.isLoadout?`<span class="qbadge qb-main" style="background:var(--bg4);border-color:var(--sf2);color:var(--t3)">⚙️ loadout</span>`:`<span class="qbadge ${p.cls}">${p.lbl}</span>`;return`<div class="qitem">${badge}<span class="qname">${esc(q.name)}</span><span class="qdur">${hLbl(q.dur)}</span><button class="qdel" onclick="delQuest(${q.id})">×</button></div>`}).join('')}
+function renderQList(){const el=document.getElementById('qlist');const bar=document.getElementById('qdur-bar');if(quests.length===0){el.innerHTML='<div class="hempty">no quests yet — add some above!</div>';if(bar)bar.style.display='none';return;}const totalH=quests.reduce((s,q)=>s+q.dur,0);const dh=dayLen();if(bar){bar.style.display='';const over=totalH>dh;bar.innerHTML=`⏱ <strong>${hLbl(totalH)}</strong> queued &nbsp;·&nbsp; ${over?`<span class="qdb-over">⚠️ over by ${hLbl(totalH-dh)}</span>`:`<span>${hLbl(dh-totalH)} still fits today</span>`}`;}const PRI={main:{cls:'qb-main',lbl:'⚔️ main'},escort:{cls:'qb-escort',lbl:'🛡️ escort'},fetch:{cls:'qb-fetch',lbl:'🎒 fetch'},delivery:{cls:'qb-delivery',lbl:'📦 delivery'},side:{cls:'qb-side',lbl:'🗡️ side'}};el.innerHTML=quests.map(q=>{const p=PRI[q.pri]||PRI.main;const badge=q.isLoadout?`<span class="qbadge qb-main" style="background:var(--bg4);border-color:var(--sf2);color:var(--t3)">⚙️ loadout</span>`:`<span class="qbadge ${p.cls}">${p.lbl}</span>`;return`<div class="qitem">${badge}<span class="qname">${esc(q.name)}</span><span class="qdur">${hLbl(q.dur)}</span><button class="qdel" onclick="delQuest(${q.id})">×</button></div>`}).join('')}
 
 function addNap(){const h=parseFloat(document.getElementById('nhr').value)||7;const dm=parseInt(document.getElementById('ndur').value)||30;blocks.push({id:Date.now(),name:'afternoon nap 😴',cat:'nap',start:h,dur:dm/60,fixed:false});blocks.sort((a,b)=>a.start-b.start);renderTL();saveQuickHub()}
 
