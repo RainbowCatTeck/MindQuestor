@@ -922,7 +922,7 @@ select option{background:var(--bg3)}
 <!-- DAY CONFIG -->
 <div class="dcfg">
   <div class="dcfg-row">
-    <div class="dfield"><label>🌅 i woke up at</label><input type="time" id="wt" value="10:00" oninput="updateDayDebounced()"></div>
+    <div class="dfield"><label>🌅 i woke up at</label><input type="time" id="wt" value="10:00" oninput="updateDayDebounced();localStorage.setItem('fb-wake-time',this.value)"></div>
     <div class="dfield">
       <input type="checkbox" id="slp-tog" onchange="toggleSlp()">
       <label style="font-size:12px;color:var(--t3);cursor:pointer" for="slp-tog">🌙 i'll probably sleep at</label>
@@ -3408,7 +3408,7 @@ function hLbl(h){if(h<1)return Math.round(h*60)+'min';if(Number.isInteger(h))ret
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 
 // ===================== INIT =====================
-(function(){const n=new Date(),h=String(n.getHours()).padStart(2,'0'),m=String(n.getMinutes()).padStart(2,'0');const el=document.getElementById('wt');if(el)el.value=h+':'+m;})();initAppearance();updateDay();initPomo();initFree();updateAnimal();renderTL();renderHabits();renderCustomTemplates();renderBuiltinTemplates();renderXPBar();updateProfileHeader();loadProfileMeta();loadShelf();loadPhotobook();loadNote();loadWhimsy();
+(function(){const el=document.getElementById('wt');if(!el)return;const saved=localStorage.getItem('fb-wake-time');if(saved){el.value=saved;}else{const n=new Date();el.value=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');}})();initAppearance();updateDay();initPomo();initFree();updateAnimal();renderTL();renderHabits();renderCustomTemplates();renderBuiltinTemplates();renderXPBar();updateProfileHeader();loadProfileMeta();loadShelf();loadPhotobook();loadNote();loadWhimsy();
 renderPlannerRecs();
 renderHabitRecs();
 loadQuickHub();
@@ -3520,7 +3520,7 @@ function resetAllData(){
     'fb-username','fb-needs','fb-period','fb-builtin-over',
     'fb-phase-meta','fb-motivations','fb-removed-vision',
     'fb-quests','fb-habits','fb-blocks','fb-templates',
-    'fb-xp-h','fb-xp-t','mq-whimsy','mq-gentle-mode','mq-theme'].forEach(k=>localStorage.removeItem(k));
+    'fb-xp-h','fb-xp-t','mq-whimsy','mq-gentle-mode','mq-theme','fb-wake-time'].forEach(k=>localStorage.removeItem(k));
   location.reload();
 }
 </script>
