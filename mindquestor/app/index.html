@@ -3408,7 +3408,7 @@ function hLbl(h){if(h<1)return Math.round(h*60)+'min';if(Number.isInteger(h))ret
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 
 // ===================== INIT =====================
-initAppearance();updateDay();initPomo();initFree();updateAnimal();renderTL();renderHabits();renderCustomTemplates();renderBuiltinTemplates();renderXPBar();updateProfileHeader();loadProfileMeta();loadShelf();loadPhotobook();loadNote();loadWhimsy();
+(function(){const n=new Date(),h=String(n.getHours()).padStart(2,'0'),m=String(n.getMinutes()).padStart(2,'0');const el=document.getElementById('wt');if(el)el.value=h+':'+m;})();initAppearance();updateDay();initPomo();initFree();updateAnimal();renderTL();renderHabits();renderCustomTemplates();renderBuiltinTemplates();renderXPBar();updateProfileHeader();loadProfileMeta();loadShelf();loadPhotobook();loadNote();loadWhimsy();
 renderPlannerRecs();
 renderHabitRecs();
 loadQuickHub();
