@@ -163,6 +163,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100v
 .profile-quote-hint{font-size:9px;color:var(--t4);text-align:right;margin-top:4px;display:flex;justify-content:flex-end;align-items:center;gap:6px}
 .pq-reset{background:none;border:none;font-size:9px;color:var(--t4);cursor:pointer;font-family:var(--font);padding:0;transition:color .12s}.pq-reset:hover{color:var(--brand)}
 .profile-curr-wrap{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.stats-block{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0 14px}
+@media(max-width:480px){.stats-block{grid-template-columns:repeat(2,1fr)}}
+.stat-card{background:var(--bg3);border:1px solid var(--sf);border-radius:var(--rad-s);padding:10px 10px 8px;text-align:center;transition:border-color .15s}
+.stat-card:hover{border-color:var(--sf2)}
+.stat-num{font-size:20px;font-weight:800;color:var(--brand);line-height:1}
+.stat-lbl{font-size:9px;color:var(--t4);margin-top:4px;line-height:1.3;letter-spacing:.2px}
 .pcurr{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad-s);padding:11px 13px}
 .pcurr-lbl{font-size:10px;font-weight:700;color:var(--t3);margin-bottom:5px;display:flex;align-items:center;gap:4px}
 .pcurr-in{background:none;border:none;color:var(--t);font-family:var(--font);font-size:12px;width:100%;outline:none;padding:0;line-height:1.5}
@@ -1356,6 +1362,9 @@ select option{background:var(--bg3)}
     <div class="profile-quote-hint"><span>click to edit · auto-saves on blur</span><button class="pq-reset" onclick="resetProfileQuote()" title="reset to default quote">↺ reset</button></div>
   </div>
 
+  <!-- stats block -->
+  <div class="stats-block" id="stats-block"></div>
+
   <!-- currently section -->
   <div class="profile-curr-wrap">
     <div class="pcurr">
@@ -1541,6 +1550,16 @@ select option{background:var(--bg3)}
               <div class="set-sub">hides streak counts and XP numbers — keeps progress visible without the pressure · good for bad brain days</div>
             </div>
             <div class="tog-sw" id="gentle-toggle" onclick="toggleGentleMode()" title="toggle gentle mode"></div>
+          </div>
+        </div>
+
+        <div class="set-card">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+            <div>
+              <div class="set-title">📊 stats block</div>
+              <div class="set-sub">shows level, total xp, and streak summary on your profile · independent of gentle mode — you can track quietly but still review your history</div>
+            </div>
+            <div class="tog-sw" id="stats-toggle" onclick="toggleStatsBlock()" title="toggle stats block"></div>
           </div>
         </div>
 
@@ -2597,6 +2616,7 @@ function renderXPBar(){
   const hlv=document.getElementById('hdr-xp-lv');if(hlv)hlv.textContent='Level '+lvl;
   const hfi=document.getElementById('hdr-xp-fill');if(hfi)hfi.style.width=Math.min(100,Math.round(cur/needed*100))+'%';
   const hcu=document.getElementById('hdr-xp-curr');if(hcu)hcu.textContent=cur+' / '+needed+' xp';
+  renderStats();
 }
 
 function autoSchedule(){
@@ -2753,13 +2773,15 @@ function shiftPeriodDay(d){periodTracker.day=Math.max(1,Math.min(periodTracker.c
 function switchSettingsSection(id,el){document.querySelectorAll('.set-section').forEach(s=>s.classList.remove('sn-active'));document.querySelectorAll('.set-nav-item').forEach(b=>b.classList.remove('sn-active'));const sec=document.getElementById('set-sec-'+id);if(sec)sec.classList.add('sn-active');if(el)el.classList.add('sn-active');}
 
 // ── APPEARANCE (theme + gentle mode) ─────────────────────────────────────────
-let isDarkMode=true,isGentleMode=false;
+let isDarkMode=true,isGentleMode=false,isStatsVisible=true;
 function initAppearance(){
   isDarkMode=localStorage.getItem('mq-dark-mode')!=='false';
   isGentleMode=localStorage.getItem('mq-gentle-mode')!=='false';
-  applyTheme();applyGentleMode();
+  isStatsVisible=localStorage.getItem('mq-show-stats')!=='false';
+  applyTheme();applyGentleMode();applyStatsBlock();
   document.getElementById('theme-toggle')?.classList.toggle('on',!isDarkMode);
   document.getElementById('gentle-toggle')?.classList.toggle('on',isGentleMode);
+  document.getElementById('stats-toggle')?.classList.toggle('on',isStatsVisible);
 }
 function toggleTheme(){
   isDarkMode=!isDarkMode;
@@ -2773,8 +2795,27 @@ function toggleGentleMode(){
   localStorage.setItem('mq-gentle-mode',isGentleMode);
   applyGentleMode();
   document.getElementById('gentle-toggle')?.classList.toggle('on',isGentleMode);
+  renderHabits();
 }
 function applyGentleMode(){document.body.classList.toggle('gentle',isGentleMode);}
+function toggleStatsBlock(){
+  isStatsVisible=!isStatsVisible;
+  localStorage.setItem('mq-show-stats',isStatsVisible);
+  applyStatsBlock();
+  document.getElementById('stats-toggle')?.classList.toggle('on',isStatsVisible);
+}
+function applyStatsBlock(){const b=document.getElementById('stats-block');if(b)b.style.display=isStatsVisible?'':'none';}
+function renderStats(){
+  const b=document.getElementById('stats-block');if(!b||!isStatsVisible)return;
+  const total=xpHabits+xpTasks;
+  const info=getXPInfo(total);
+  const active=habits.filter(h=>h.streak>0).length;
+  const best=habits.length?Math.max(...habits.map(h=>h.streak)):0;
+  b.innerHTML=`<div class="stat-card"><div class="stat-num">${info.level}</div><div class="stat-lbl">level</div></div>`
+    +`<div class="stat-card"><div class="stat-num">${total}</div><div class="stat-lbl">total xp</div></div>`
+    +`<div class="stat-card"><div class="stat-num">${active||'—'}</div><div class="stat-lbl">active streaks</div></div>`
+    +`<div class="stat-card"><div class="stat-num">${best>0?'🔥'+best:'—'}</div><div class="stat-lbl">best streak</div></div>`;
+}
 function toggleCyclePopup(){const p=document.getElementById('cycle-pop');p.classList.toggle('show')}
 function renderPeriodVis(){const el=document.getElementById('p-vis');if(!el)return;el.innerHTML='';const total=Math.min(periodTracker.cycle,32);for(let i=1;i<=total;i++){const dot=document.createElement('div');dot.className='need-dot'+(i<=periodTracker.day?' on':'');dot.style.background=i<=periodTracker.day?'#2dd4bf':'var(--sf2)';dot.style.borderRadius='50%';el.appendChild(dot)}}
 function saveTrackerSettings(){const n=(document.getElementById('tr-name').value||'').trim();const e=(document.getElementById('tr-emo').value||'').trim();periodTracker.name=n||'flow tracker';periodTracker.emoji=e||'🌊';renderNeeds();saveQuickHub()}
@@ -3412,7 +3453,7 @@ function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g
 renderPlannerRecs();
 renderHabitRecs();
 loadQuickHub();
-renderQList();renderTL();renderHabits();renderCustomTemplates();
+renderQList();renderTL();renderHabits();renderCustomTemplates();renderStats();
 renderSettingsLinks();renderLinkOrder();
 renderQuickLinksHeader();
 renderVisionBoard();
@@ -3520,7 +3561,7 @@ function resetAllData(){
     'fb-username','fb-needs','fb-period','fb-builtin-over',
     'fb-phase-meta','fb-motivations','fb-removed-vision',
     'fb-quests','fb-habits','fb-blocks','fb-templates',
-    'fb-xp-h','fb-xp-t','mq-whimsy','mq-gentle-mode','mq-theme','fb-wake-time'].forEach(k=>localStorage.removeItem(k));
+    'fb-xp-h','fb-xp-t','mq-whimsy','mq-gentle-mode','mq-theme','fb-wake-time','mq-show-stats'].forEach(k=>localStorage.removeItem(k));
   location.reload();
 }
 </script>
