@@ -1654,6 +1654,11 @@ select option{background:var(--bg3)}
           <div class="lorder-list" id="link-order-list"></div>
         </div>
         <div class="set-card">
+          <div class="set-title">📋 category order</div>
+          <div class="set-sub">preferred order used when grouping by category</div>
+          <div class="lorder-list" id="cat-order-list"></div>
+        </div>
+        <div class="set-card">
           <div class="set-title">🔗 quick links in header</div>
           <div class="set-sub">choose the links you want next to goblin tools</div>
           <div class="set-list" id="set-link-list"></div>
@@ -2993,6 +2998,9 @@ const QUICK_LINKS={
 };
 let quickChosen=[];
 let customLinks=[];
+const CAT_EMOJI={email:'✉️',calendar:'📅',music:'🎵',notes:'📝',ai:'🤖',passwords:'🔒',inspo:'🎨',other:'🔗'};
+let catOrder=['email','calendar','music','notes','ai','passwords','inspo','other'];
+let catDragIdx=null;
 let visionItems=[];
 let userName='';
 function allQuickLinks(){return[...Object.values(QUICK_LINKS).flat(),...customLinks]}
@@ -3043,12 +3051,21 @@ function removeQuickLink(i){
   renderLinkOrder();renderSettingsLinks();renderQuickLinksHeader();saveQuickHub();
 }
 function groupLinksByCategory(){
-  const cats=['email','calendar','music','notes','ai','passwords','inspo','other'];
+  const allCats=[...catOrder,...['email','calendar','music','notes','ai','passwords','inspo','other'].filter(c=>!catOrder.includes(c))];
   const grouped=[];
-  for(const cat of cats)grouped.push(...quickChosen.filter(x=>(x.cat||'other')===cat));
+  for(const cat of allCats)grouped.push(...quickChosen.filter(x=>(x.cat||'other')===cat));
   quickChosen=grouped;
   renderLinkOrder();renderQuickLinksHeader();saveQuickHub();
 }
+function renderCatOrder(){
+  const el=document.getElementById('cat-order-list');if(!el)return;
+  el.innerHTML=catOrder.map((c,i)=>`<div class="lorder-item" draggable="true" ondragstart="catDragStart(event,${i})" ondragover="catDragOver(event,${i})" ondrop="catDrop(event,${i})" ondragend="catDragEnd()"><span class="lorder-drag" title="drag to reorder">⠿</span><div class="lorder-moves"><button class="lorder-move" onclick="moveCat(${i},-1)" ${i===0?'disabled':''}>▲</button><button class="lorder-move" onclick="moveCat(${i},1)" ${i===catOrder.length-1?'disabled':''}>▼</button></div><span>${CAT_EMOJI[c]||'🔗'} ${c}</span></div>`).join('');
+}
+function moveCat(i,dir){const j=i+dir;if(j<0||j>=catOrder.length)return;[catOrder[i],catOrder[j]]=[catOrder[j],catOrder[i]];renderCatOrder();saveQuickHub();}
+function catDragStart(e,i){catDragIdx=i;setTimeout(()=>{const el=e.target.closest('.lorder-item');if(el)el.classList.add('dragging');},0);}
+function catDragOver(e,i){e.preventDefault();const items=document.querySelectorAll('#cat-order-list .lorder-item');items.forEach((el,idx)=>el.classList.toggle('drag-over',idx===i&&i!==catDragIdx));}
+function catDrop(e,toIdx){e.preventDefault();if(catDragIdx===null||catDragIdx===toIdx){catDragIdx=null;return;}const from=catDragIdx;const item=catOrder.splice(from,1)[0];catOrder.splice(from<toIdx?toIdx-1:toIdx,0,item);renderCatOrder();saveQuickHub();catDragIdx=null;}
+function catDragEnd(){catDragIdx=null;document.querySelectorAll('#cat-order-list .lorder-item').forEach(el=>el.classList.remove('dragging','drag-over'));}
 function inferNameFromUrl(u){try{return new URL(u).hostname.replace('www.','')}catch(e){return u}}
 function addCustomQuickLink(){const n=document.getElementById('cname').value.trim();let u=document.getElementById('curl').value.trim();if(!u)return;if(!/^https?:\/\//i.test(u))u='https://'+u;if(allQuickLinks().some(x=>x.url===u))return;const cat=document.getElementById('ccat').value||'other';const emo=document.getElementById('cemo').value.trim();const finalName=n||inferNameFromUrl(u);customLinks.push({name:finalName,url:u,cat:cat,emoji:emo,icon:''});quickChosen.push({id:Date.now()+Math.random(),name:finalName,url:u,cat:cat,emoji:emo,icon:''});document.getElementById('cname').value='';document.getElementById('curl').value='';document.getElementById('cemo').value='';saveQuickHub();renderSettingsLinks();renderLinkOrder();renderQuickLinksHeader();showNotif('🔗 link added to header!');}
 // ── EMOTION WHEEL ────────────────────────────────────────────────────────────
@@ -3369,8 +3386,8 @@ function handleNotePaste(e,el){
     else saveNote();
   }
 }
-function saveQuickHub(){try{localStorage.setItem('fb-links',JSON.stringify(quickChosen));localStorage.setItem('fb-custom-links',JSON.stringify(customLinks));localStorage.setItem('fb-vision',JSON.stringify(visionItems));localStorage.setItem('fb-username',userName||'');localStorage.setItem('fb-needs',JSON.stringify(needs));localStorage.setItem('fb-period',JSON.stringify(periodTracker));localStorage.setItem('fb-builtin-over',JSON.stringify(builtinOverrides));localStorage.setItem('fb-phase-meta',JSON.stringify(phaseMeta));localStorage.setItem('fb-motivations',JSON.stringify(customMotivations));localStorage.setItem('fb-quests',JSON.stringify(quests));localStorage.setItem('fb-habits',JSON.stringify(habits));localStorage.setItem('fb-blocks',JSON.stringify(blocks));localStorage.setItem('fb-templates',JSON.stringify(customTemplates));localStorage.setItem('fb-xp-h',xpHabits);localStorage.setItem('fb-xp-t',xpTasks)}catch(e){showNotif('⚠️ storage full — clear some vision board images or browser data')}}
-function loadQuickHub(){try{quickChosen=JSON.parse(localStorage.getItem('fb-links')||'[]');customLinks=JSON.parse(localStorage.getItem('fb-custom-links')||'[]');visionItems=JSON.parse(localStorage.getItem('fb-vision')||'[]').map((v,i)=>({x:40+(i%4)*175,y:40+Math.floor(i/4)*175,w:180,h:155,z:10+i,...v}));vMaxZ=visionItems.length?Math.max(10,...visionItems.map(v=>v.z||10)):10;userName=localStorage.getItem('fb-username')||'';document.getElementById('uname').value=userName;const n=JSON.parse(localStorage.getItem('fb-needs')||'{}');if(n.water)needs.water={...needs.water,...n.water};if(n.sleep)needs.sleep={...needs.sleep,...n.sleep};if(n.food)needs.food={...needs.food,...n.food};const p=JSON.parse(localStorage.getItem('fb-period')||'{}');periodTracker={...periodTracker,...p};if(periodTracker.name==='blood sacrifice tracker'){periodTracker.name='flow tracker';periodTracker.emoji='🌊';}const pm=JSON.parse(localStorage.getItem('fb-phase-meta')||'{}');phaseMeta={...phaseMeta,...pm};customMotivations=JSON.parse(localStorage.getItem('fb-motivations')||'[]');builtinOverrides=JSON.parse(localStorage.getItem('fb-builtin-over')||'{}');quests=JSON.parse(localStorage.getItem('fb-quests')||'[]');habits=JSON.parse(localStorage.getItem('fb-habits')||'[]');const rawB=localStorage.getItem('fb-blocks');blocks=rawB?JSON.parse(rawB):[];customTemplates=JSON.parse(localStorage.getItem('fb-templates')||'[]');xpHabits=parseInt(localStorage.getItem('fb-xp-h')||'0');xpTasks=parseInt(localStorage.getItem('fb-xp-t')||'0')}catch(e){quickChosen=[];customLinks=[];visionItems=[];userName='';customMotivations=[];quests=[];habits=[];blocks=[];customTemplates=[];xpHabits=0;xpTasks=0}}
+function saveQuickHub(){try{localStorage.setItem('fb-links',JSON.stringify(quickChosen));localStorage.setItem('fb-custom-links',JSON.stringify(customLinks));localStorage.setItem('fb-vision',JSON.stringify(visionItems));localStorage.setItem('fb-username',userName||'');localStorage.setItem('fb-needs',JSON.stringify(needs));localStorage.setItem('fb-period',JSON.stringify(periodTracker));localStorage.setItem('fb-builtin-over',JSON.stringify(builtinOverrides));localStorage.setItem('fb-phase-meta',JSON.stringify(phaseMeta));localStorage.setItem('fb-motivations',JSON.stringify(customMotivations));localStorage.setItem('fb-quests',JSON.stringify(quests));localStorage.setItem('fb-habits',JSON.stringify(habits));localStorage.setItem('fb-blocks',JSON.stringify(blocks));localStorage.setItem('fb-templates',JSON.stringify(customTemplates));localStorage.setItem('fb-xp-h',xpHabits);localStorage.setItem('fb-xp-t',xpTasks);localStorage.setItem('fb-cat-order',JSON.stringify(catOrder))}catch(e){showNotif('⚠️ storage full — clear some vision board images or browser data')}}
+function loadQuickHub(){try{quickChosen=JSON.parse(localStorage.getItem('fb-links')||'[]');customLinks=JSON.parse(localStorage.getItem('fb-custom-links')||'[]');visionItems=JSON.parse(localStorage.getItem('fb-vision')||'[]').map((v,i)=>({x:40+(i%4)*175,y:40+Math.floor(i/4)*175,w:180,h:155,z:10+i,...v}));vMaxZ=visionItems.length?Math.max(10,...visionItems.map(v=>v.z||10)):10;userName=localStorage.getItem('fb-username')||'';document.getElementById('uname').value=userName;const n=JSON.parse(localStorage.getItem('fb-needs')||'{}');if(n.water)needs.water={...needs.water,...n.water};if(n.sleep)needs.sleep={...needs.sleep,...n.sleep};if(n.food)needs.food={...needs.food,...n.food};const p=JSON.parse(localStorage.getItem('fb-period')||'{}');periodTracker={...periodTracker,...p};if(periodTracker.name==='blood sacrifice tracker'){periodTracker.name='flow tracker';periodTracker.emoji='🌊';}const pm=JSON.parse(localStorage.getItem('fb-phase-meta')||'{}');phaseMeta={...phaseMeta,...pm};customMotivations=JSON.parse(localStorage.getItem('fb-motivations')||'[]');builtinOverrides=JSON.parse(localStorage.getItem('fb-builtin-over')||'{}');quests=JSON.parse(localStorage.getItem('fb-quests')||'[]');habits=JSON.parse(localStorage.getItem('fb-habits')||'[]');const rawB=localStorage.getItem('fb-blocks');blocks=rawB?JSON.parse(rawB):[];customTemplates=JSON.parse(localStorage.getItem('fb-templates')||'[]');xpHabits=parseInt(localStorage.getItem('fb-xp-h')||'0');xpTasks=parseInt(localStorage.getItem('fb-xp-t')||'0');const _co=JSON.parse(localStorage.getItem('fb-cat-order')||'null');if(_co&&Array.isArray(_co))catOrder=_co;}catch(e){quickChosen=[];customLinks=[];visionItems=[];userName='';customMotivations=[];quests=[];habits=[];blocks=[];customTemplates=[];xpHabits=0;xpTasks=0}}
 
 // ===================== VISION BOARD =====================
 let vDrag=null,vDragOX=0,vDragOY=0,vResize=null,vResX=0,vResY=0,vResW=0,vResH=0,vMaxZ=10;
@@ -3578,7 +3595,7 @@ renderPlannerRecs();
 renderHabitRecs();
 loadQuickHub();
 renderQList();renderTL();renderHabits();renderCustomTemplates();renderStats();
-renderSettingsLinks();renderLinkOrder();
+renderSettingsLinks();renderLinkOrder();renderCatOrder();
 renderQuickLinksHeader();
 renderVisionBoard();
 renderNeeds();
