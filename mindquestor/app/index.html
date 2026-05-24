@@ -135,7 +135,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100v
 .head-links{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center}
 .head-chip{display:inline-flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--sf);border-radius:var(--rad-s);padding:6px 12px;font-size:12px;text-decoration:none;transition:border-color .15s,background .15s}
 .head-chip:hover{background:var(--bg4);border-color:var(--sf2)}
-.head-chip.email{color:var(--indigo)}.head-chip.calendar{color:var(--teal)}.head-chip.music{color:var(--brand)}.head-chip.notes{color:var(--amber)}.head-chip.ai{color:var(--gold)}.head-chip.inspo{color:var(--pink)}.head-chip.other{color:var(--t2)}
+.head-chip.email{color:var(--indigo)}.head-chip.calendar{color:var(--teal)}.head-chip.music{color:var(--brand)}.head-chip.notes{color:var(--amber)}.head-chip.ai{color:var(--gold)}.head-chip.inspo{color:var(--pink)}.head-chip.passwords{color:var(--teal)}.head-chip.other{color:var(--t2)}
 .chip-ico{width:13px;height:13px;border-radius:3px;object-fit:contain;filter:brightness(1.1)}
 .chip-emo{font-size:13px;line-height:1;flex-shrink:0}
 .glink{display:flex;align-items:center;gap:7px;background:var(--amber-soft);border:1px solid rgba(251,146,60,.3);border-radius:var(--rad-s);padding:8px 13px;color:var(--amber);font-family:var(--font);font-size:12px;text-decoration:none;transition:background .15s}
@@ -701,7 +701,7 @@ select option{background:var(--bg3)}
 .set-item:hover{border-color:var(--sf2)}
 .set-item input{accent-color:var(--teal)}
 .set-item .tag{font-size:10px;padding:2px 7px;border-radius:99px;border:1px solid var(--sf);color:var(--t3)}
-.tag.email{color:var(--indigo)}.tag.calendar{color:var(--teal)}.tag.music{color:var(--brand)}.tag.notes{color:var(--amber)}.tag.ai{color:var(--gold)}.tag.inspo{color:var(--pink)}
+.tag.email{color:var(--indigo)}.tag.calendar{color:var(--teal)}.tag.music{color:var(--brand)}.tag.notes{color:var(--amber)}.tag.ai{color:var(--gold)}.tag.inspo{color:var(--pink)}.tag.passwords{color:var(--teal)}
 .qadd-form{display:flex;flex-direction:column;gap:8px}
 .qfield{display:flex;flex-direction:column;gap:4px}
 .qfield label{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.5px}
@@ -1669,6 +1669,7 @@ select option{background:var(--bg3)}
                 <option value="music">music</option>
                 <option value="notes">notes</option>
                 <option value="ai">ai agent</option>
+                <option value="passwords">passwords</option>
                 <option value="other">other</option>
               </select>
             </div>
@@ -2950,7 +2951,8 @@ function habitDragEnd(){habitDragIdx=null;document.querySelectorAll('#hweek .hit
 const QUICK_LINKS={
   email:[
     {name:'Gmail',url:'https://mail.google.com',cat:'email',emoji:'✉️'},
-    {name:'Outlook',url:'https://outlook.live.com/mail/',cat:'email',emoji:'📧'}
+    {name:'Outlook',url:'https://outlook.live.com/mail/',cat:'email',emoji:'📧'},
+    {name:'Proton Mail',url:'https://mail.proton.me/',cat:'email',emoji:'🛡️'}
   ],
   calendar:[
     {name:'Google Calendar',url:'https://calendar.google.com',cat:'calendar',emoji:'📅'},
@@ -2970,6 +2972,11 @@ const QUICK_LINKS={
     {name:'ChatGPT',url:'https://chatgpt.com',cat:'ai',emoji:'🤖'},
     {name:'Claude',url:'https://claude.ai',cat:'ai',emoji:'🧠'},
     {name:'Cursor',url:'https://cursor.com',cat:'ai',emoji:'⚡'}
+  ],
+  passwords:[
+    {name:'Proton Pass',url:'https://pass.proton.me/',cat:'passwords',emoji:'🔒'},
+    {name:'Google Passwords',url:'https://passwords.google.com/',cat:'passwords',emoji:'🔑'},
+    {name:'Apple Passwords',url:'https://www.icloud.com/passwords/',cat:'passwords',emoji:'🍎'}
   ],
   inspo:[
     {name:'Pinterest',url:'https://pinterest.com',cat:'inspo',emoji:'📌'},
