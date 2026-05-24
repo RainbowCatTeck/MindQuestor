@@ -1649,14 +1649,14 @@ select option{background:var(--bg3)}
       <!-- QUICK LINKS -->
       <div class="set-section" id="set-sec-links">
         <div class="set-card">
-          <div class="set-title">🔗 quick links in header</div>
-          <div class="set-sub">choose the links you want next to goblin tools</div>
-          <div class="set-list" id="set-link-list"></div>
-        </div>
-        <div class="set-card">
           <div class="set-title">↕ reorder chosen links</div>
           <div class="set-sub">drag order = left-to-right in header · <button class="btn-link" onclick="groupLinksByCategory()">group by category</button></div>
           <div class="lorder-list" id="link-order-list"></div>
+        </div>
+        <div class="set-card">
+          <div class="set-title">🔗 quick links in header</div>
+          <div class="set-sub">choose the links you want next to goblin tools</div>
+          <div class="set-list" id="set-link-list"></div>
         </div>
         <div class="set-card">
           <div class="set-title">➕ custom link</div>
@@ -2345,7 +2345,7 @@ function switchProfileSection(s,el){
   if(s==="vision")renderVisionBoard();
   if(s==="shelf"&&activeBook)openBook(activeBook);
 }
-function switchTab(n,el){activeTab=n;document.querySelectorAll('.tpanel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));const panel=document.getElementById('tab-'+n);if(panel)panel.classList.add('active');if(el)el.classList.add('active');updateSharedNoteVisibility();if(n==='profile'){updateProfileHeader();loadProfileMeta();loadNote();if(activeProfileSection==='vision')renderVisionBoard();}if(tourActive&&(TOUR_STEPS[tourStep]?.tab===n||TOUR_STEPS[tourStep]?.highlightAll))setTimeout(tourNext,220);}
+function switchTab(n,el){activeTab=n;localStorage.setItem('fb-tab',n);document.querySelectorAll('.tpanel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));const panel=document.getElementById('tab-'+n);if(panel)panel.classList.add('active');if(el)el.classList.add('active');updateSharedNoteVisibility();if(n==='profile'){updateProfileHeader();loadProfileMeta();loadNote();if(activeProfileSection==='vision')renderVisionBoard();}if(tourActive&&(TOUR_STEPS[tourStep]?.tab===n||TOUR_STEPS[tourStep]?.highlightAll))setTimeout(tourNext,220);}
 
 // ===================== NOTIF =====================
 let nT;function showNotif(m){const b=document.getElementById('notif');document.getElementById('notif-t').textContent=m;b.classList.add('show');clearTimeout(nT);nT=setTimeout(()=>b.classList.remove('show'),5000);try{const c=new AudioContext(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.setValueAtTime(520,c.currentTime);o.frequency.setValueAtTime(680,c.currentTime+.1);g.gain.setValueAtTime(.15,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.45);o.start();o.stop(c.currentTime+.45)}catch(e){}}
@@ -3586,6 +3586,7 @@ renderMotivations();
 updateGreeting();
 document.getElementById('f-year').textContent=String(new Date().getFullYear());
 updateSharedNoteVisibility();
+const _t=localStorage.getItem('fb-tab');if(_t){const _b=document.querySelector(`.tbtn[onclick*="'${_t}'"]`);switchTab(_t,_b);}
 document.getElementById('vup').addEventListener('change',e=>addVisionFiles(e.target.files));
 document.getElementById('v-drop').addEventListener('dragover',e=>{e.preventDefault();e.currentTarget.style.borderColor='var(--teal)'});
 document.getElementById('v-drop').addEventListener('dragleave',e=>{e.currentTarget.style.borderColor='var(--sf2)'});
