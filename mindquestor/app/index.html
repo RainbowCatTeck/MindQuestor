@@ -2957,7 +2957,7 @@ const QUICK_LINKS={
   ],
   calendar:[
     {name:'Google Calendar',url:'https://calendar.google.com',cat:'calendar',emoji:'📅'},
-    {name:'Outlook Cal',url:'https://outlook.live.com/calendar/',cat:'calendar',emoji:'🗓'},
+    {name:'Outlook Calendar',url:'https://outlook.live.com/calendar/',cat:'calendar',emoji:'🗓'},
     {name:'Apple Calendar',url:'https://www.icloud.com/calendar',cat:'calendar',emoji:'🍎'},
     {name:'Notion Calendar',url:'https://calendar.notion.so/',cat:'calendar',emoji:'🗃️'}
   ],
@@ -2996,7 +2996,7 @@ let userName='';
 function allQuickLinks(){return[...Object.values(QUICK_LINKS).flat(),...customLinks]}
 function linkChecked(url){return quickChosen.some(x=>x.url===url)}
 function toggleQuickLink(name,url,checked,cat='other',emoji='',icon=''){if(checked){if(!linkChecked(url))quickChosen.push({id:Date.now()+Math.random(),name,url,cat,emoji,icon})}else{quickChosen=quickChosen.filter(x=>x.url!==url)}saveQuickHub();renderQuickLinksHeader();renderLinkOrder()}
-function renderSettingsLinks(){const el=document.getElementById('set-link-list');const cats=['email','calendar','music','notes','ai','inspo','other'];let html='';for(const cat of cats){const built=QUICK_LINKS[cat]||[];const custom=customLinks.filter(x=>(x.cat||'other')===cat);const items=[...built,...custom];if(items.length===0)continue;html+=`<div class="set-sub" style="margin:4px 0">${cat}</div>`;html+=items.map((x,i)=>`<label class="set-item"><input type="checkbox" ${linkChecked(x.url)?'checked':''} data-cat="${cat}" data-idx="${i}" class="set-link-check"><span>${x.emoji?`<span class="chip-emo">${x.emoji}</span> `:'' }${esc(x.name)}</span><span class="tag ${cat}">${cat}</span><span style="font-size:10px;color:var(--t3);margin-left:auto">${esc(x.url.replace('https://',''))}</span></label>`).join('')}el.innerHTML=html||'<div class="hempty">no links yet</div>';el.querySelectorAll('.set-link-check').forEach(ch=>ch.addEventListener('change',function(){const cat=this.dataset.cat;const idx=parseInt(this.dataset.idx)||0;const src=[...(QUICK_LINKS[cat]||[]),...customLinks.filter(x=>(x.cat||'other')===cat)];const item=src&&src[idx];if(item)toggleQuickLink(item.name,item.url,this.checked,item.cat||cat,item.emoji||'',item.icon||'')}))}
+function renderSettingsLinks(){const el=document.getElementById('set-link-list');const cats=['email','calendar','music','notes','ai','passwords','inspo','other'];let html='';for(const cat of cats){const built=QUICK_LINKS[cat]||[];const custom=customLinks.filter(x=>(x.cat||'other')===cat);const items=[...built,...custom];if(items.length===0)continue;html+=`<div class="set-sub" style="margin:4px 0">${cat}</div>`;html+=items.map((x,i)=>`<label class="set-item"><input type="checkbox" ${linkChecked(x.url)?'checked':''} data-cat="${cat}" data-idx="${i}" class="set-link-check"><span>${x.emoji?`<span class="chip-emo">${x.emoji}</span> `:'' }${esc(x.name)}</span><span style="font-size:10px;color:var(--t3);margin-left:auto">${esc(x.url.replace('https://',''))}</span></label>`).join('')}el.innerHTML=html||'<div class="hempty">no links yet</div>';el.querySelectorAll('.set-link-check').forEach(ch=>ch.addEventListener('change',function(){const cat=this.dataset.cat;const idx=parseInt(this.dataset.idx)||0;const src=[...(QUICK_LINKS[cat]||[]),...customLinks.filter(x=>(x.cat||'other')===cat)];const item=src&&src[idx];if(item)toggleQuickLink(item.name,item.url,this.checked,item.cat||cat,item.emoji||'',item.icon||'')}))}
 function renderQuickLinksHeader(){const box=document.getElementById('head-links');if(quickChosen.length===0){box.innerHTML='';return}box.innerHTML=quickChosen.map(x=>`<a class="head-chip ${(x.cat||'other')}" href="${x.url}" target="_blank"><span class="chip-emo">${x.emoji||'🔗'}</span>${esc(x.name)} ↗</a>`).join('')}
 function renderLinkOrder(){
   const el=document.getElementById('link-order-list');if(!el)return;
@@ -3041,7 +3041,7 @@ function removeQuickLink(i){
   renderLinkOrder();renderSettingsLinks();renderQuickLinksHeader();saveQuickHub();
 }
 function groupLinksByCategory(){
-  const cats=['email','calendar','music','notes','ai','inspo','other'];
+  const cats=['email','calendar','music','notes','ai','passwords','inspo','other'];
   const grouped=[];
   for(const cat of cats)grouped.push(...quickChosen.filter(x=>(x.cat||'other')===cat));
   quickChosen=grouped;
