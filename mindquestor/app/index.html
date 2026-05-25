@@ -604,6 +604,14 @@ select option{background:var(--bg3)}
 .lorder-del:hover{color:var(--danger)}
 .lorder-drag{cursor:grab;color:var(--sf2);font-size:14px;flex-shrink:0;padding:0 3px;user-select:none;line-height:1}
 .lorder-drag:active{cursor:grabbing}
+.theme-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.theme-chip{display:flex;flex-direction:column;gap:5px;background:var(--bg3);border:1px solid var(--sf);border-radius:var(--rad-s);padding:8px 10px;flex:1 1 calc(33% - 6px);min-width:88px;cursor:default;transition:border-color .15s,opacity .15s}
+.theme-chip.tc-active{border-color:var(--brand);background:var(--brand-soft)}
+.theme-chip.tc-locked{opacity:.45}
+.theme-dots{display:flex;gap:4px}
+.theme-dots span{width:13px;height:13px;border-radius:50%;flex-shrink:0}
+.tc-name{font-size:11px;color:var(--t2);white-space:nowrap}
+.tc-tag{font-size:10px;color:var(--t3)}.theme-chip.tc-active .tc-tag{color:var(--brand)}
 .lorder-item.dragging{opacity:.35;background:var(--bg2)}
 .lorder-item.drag-over{outline:2px dashed var(--brand);background:var(--brand-soft)}
 .cat-preview{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px 10px;background:var(--bg2);border:1px solid var(--sf);border-radius:var(--rad-s);min-height:38px;margin-bottom:8px}
@@ -1610,6 +1618,43 @@ select option{background:var(--bg3)}
               <div class="set-sub">shows level, total xp, and streak summary on your profile · independent of gentle mode — you can track quietly but still review your history</div>
             </div>
             <div class="tog-sw" id="stats-toggle" onclick="toggleStatsBlock()" title="toggle stats block"></div>
+          </div>
+        </div>
+
+        <div class="set-card">
+          <div class="set-title" style="display:flex;align-items:center;gap:8px">🎨 themes <span style="font-size:9px;background:var(--brand-soft);color:var(--brand);border:1px solid var(--brand);border-radius:99px;padding:1px 8px;font-weight:700;letter-spacing:.5px">coming soon</span></div>
+          <div class="set-sub">make it feel like yours — unlocks with supporter access when that opens ✨</div>
+          <div class="theme-grid">
+            <div class="theme-chip tc-active" title="current theme">
+              <div class="theme-dots"><span style="background:#c084fc"></span><span style="background:#818cf8"></span><span style="background:#0f0c1a"></span></div>
+              <span class="tc-name">midnight bloom</span>
+              <span class="tc-tag">current</span>
+            </div>
+            <div class="theme-chip tc-locked" title="coming soon">
+              <div class="theme-dots"><span style="background:#34d399"></span><span style="background:#059669"></span><span style="background:#0d1f0d"></span></div>
+              <span class="tc-name">forest floor</span>
+              <span class="tc-tag">🔒 soon</span>
+            </div>
+            <div class="theme-chip tc-locked" title="coming soon">
+              <div class="theme-dots"><span style="background:#f472b6"></span><span style="background:#e879f9"></span><span style="background:#1a0a1a"></span></div>
+              <span class="tc-name">sakura</span>
+              <span class="tc-tag">🔒 soon</span>
+            </div>
+            <div class="theme-chip tc-locked" title="coming soon">
+              <div class="theme-dots"><span style="background:#fb923c"></span><span style="background:#fbbf24"></span><span style="background:#1a0f00"></span></div>
+              <span class="tc-name">ember season</span>
+              <span class="tc-tag">🔒 soon</span>
+            </div>
+            <div class="theme-chip tc-locked" title="coming soon">
+              <div class="theme-dots"><span style="background:#38bdf8"></span><span style="background:#818cf8"></span><span style="background:#050714"></span></div>
+              <span class="tc-name">deep tide</span>
+              <span class="tc-tag">🔒 soon</span>
+            </div>
+            <div class="theme-chip tc-locked" title="coming soon">
+              <div class="theme-dots"><span style="background:#d4a574"></span><span style="background:#b5896b"></span><span style="background:#1a1208"></span></div>
+              <span class="tc-name">golden hour</span>
+              <span class="tc-tag">🔒 soon</span>
+            </div>
           </div>
         </div>
 
