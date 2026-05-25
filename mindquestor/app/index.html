@@ -777,6 +777,22 @@ select option{background:var(--bg3)}
 .nb-col{flex:1;min-width:0;border:1px dashed transparent;border-radius:var(--rad-s);padding:4px;transition:border-color .15s}
 .nb-col.nb-col-hover{border-color:var(--brand)}
 .nb-sep{width:1px;background:var(--sf2);align-self:stretch;margin:0 2px;flex-shrink:0}
+/* floating note */
+.nb-float-btn{position:fixed;bottom:76px;right:20px;z-index:950;width:42px;height:42px;border-radius:50%;background:var(--brand-soft);border:1px solid var(--brand);color:var(--brand);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.4);padding:0;transition:transform .15s,box-shadow .15s}
+.nb-float-btn:hover{transform:scale(1.08);box-shadow:0 6px 22px rgba(0,0,0,.5)}.nb-float-btn.nb-open{background:var(--brand);color:#fff}
+#shared-note{position:fixed!important;bottom:128px;right:20px;z-index:960;width:375px;max-height:70vh;display:flex!important;flex-direction:column;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad);box-shadow:0 8px 36px rgba(0,0,0,.55);margin:0!important;padding:0!important;overflow:hidden;transition:opacity .18s,transform .18s}
+#shared-note.nb-hidden{opacity:0!important;pointer-events:none!important;transform:translateY(10px)}
+.nb-float-hdr{display:flex;align-items:center;gap:8px;padding:9px 12px 8px;border-bottom:1px solid var(--border);cursor:move;user-select:none;flex-shrink:0}
+.nb-float-title{font-size:13px;font-weight:700;color:var(--teal);flex:1}
+.nb-float-close{background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;line-height:1;padding:0 2px;flex-shrink:0}.nb-float-close:hover{color:var(--t)}
+.nb-toolbar-wrap{padding:6px 10px;border-bottom:1px solid var(--sf);flex-shrink:0}
+#nb-editor{flex:1;overflow-y:auto;padding:10px 12px 12px;min-height:60px}
+.nb-url-bar{display:none;align-items:center;gap:5px;padding:5px 10px;border-bottom:1px solid var(--sf);flex-shrink:0;background:var(--bg3)}
+.nb-url-in{flex:1;background:var(--bg2);border:1px solid var(--sf);border-radius:var(--rad-s);color:var(--t);font-family:var(--font);font-size:12px;padding:4px 9px;outline:none}.nb-url-in:focus{border-color:var(--teal)}
+.nb-url-label{font-size:10px;color:var(--t3);white-space:nowrap;flex-shrink:0}
+.nb-cp{display:none;flex-wrap:wrap;gap:5px;padding:7px 10px;border-bottom:1px solid var(--sf);align-items:center;flex-shrink:0;background:var(--bg3)}
+.nb-cp-sw{width:18px;height:18px;border-radius:50%;cursor:pointer;border:2px solid rgba(255,255,255,.1);flex-shrink:0;transition:transform .1s,border-color .1s}.nb-cp-sw:hover{transform:scale(1.25);border-color:rgba(255,255,255,.5)}
+.nb-cp-clr{font-size:10px;color:var(--t3);background:none;border:1px solid var(--sf);border-radius:99px;padding:2px 8px;cursor:pointer;font-family:var(--font)}.nb-cp-clr:hover{color:var(--t);border-color:var(--sf2)}
 .game-card{margin-top:12px;background:var(--bg3);border:1px solid var(--sf);border-radius:var(--rad-s);padding:12px}
 .game-head{display:flex;align-items:center;justify-content:space-between;gap:7px;flex-wrap:wrap}
 .game-stat{font-size:11px;color:var(--t3)}
@@ -1832,9 +1848,13 @@ select option{background:var(--bg3)}
 
 
 
+<button class="nb-float-btn nb-open" id="nb-float-btn" onclick="nbToggleFloat()" title="quick note">📝</button>
 <div class="quick-hub" id="shared-note">
-  <div class="qh-header">
-    <div class="qh-title">📝 don't you forget about me</div>
+  <div class="nb-float-hdr" onmousedown="nbPanelDrag(event)">
+    <span class="nb-float-title">📝 don't you forget about me</span>
+    <button class="nb-float-close" onclick="nbToggleFloat()">×</button>
+  </div>
+  <div class="nb-toolbar-wrap">
     <div class="qh-toolbar">
       <button class="qtb" onclick="nbFmt('bold')" title="bold"><b>B</b></button>
       <button class="qtb" onclick="nbFmt('italic')" title="italic"><i>I</i></button>
@@ -1850,11 +1870,20 @@ select option{background:var(--bg3)}
       <button class="qtb" onclick="nbSetType('callout')" title="callout box">💡</button>
       <button class="qtb" onclick="nbAddDivider()" title="divider">—</button>
       <div class="nb-sep"></div>
-      <button class="qtb" onclick="nbInlineLink()" title="link selected text">🔗</button>
-      <button class="qtb" onclick="nbAddBookmark()" title="bookmark card">⊞</button>
+      <button class="qtb" onclick="nbOpenUrlBar('link')" title="link selected text">🔗</button>
+      <button class="qtb" onclick="nbOpenUrlBar('bookmark')" title="bookmark card">⊞</button>
       <div class="nb-sep"></div>
       <button class="qtb" id="qtb-cols" onclick="nbToggleCols()" title="two columns">⊟</button>
+      <div class="nb-sep"></div>
+      <button class="qtb" id="qtb-cp" onclick="nbToggleCp()" title="text colour" style="font-weight:800;text-decoration:underline;text-decoration-color:var(--brand);text-underline-offset:2px">A</button>
     </div>
+  </div>
+  <div class="nb-cp" id="nb-cp"></div>
+  <div class="nb-url-bar" id="nb-url-bar">
+    <span class="nb-url-label" id="nb-url-label">link:</span>
+    <input type="url" id="nb-url-input" class="nb-url-in" placeholder="paste a URL and press Enter" onkeydown="if(event.key==='Enter')nbUrlConfirm();if(event.key==='Escape')nbUrlCancel()">
+    <button class="qtb" onclick="nbUrlConfirm()" title="confirm">↵</button>
+    <button class="qtb" onclick="nbUrlCancel()" title="cancel">×</button>
   </div>
   <div id="nb-editor"></div>
 </div>
@@ -2448,7 +2477,12 @@ function updateNapWall(){const h=parseFloat(document.getElementById('nhr').value
 // ===================== TABS =====================
 let activeTab='timers';let prevTab='timers';
 function noteVisibleTab(t){return t!=='settings'&&t!=='profile'}
-function updateSharedNoteVisibility(){document.getElementById('shared-note').style.display=noteVisibleTab(activeTab)?'block':'none'}
+function updateSharedNoteVisibility(){
+  const btn=document.getElementById('nb-float-btn');
+  const vis=noteVisibleTab(activeTab);
+  if(btn)btn.style.display=vis?'flex':'none';
+  if(!vis){document.getElementById('shared-note')?.classList.add('nb-hidden');if(btn)btn.classList.remove('nb-open');}
+}
 let activeProfileSection="vision";
 function switchProfileSection(s,el){
   activeProfileSection=s;
@@ -3589,8 +3623,8 @@ function nbAddDivider(){
   if(idx>=0)nbBlocks.splice(idx+1,0,nb);else nbBlocks.push(nb);
   nbRender();nbSave();
 }
-function nbAddBookmark(intoId){
-  const url=prompt('paste a URL:');if(!url)return;
+function nbAddBookmark(intoId){nbOpenUrlBar('bookmark',intoId||null);}
+function _nbDoBookmark(url,intoId){
   const safe=/^https?:\/\//i.test(url)?url:'https://'+url;
   let host='';try{host=new URL(safe).hostname;}catch(e){}
   nbCollect();
@@ -3602,11 +3636,7 @@ function nbAddBookmark(intoId){
   nbRender();nbSave();
 }
 function nbFmt(cmd){document.execCommand(cmd,false,null);nbSave();}
-function nbInlineLink(){
-  const url=prompt('paste a URL:');if(!url)return;
-  const safe=/^https?:\/\//i.test(url)?url:'https://'+url;
-  document.execCommand('createLink',false,safe);nbSave();
-}
+function nbInlineLink(){nbOpenUrlBar('link');}
 function nbToggleCols(){
   nbCollect();nbCols=!nbCols;
   if(nbCols){const mid=Math.ceil(nbBlocks.length/2);nbBlocks.forEach((b,i)=>{b.col=i<mid?1:2;});}
@@ -3662,8 +3692,9 @@ function nbSlashRefresh(){
 function nbSlashMove(d){nbSlashIdx=Math.max(0,Math.min(nbSlashList.length-1,nbSlashIdx+d));nbSlashRefresh();}
 function nbSlashApply(){if(nbSlashList[nbSlashIdx])nbSlashApplyType(nbSlashList[nbSlashIdx].type);}
 function nbSlashApplyType(type){
-  if(!nbSlashId)return;nbSlashClose();nbCollect();
-  if(type==='bookmark'){nbAddBookmark(nbSlashId);return;}
+  if(!nbSlashId)return;
+  const sid=nbSlashId;nbSlashClose();nbCollect();
+  if(type==='bookmark'){nbOpenUrlBar('bookmark',sid);return;}
   if(type==='divider'){const b=nbBlocks.find(x=>x.id===nbSlashId);if(b){b.type='divider';b.content='';}nbRender();nbSave();return;}
   const b=nbBlocks.find(x=>x.id===nbSlashId);
   if(b){b.type=type;b.content='';nbRender();nbSave();setTimeout(()=>document.querySelector('.nb-block[data-id="'+b.id+'"] .nb-content')?.focus(),0);}
@@ -3684,6 +3715,67 @@ function nInsertLink2(){
   const safe=/^https?:\/\//i.test(url)?url:'https://'+url;
   document.getElementById('note-profile').focus();document.execCommand('createLink',false,safe);syncNoteFromProfile();
 }
+// ── FLOAT TOGGLE ──
+function nbToggleFloat(){
+  const p=document.getElementById('shared-note'),btn=document.getElementById('nb-float-btn');
+  if(!p||!btn)return;
+  const hidden=p.classList.toggle('nb-hidden');
+  btn.classList.toggle('nb-open',!hidden);
+}
+// ── URL BAR (replaces prompt popups) ──
+let _nbUrlMode=null,_nbUrlData=null;
+function nbOpenUrlBar(mode,data){
+  _nbUrlMode=mode;_nbUrlData=data||null;
+  const lbl=document.getElementById('nb-url-label'),inp=document.getElementById('nb-url-input'),bar=document.getElementById('nb-url-bar');
+  if(lbl)lbl.textContent=mode==='bookmark'?'bookmark:':'link:';
+  if(bar)bar.style.display='flex';
+  if(inp){inp.value='';inp.focus();}
+}
+function nbUrlConfirm(){
+  const url=(document.getElementById('nb-url-input')?.value||'').trim();
+  if(!url){nbUrlCancel();return;}
+  const safe=/^https?:\/\//i.test(url)?url:'https://'+url;
+  if(_nbUrlMode==='link'){document.execCommand('createLink',false,safe);nbSave();}
+  else if(_nbUrlMode==='bookmark'){_nbDoBookmark(safe,_nbUrlData);}
+  nbUrlCancel();
+}
+function nbUrlCancel(){const b=document.getElementById('nb-url-bar');if(b)b.style.display='none';_nbUrlMode=null;_nbUrlData=null;}
+// ── COLOUR PICKER ──
+const NB_COLORS=['#f87171','#fb923c','#fbbf24','#a3e635','#34d399','#38bdf8','#818cf8','#c084fc','#f472b6','#a8a29e'];
+let _nbCpOpen=false;
+function nbInitCp(){
+  const cp=document.getElementById('nb-cp');if(!cp)return;
+  cp.innerHTML=NB_COLORS.map(c=>'<div class="nb-cp-sw" style="background:'+c+'" onclick="nbSetColor(\''+c+'\')" title="'+c+'"></div>').join('')
+    +'<button class="nb-cp-clr" onclick="nbSetColor(null)">✕ remove</button>';
+}
+function nbToggleCp(){
+  _nbCpOpen=!_nbCpOpen;
+  const cp=document.getElementById('nb-cp');if(cp)cp.style.display=_nbCpOpen?'flex':'none';
+  document.getElementById('qtb-cp')?.classList.toggle('qtb-on',_nbCpOpen);
+}
+function nbSetColor(c){
+  if(c)document.execCommand('foreColor',false,c);
+  else document.execCommand('removeFormat',false,null);
+  nbSave();
+}
+// ── PANEL DRAG ──
+let _nbDrag=false,_nbDx=0,_nbDy=0;
+function nbPanelDrag(e){
+  if(e.button!==0)return;
+  const p=document.getElementById('shared-note');if(!p)return;
+  const r=p.getBoundingClientRect();
+  p.style.bottom='auto';p.style.right='auto';
+  p.style.left=r.left+'px';p.style.top=r.top+'px';
+  _nbDx=e.clientX-r.left;_nbDy=e.clientY-r.top;
+  _nbDrag=true;e.preventDefault();
+}
+document.addEventListener('mousemove',function(e){
+  if(!_nbDrag)return;
+  const p=document.getElementById('shared-note');if(!p)return;
+  p.style.left=Math.max(0,Math.min(window.innerWidth-380,e.clientX-_nbDx))+'px';
+  p.style.top=Math.max(0,Math.min(window.innerHeight-100,e.clientY-_nbDy))+'px';
+});
+document.addEventListener('mouseup',function(){_nbDrag=false;});
 function saveQuickHub(){try{localStorage.setItem('fb-links',JSON.stringify(quickChosen));localStorage.setItem('fb-custom-links',JSON.stringify(customLinks));localStorage.setItem('fb-vision',JSON.stringify(visionItems));localStorage.setItem('fb-username',userName||'');localStorage.setItem('fb-needs',JSON.stringify(needs));localStorage.setItem('fb-period',JSON.stringify(periodTracker));localStorage.setItem('fb-builtin-over',JSON.stringify(builtinOverrides));localStorage.setItem('fb-phase-meta',JSON.stringify(phaseMeta));localStorage.setItem('fb-motivations',JSON.stringify(customMotivations));localStorage.setItem('fb-quests',JSON.stringify(quests));localStorage.setItem('fb-habits',JSON.stringify(habits));localStorage.setItem('fb-blocks',JSON.stringify(blocks));localStorage.setItem('fb-templates',JSON.stringify(customTemplates));localStorage.setItem('fb-xp-h',xpHabits);localStorage.setItem('fb-xp-t',xpTasks);localStorage.setItem('fb-cat-order',JSON.stringify(catOrder))}catch(e){showNotif('⚠️ storage full — clear some vision board images or browser data')}}
 function loadQuickHub(){try{quickChosen=JSON.parse(localStorage.getItem('fb-links')||'[]');customLinks=JSON.parse(localStorage.getItem('fb-custom-links')||'[]');visionItems=JSON.parse(localStorage.getItem('fb-vision')||'[]').map((v,i)=>({x:40+(i%4)*175,y:40+Math.floor(i/4)*175,w:180,h:155,z:10+i,...v}));vMaxZ=visionItems.length?Math.max(10,...visionItems.map(v=>v.z||10)):10;userName=localStorage.getItem('fb-username')||'';document.getElementById('uname').value=userName;const n=JSON.parse(localStorage.getItem('fb-needs')||'{}');if(n.water)needs.water={...needs.water,...n.water};if(n.sleep)needs.sleep={...needs.sleep,...n.sleep};if(n.food)needs.food={...needs.food,...n.food};const p=JSON.parse(localStorage.getItem('fb-period')||'{}');periodTracker={...periodTracker,...p};if(periodTracker.name==='blood sacrifice tracker'){periodTracker.name='flow tracker';periodTracker.emoji='🌊';}const pm=JSON.parse(localStorage.getItem('fb-phase-meta')||'{}');phaseMeta={...phaseMeta,...pm};customMotivations=JSON.parse(localStorage.getItem('fb-motivations')||'[]');builtinOverrides=JSON.parse(localStorage.getItem('fb-builtin-over')||'{}');quests=JSON.parse(localStorage.getItem('fb-quests')||'[]');habits=JSON.parse(localStorage.getItem('fb-habits')||'[]');const rawB=localStorage.getItem('fb-blocks');blocks=rawB?JSON.parse(rawB):[];customTemplates=JSON.parse(localStorage.getItem('fb-templates')||'[]');xpHabits=parseInt(localStorage.getItem('fb-xp-h')||'0');xpTasks=parseInt(localStorage.getItem('fb-xp-t')||'0');const _co=JSON.parse(localStorage.getItem('fb-cat-order')||'null');if(_co&&Array.isArray(_co))catOrder=_co;}catch(e){quickChosen=[];customLinks=[];visionItems=[];userName='';customMotivations=[];quests=[];habits=[];blocks=[];customTemplates=[];xpHabits=0;xpTasks=0}}
 
@@ -3900,7 +3992,7 @@ renderNeeds();
 renderMotivations();
 updateGreeting();
 document.getElementById('f-year').textContent=String(new Date().getFullYear());
-updateSharedNoteVisibility();
+updateSharedNoteVisibility();nbInitCp();
 const _t=localStorage.getItem('fb-tab');if(_t){const _b=document.querySelector(`.tbtn[onclick*="'${_t}'"]`);switchTab(_t,_b);}
 const _ss=localStorage.getItem('fb-set-sec');if(_ss){const _sb=document.querySelector(`.set-nav-item[onclick*="'${_ss}'"]`);switchSettingsSection(_ss,_sb);}
 document.getElementById('vup').addEventListener('change',e=>addVisionFiles(e.target.files));
