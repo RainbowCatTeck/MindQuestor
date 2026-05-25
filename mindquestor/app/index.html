@@ -607,10 +607,12 @@ select option{background:var(--bg3)}
 .theme-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .theme-chip{display:flex;flex-direction:column;gap:5px;background:var(--bg3);border:1px solid var(--sf);border-radius:var(--rad-s);padding:8px 10px;flex:1 1 calc(33% - 6px);min-width:88px;cursor:default;transition:border-color .15s,opacity .15s}
 .theme-chip.tc-active{border-color:var(--brand);background:var(--brand-soft)}
-.theme-chip.tc-locked{opacity:.45}
+.theme-chip.tc-locked{opacity:.85}
+.theme-chip.tc-locked .theme-dots,.theme-chip.tc-locked .tc-name,.theme-chip.tc-locked .tc-icons{filter:blur(3.5px);user-select:none;pointer-events:none}
 .theme-dots{display:flex;gap:4px}
 .theme-dots span{width:13px;height:13px;border-radius:50%;flex-shrink:0}
 .tc-name{font-size:11px;color:var(--t2);white-space:nowrap}
+.tc-icons{font-size:11px;letter-spacing:2px;line-height:1;margin:1px 0}
 .tc-tag{font-size:10px;color:var(--t3)}.theme-chip.tc-active .tc-tag{color:var(--brand)}
 .lorder-item.dragging{opacity:.35;background:var(--bg2)}
 .lorder-item.drag-over{outline:2px dashed var(--brand);background:var(--brand-soft)}
@@ -1627,27 +1629,48 @@ select option{background:var(--bg3)}
           <div class="theme-grid">
             <div class="theme-chip tc-active" title="current theme">
               <div class="theme-dots"><span style="background:#c084fc"></span><span style="background:#818cf8"></span><span style="background:#0f0c1a"></span></div>
+              <div class="tc-icons">🌙✨🌸</div>
               <div style="display:flex;align-items:center;justify-content:space-between"><span class="tc-name">midnight bloom</span><span class="tc-tag">current</span></div>
             </div>
             <div class="theme-chip tc-locked" title="coming soon">
               <div class="theme-dots"><span style="background:#34d399"></span><span style="background:#059669"></span><span style="background:#0d1f0d"></span></div>
+              <div class="tc-icons">🌿🍃🌲</div>
               <div style="display:flex;align-items:center;justify-content:space-between"><span class="tc-name">forest floor</span><span style="font-size:11px">🔒</span></div>
             </div>
             <div class="theme-chip tc-locked" title="coming soon">
               <div class="theme-dots"><span style="background:#f472b6"></span><span style="background:#e879f9"></span><span style="background:#1a0a1a"></span></div>
+              <div class="tc-icons">🌸🌷🌺</div>
               <div style="display:flex;align-items:center;justify-content:space-between"><span class="tc-name">sakura</span><span style="font-size:11px">🔒</span></div>
             </div>
             <div class="theme-chip tc-locked" title="coming soon">
               <div class="theme-dots"><span style="background:#fb923c"></span><span style="background:#fbbf24"></span><span style="background:#1a0f00"></span></div>
+              <div class="tc-icons">🔥🍂🍁</div>
               <div style="display:flex;align-items:center;justify-content:space-between"><span class="tc-name">ember season</span><span style="font-size:11px">🔒</span></div>
             </div>
             <div class="theme-chip tc-locked" title="coming soon">
               <div class="theme-dots"><span style="background:#38bdf8"></span><span style="background:#818cf8"></span><span style="background:#050714"></span></div>
+              <div class="tc-icons">🌊🐚🫧</div>
               <div style="display:flex;align-items:center;justify-content:space-between"><span class="tc-name">deep tide</span><span style="font-size:11px">🔒</span></div>
             </div>
             <div class="theme-chip tc-locked" title="coming soon">
               <div class="theme-dots"><span style="background:#d4a574"></span><span style="background:#b5896b"></span><span style="background:#1a1208"></span></div>
+              <div class="tc-icons">🌅☀️🍯</div>
               <div style="display:flex;align-items:center;justify-content:space-between"><span class="tc-name">golden hour</span><span style="font-size:11px">🔒</span></div>
+            </div>
+            <div class="theme-chip tc-locked" title="coming soon">
+              <div class="theme-dots"><span style="background:#e8e8e8"></span><span style="background:#c0392b"></span><span style="background:#080508"></span></div>
+              <div class="tc-icons">🎸🖤⚡</div>
+              <div style="display:flex;align-items:center;justify-content:space-between"><span class="tc-name">visual kei</span><span style="font-size:11px">🔒</span></div>
+            </div>
+            <div class="theme-chip tc-locked" title="coming soon">
+              <div class="theme-dots"><span style="background:#ffd60a"></span><span style="background:#ff6b35"></span><span style="background:#0d1b2a"></span></div>
+              <div class="tc-icons">⚡🌀🎯</div>
+              <div style="display:flex;align-items:center;justify-content:space-between"><span class="tc-name">adhd mode</span><span style="font-size:11px">🔒</span></div>
+            </div>
+            <div class="theme-chip tc-locked" title="coming soon">
+              <div class="theme-dots"><span style="background:#9f7aea"></span><span style="background:#718096"></span><span style="background:#0d0d1a"></span></div>
+              <div class="tc-icons">🎵☕🌙</div>
+              <div style="display:flex;align-items:center;justify-content:space-between"><span class="tc-name">lofi night</span><span style="font-size:11px">🔒</span></div>
             </div>
           </div>
         </div>
