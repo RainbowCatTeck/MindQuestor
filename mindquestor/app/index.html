@@ -2828,7 +2828,7 @@ function changeNeed(k,d){const n=needs[k];n.count=Math.max(0,Math.min(n.goal,n.c
 function renderNeedDots(elId,count,goal){const el=document.getElementById(elId);if(!el)return;el.innerHTML='';for(let i=0;i<goal;i++){const d=document.createElement('div');d.className='need-dot'+(i<count?' on':'');el.appendChild(d)}}
 function periodPhaseKey(day){if(day<=5)return'p1';if(day<=13)return'p2';if(day<=16)return'p3';return'p4'}
 function shiftPeriodDay(d){periodTracker.day=Math.max(1,Math.min(periodTracker.cycle,periodTracker.day+d));renderNeeds();saveQuickHub()}
-function switchSettingsSection(id,el){document.querySelectorAll('.set-section').forEach(s=>s.classList.remove('sn-active'));document.querySelectorAll('.set-nav-item').forEach(b=>b.classList.remove('sn-active'));const sec=document.getElementById('set-sec-'+id);if(sec)sec.classList.add('sn-active');if(el)el.classList.add('sn-active');if(id==='links')renderCatOrder();}
+function switchSettingsSection(id,el){document.querySelectorAll('.set-section').forEach(s=>s.classList.remove('sn-active'));document.querySelectorAll('.set-nav-item').forEach(b=>b.classList.remove('sn-active'));const sec=document.getElementById('set-sec-'+id);if(sec)sec.classList.add('sn-active');if(el)el.classList.add('sn-active');if(id==='links')renderCatOrder();localStorage.setItem('fb-set-sec',id);}
 
 // ── APPEARANCE (theme + gentle mode) ─────────────────────────────────────────
 let isDarkMode=true,isGentleMode=false,isStatsVisible=true;
@@ -3615,6 +3615,7 @@ updateGreeting();
 document.getElementById('f-year').textContent=String(new Date().getFullYear());
 updateSharedNoteVisibility();
 const _t=localStorage.getItem('fb-tab');if(_t){const _b=document.querySelector(`.tbtn[onclick*="'${_t}'"]`);switchTab(_t,_b);}
+const _ss=localStorage.getItem('fb-set-sec');if(_ss){const _sb=document.querySelector(`.set-nav-item[onclick*="'${_ss}'"]`);switchSettingsSection(_ss,_sb);}
 document.getElementById('vup').addEventListener('change',e=>addVisionFiles(e.target.files));
 document.getElementById('v-drop').addEventListener('dragover',e=>{e.preventDefault();e.currentTarget.style.borderColor='var(--teal)'});
 document.getElementById('v-drop').addEventListener('dragleave',e=>{e.currentTarget.style.borderColor='var(--sf2)'});
