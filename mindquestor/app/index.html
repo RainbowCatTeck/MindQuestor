@@ -606,6 +606,11 @@ select option{background:var(--bg3)}
 .lorder-drag:active{cursor:grabbing}
 .lorder-item.dragging{opacity:.35;background:var(--bg2)}
 .lorder-item.drag-over{outline:2px dashed var(--brand);background:var(--brand-soft)}
+.cat-preview{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px 10px;background:var(--bg2);border:1px solid var(--sf);border-radius:var(--rad-s);min-height:38px;margin-bottom:8px}
+.cat-order-wrap{display:flex;flex-wrap:wrap;gap:6px}
+.cat-chip{display:inline-flex;align-items:center;gap:5px;background:var(--bg3);border:1px solid var(--sf);border-radius:99px;padding:5px 11px;font-size:11px;color:var(--t2);cursor:grab;user-select:none;transition:border-color .15s,background .15s}
+.cat-chip:hover{border-color:var(--sf2);background:var(--sf)}.cat-chip:active{cursor:grabbing}
+.cat-chip.dragging{opacity:.35}.cat-chip.drag-over{outline:2px dashed var(--brand);background:var(--brand-soft)}
 .hitem.dragging{opacity:.35;background:var(--bg2)!important}
 .hitem.drag-over{outline:2px dashed var(--brand);background:var(--brand-soft)!important}
 .hright{display:flex;align-items:center;gap:6px;flex-shrink:0}
@@ -2823,7 +2828,7 @@ function changeNeed(k,d){const n=needs[k];n.count=Math.max(0,Math.min(n.goal,n.c
 function renderNeedDots(elId,count,goal){const el=document.getElementById(elId);if(!el)return;el.innerHTML='';for(let i=0;i<goal;i++){const d=document.createElement('div');d.className='need-dot'+(i<count?' on':'');el.appendChild(d)}}
 function periodPhaseKey(day){if(day<=5)return'p1';if(day<=13)return'p2';if(day<=16)return'p3';return'p4'}
 function shiftPeriodDay(d){periodTracker.day=Math.max(1,Math.min(periodTracker.cycle,periodTracker.day+d));renderNeeds();saveQuickHub()}
-function switchSettingsSection(id,el){document.querySelectorAll('.set-section').forEach(s=>s.classList.remove('sn-active'));document.querySelectorAll('.set-nav-item').forEach(b=>b.classList.remove('sn-active'));const sec=document.getElementById('set-sec-'+id);if(sec)sec.classList.add('sn-active');if(el)el.classList.add('sn-active');}
+function switchSettingsSection(id,el){document.querySelectorAll('.set-section').forEach(s=>s.classList.remove('sn-active'));document.querySelectorAll('.set-nav-item').forEach(b=>b.classList.remove('sn-active'));const sec=document.getElementById('set-sec-'+id);if(sec)sec.classList.add('sn-active');if(el)el.classList.add('sn-active');if(id==='links')renderCatOrder();}
 
 // ── APPEARANCE (theme + gentle mode) ─────────────────────────────────────────
 let isDarkMode=true,isGentleMode=false,isStatsVisible=true;
@@ -3059,13 +3064,19 @@ function groupLinksByCategory(){
 }
 function renderCatOrder(){
   const el=document.getElementById('cat-order-list');if(!el)return;
-  el.innerHTML=catOrder.map((c,i)=>`<div class="lorder-item" draggable="true" ondragstart="catDragStart(event,${i})" ondragover="catDragOver(event,${i})" ondrop="catDrop(event,${i})" ondragend="catDragEnd()"><span class="lorder-drag" title="drag to reorder">⠿</span><div class="lorder-moves"><button class="lorder-move" onclick="moveCat(${i},-1)" ${i===0?'disabled':''}>▲</button><button class="lorder-move" onclick="moveCat(${i},1)" ${i===catOrder.length-1?'disabled':''}>▼</button></div><span>${CAT_EMOJI[c]||'🔗'} ${c}</span></div>`).join('');
+  const allCats=[...catOrder,...['email','calendar','music','notes','ai','passwords','inspo','other'].filter(c=>!catOrder.includes(c))];
+  const grouped=[];for(const cat of allCats)grouped.push(...quickChosen.filter(x=>(x.cat||'other')===cat));
+  const previewHtml=grouped.length
+    ?grouped.map(x=>`<span class="head-chip ${x.cat||'other'}" style="pointer-events:none;cursor:default"><span class="chip-emo">${x.emoji||'🔗'}</span>${esc(x.name)}</span>`).join('')
+    :'<span style="font-size:11px;color:var(--t3)">choose links above to see a preview</span>';
+  const chipsHtml=catOrder.map((c,i)=>`<div class="cat-chip" draggable="true" ondragstart="catDragStart(event,${i})" ondragover="catDragOver(event,${i})" ondrop="catDrop(event,${i})" ondragend="catDragEnd()">${CAT_EMOJI[c]||'🔗'} ${c}</div>`).join('');
+  el.innerHTML=`<div class="cat-preview">${previewHtml}</div><div class="cat-order-wrap">${chipsHtml}</div>`;
 }
 function moveCat(i,dir){const j=i+dir;if(j<0||j>=catOrder.length)return;[catOrder[i],catOrder[j]]=[catOrder[j],catOrder[i]];renderCatOrder();saveQuickHub();}
-function catDragStart(e,i){catDragIdx=i;setTimeout(()=>{const el=e.target.closest('.lorder-item');if(el)el.classList.add('dragging');},0);}
-function catDragOver(e,i){e.preventDefault();const items=document.querySelectorAll('#cat-order-list .lorder-item');items.forEach((el,idx)=>el.classList.toggle('drag-over',idx===i&&i!==catDragIdx));}
+function catDragStart(e,i){catDragIdx=i;setTimeout(()=>{const el=e.target.closest('.cat-chip');if(el)el.classList.add('dragging');},0);}
+function catDragOver(e,i){e.preventDefault();const items=document.querySelectorAll('#cat-order-list .cat-chip');items.forEach((el,idx)=>el.classList.toggle('drag-over',idx===i&&i!==catDragIdx));}
 function catDrop(e,toIdx){e.preventDefault();if(catDragIdx===null||catDragIdx===toIdx){catDragIdx=null;return;}const from=catDragIdx;const item=catOrder.splice(from,1)[0];catOrder.splice(from<toIdx?toIdx-1:toIdx,0,item);renderCatOrder();saveQuickHub();catDragIdx=null;}
-function catDragEnd(){catDragIdx=null;document.querySelectorAll('#cat-order-list .lorder-item').forEach(el=>el.classList.remove('dragging','drag-over'));}
+function catDragEnd(){catDragIdx=null;document.querySelectorAll('#cat-order-list .cat-chip').forEach(el=>el.classList.remove('dragging','drag-over'));}
 function inferNameFromUrl(u){try{return new URL(u).hostname.replace('www.','')}catch(e){return u}}
 function addCustomQuickLink(){const n=document.getElementById('cname').value.trim();let u=document.getElementById('curl').value.trim();if(!u)return;if(!/^https?:\/\//i.test(u))u='https://'+u;if(allQuickLinks().some(x=>x.url===u))return;const cat=document.getElementById('ccat').value||'other';const emo=document.getElementById('cemo').value.trim();const finalName=n||inferNameFromUrl(u);customLinks.push({name:finalName,url:u,cat:cat,emoji:emo,icon:''});quickChosen.push({id:Date.now()+Math.random(),name:finalName,url:u,cat:cat,emoji:emo,icon:''});document.getElementById('cname').value='';document.getElementById('curl').value='';document.getElementById('cemo').value='';saveQuickHub();renderSettingsLinks();renderLinkOrder();renderQuickLinksHeader();showNotif('🔗 link added to header!');}
 // ── EMOTION WHEEL ────────────────────────────────────────────────────────────
