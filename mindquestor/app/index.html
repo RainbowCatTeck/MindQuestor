@@ -4153,6 +4153,13 @@ setInterval(updateDay,60000);
 bstEnabled=!!periodTracker.enabled;renderBSTState();
 setHeaderOffset();
 window.addEventListener('resize',setHeaderOffset);
+// re-measure after fonts/images settle (covers file:// and slow font-swap scenarios)
+window.addEventListener('load',setHeaderOffset);
+if(window.ResizeObserver){
+  const _ro=new ResizeObserver(setHeaderOffset);
+  const _hf=document.getElementById('hdr-float');
+  if(_hf)_ro.observe(_hf);
+}
 if(!localStorage.getItem('mq-toured'))setTimeout(showTour,600);
 
 // ===================== EXPORT / IMPORT =====================
