@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ══ PRIMARY SEO ══ -->
-<title>MoonBloom — Soft Tools for Neurospicy Brains</title>
-<meta name="description" content="A soft studio for neurodivergent minds. Free tools built slowly, without burning out — MindQuestor, Drift, Ritual, Scout. Built by someone autistic, ADHD, and disabled.">
+<title>MoonBloom — A Soft Studio for Neurospicy Brains</title>
+<meta name="description" content="A soft studio for neurodivergent minds. Free tools built slowly, without burning out. Built by someone autistic, ADHD, and disabled.">
 <meta name="keywords" content="tools for neurodivergent people, adhd friendly apps, neurodivergent apps free, soft productivity tools, adhd tools free, autism friendly apps, neurospicy tools">
 <meta name="theme-color" content="#070814">
 <meta name="robots" content="index, follow">
@@ -13,13 +13,17 @@
 <!-- ══ OPEN GRAPH ══ -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://moonbloom.netlify.app">
-<meta property="og:title" content="MoonBloom — Soft Tools for Neurospicy Brains">
-<meta property="og:description" content="Free tools built slowly for minds that bloom at midnight. MindQuestor, Drift, Ritual, Scout — made by someone autistic, ADHD, and disabled.">
+<meta property="og:title" content="MoonBloom — A Soft Studio for Neurospicy Brains">
+<meta property="og:description" content="Free tools built slowly for minds that bloom at night. Made by someone autistic, ADHD, and disabled.">
 <meta property="og:site_name" content="MoonBloom">
+<meta property="og:image" content="https://moonbloom.netlify.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <!-- ══ TWITTER/X CARD ══ -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MoonBloom — Soft Tools for Neurospicy Brains">
+<meta name="twitter:title" content="MoonBloom — A Soft Studio for Neurospicy Brains">
 <meta name="twitter:description" content="Free tools for neurodivergent minds. Built slowly, without burning out.">
+<meta name="twitter:image" content="https://moonbloom.netlify.app/og-image.png">
 <!-- ══ STRUCTURED DATA ══ -->
 <script type="application/ld+json">
 {
@@ -129,7 +133,8 @@ section{position:relative;z-index:1}
 .prod-badge{font-size:10px;padding:3px 10px;border-radius:99px;font-weight:700}
 .badge-live{background:rgba(140,200,180,0.15);color:var(--sn);border:1px solid rgba(140,200,180,0.25)}
 .badge-soon{background:rgba(184,168,240,0.12);color:var(--brand);border:1px solid rgba(184,168,240,0.22)}
-.prod-name{font-size:18px;font-weight:700;letter-spacing:-0.3px}
+.prod-name{font-size:18px;font-weight:700;letter-spacing:-0.3px;display:block;text-decoration:none}
+a.prod-name:hover{text-decoration:underline;text-underline-offset:3px;opacity:.85}
 .prod-tag{font-size:11px;color:var(--tf)}
 .prod-desc{font-size:12px;color:var(--td);line-height:1.65;flex:1}
 .prod-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;margin-top:4px;transition:gap .2s}
@@ -207,8 +212,7 @@ footer{border-top:1px solid var(--b);padding:36px 0}
       <span class="nav-name">moonbloom</span>
     </div>
     <div class="nav-links">
-      <a class="nav-link" href="#tools">tools</a>
-      <a class="nav-link" href="#podcast">podcast</a>
+      <a class="nav-link" href="#our-work">our work</a>
       <a class="nav-link" href="#about">about</a>
       <a class="nav-cta" href="https://mindquestor.netlify.app" target="_blank">open mindquestor →</a>
     </div>
@@ -217,8 +221,7 @@ footer{border-top:1px solid var(--b);padding:36px 0}
 </nav>
 
 <div class="mob-menu" id="mobMenu">
-  <a class="mob-link" href="#tools" onclick="closeMob()">tools</a>
-  <a class="mob-link" href="#podcast" onclick="closeMob()">podcast</a>
+  <a class="mob-link" href="#our-work" onclick="closeMob()">our work</a>
   <a class="mob-link" href="#about" onclick="closeMob()">about</a>
   <a class="mob-link" href="https://mindquestor.netlify.app" target="_blank" onclick="closeMob()" style="color:var(--brand)">mindquestor ↗</a>
 </div>
@@ -245,14 +248,14 @@ footer{border-top:1px solid var(--b);padding:36px 0}
     <div class="hero-pills">
       <span class="hero-pill">✦ free to use</span>
       <span class="hero-pill">✦ neurospicy-first</span>
-      <span class="hero-pill">✦ no dark patterns</span>
+      <span class="hero-pill">✦ quiet by design</span>
       <span class="hero-pill">✦ built at our own pace</span>
     </div>
   </div>
 </section>
 
 <!-- PRODUCTS -->
-<section class="section" id="tools">
+<section class="section" id="our-work">
   <div class="container">
     <p class="section-eyebrow">what we build</p>
     <h2 class="section-h reveal">soft tools for <em>real brains</em></h2>
@@ -267,62 +270,22 @@ footer{border-top:1px solid var(--b);padding:36px 0}
           <span class="prod-icon">🧠</span>
           <span class="prod-badge badge-live">Live Now</span>
         </div>
-        <div class="prod-name" style="color:var(--mq)">MindQuestor</div>
+        <a href="https://mindquestor.netlify.app" target="_blank" class="prod-name" style="color:var(--mq)">MindQuestor</a>
         <div class="prod-tag">turn your day into a quest</div>
         <div class="prod-desc">An ADHD-friendly productivity app. Quests instead of tasks, a dopamine menu for when you can't decide, a nap-first scheduler, habit streaks, vision board, and a personal shelf. Free to get started — no account needed.</div>
         <a class="prod-link" href="https://mindquestor.netlify.app" target="_blank" style="color:var(--mq)">open the app →</a>
       </div>
 
-      <!-- Drift -->
-      <div class="prod-card reveal reveal-delay-1" style="border-color:rgba(196,160,200,0.3)">
-        <div class="prod-bar" style="background:var(--dr)"></div>
+      <!-- More coming -->
+      <div class="prod-card reveal reveal-delay-1" style="border-color:rgba(184,168,240,0.18);background:rgba(184,168,240,0.04)">
+        <div class="prod-bar" style="background:var(--brand);opacity:.4"></div>
         <div class="prod-top">
-          <span class="prod-icon">🌙</span>
-          <span class="prod-badge badge-soon">Coming Soon</span>
+          <span class="prod-icon">✨</span>
+          <span class="prod-badge badge-soon">Brewing</span>
         </div>
-        <div class="prod-name" style="color:var(--dr)">Drift</div>
-        <div class="prod-tag">sleep content for your actual brain</div>
-        <div class="prod-desc">A sleep podcast built for ADHD and autistic listeners. Slow, safe, familiar enough to feel like a comfort rerun — but unpredictable enough that you can't stay awake waiting for the good part.</div>
-        <span class="prod-link" style="color:var(--td)">🔔 notify me →</span>
-      </div>
-
-      <!-- Ritual -->
-      <div class="prod-card reveal reveal-delay-2" style="border-color:rgba(232,184,192,0.3)">
-        <div class="prod-bar" style="background:var(--ri)"></div>
-        <div class="prod-top">
-          <span class="prod-icon">🪷</span>
-          <span class="prod-badge badge-soon">Coming Soon</span>
-        </div>
-        <div class="prod-name" style="color:var(--ri)">Ritual</div>
-        <div class="prod-tag">track without the streak pressure</div>
-        <div class="prod-desc">A shame-free skincare routine tracker. No broken streak screens. No guilt trips. A low-spoon mode built in from day one. Tracks product levels so you know before you run out.</div>
-        <span class="prod-link" style="color:var(--td)">🔔 notify me →</span>
-      </div>
-
-      <!-- Scout -->
-      <div class="prod-card reveal reveal-delay-3" style="border-color:rgba(136,180,212,0.3)">
-        <div class="prod-bar" style="background:var(--sc)"></div>
-        <div class="prod-top">
-          <span class="prod-icon">🔍</span>
-          <span class="prod-badge badge-soon">Coming Soon</span>
-        </div>
-        <div class="prod-name" style="color:var(--sc)">Scout</div>
-        <div class="prod-tag">never miss a K-beauty drop</div>
-        <div class="prod-desc">Price history and restock alerts for EU K-beauty shops. A browser extension that sits quietly on ksisters.hu and similar stores, shows price history at a glance, and pings you when something comes back.</div>
-        <span class="prod-link" style="color:var(--td)">🔔 notify me →</span>
-      </div>
-
-      <!-- Journal -->
-      <div class="prod-card reveal" style="border-color:rgba(212,192,132,0.3)">
-        <div class="prod-bar" style="background:var(--jo)"></div>
-        <div class="prod-top">
-          <span class="prod-icon">✦</span>
-          <span class="prod-badge badge-soon">Coming Soon</span>
-        </div>
-        <div class="prod-name" style="color:var(--jo)">Journal</div>
-        <div class="prod-tag">honest words from an honest brain</div>
-        <div class="prod-desc">Product reviews and observations from a neurospicy perspective. K-beauty, wellness tools, slow living — written with the sensory specificity and genuine tangents that only come from someone who actually lives with this stuff.</div>
-        <span class="prod-link" style="color:var(--td)">coming soon →</span>
+        <div class="prod-name" style="color:var(--brand)">more tools on the way</div>
+        <div class="prod-tag">built slowly, built with care</div>
+        <div class="prod-desc">More soft tools are in the works — no timelines, no promises. We build when we have the capacity, and we only ship things we'd actually want to use ourselves. Check back when you feel like it.</div>
       </div>
 
     </div>
@@ -334,12 +297,11 @@ footer{border-top:1px solid var(--b);padding:36px 0}
   <div class="container">
     <div class="podcast-card reveal">
       <div style="position:relative;z-index:1">
-        <p class="podcast-eyebrow">Drift · Sleep Podcast</p>
-        <h2 class="podcast-title">sleep content that<br>actually works<br>for <em>your brain</em></h2>
-        <p class="podcast-desc">Most sleep podcasts are too structured for ADHD, too repetitive for autistic listeners. Drift is built for the gap — slow, familiar, and just unpredictable enough that you drift off before the good part.</p>
-        <button class="podcast-btn">🔔 notify me when it launches</button>
+        <p class="podcast-eyebrow">moonbloom · what's next</p>
+        <h2 class="podcast-title">something quiet<br>is taking<br><em>its time</em></h2>
+        <p class="podcast-desc">We're working on things slowly and without pressure — the way we think tools should be built. No hype, no roadmap theatre. When something's ready, it'll be here.</p>
       </div>
-      <div class="podcast-visual">🌙</div>
+      <div class="podcast-visual">🌸</div>
     </div>
   </div>
 </section>
@@ -398,10 +360,10 @@ footer{border-top:1px solid var(--b);padding:36px 0}
         <circle cx="50" cy="50" r="8" fill="#070814"/>
         <circle cx="50" cy="50" r="5" fill="#d4c084" opacity="0.97"/>
       </svg>
-      <h2 class="support-title">everything here<br>is <em>free to use</em></h2>
-      <p class="support-desc">All Moonbloom tools are free to get started, with optional paid cosmetics — themes, sticker packs, customisation — that add without taking away. If something helps, supporting us on Ko-fi keeps us going and lets us keep building.</p>
+      <h2 class="support-title">always free,<br><em>no strings</em></h2>
+      <p class="support-desc">Everything moonbloom makes is free to use — no paywalls, no accounts, no catch. If something helps and you want to say thanks, ko-fi is the place. It genuinely keeps us going.</p>
       <a href="https://ko-fi.com/rainbowcatteck" target="_blank" class="kofi-btn">☕ support us on Ko-fi</a>
-      <p class="support-note">no pressure · pay what you can · everything stays free</p>
+      <p class="support-note">no pressure · only if it feels right</p>
     </div>
   </div>
 </section>
@@ -466,6 +428,7 @@ footer{border-top:1px solid var(--b);padding:36px 0}
     </div>
     <p class="footer-tagline">for minds that bloom at night ✦</p>
     <div class="footer-links">
+      <a href="https://mindquestor.netlify.app" target="_blank" class="footer-link">mindquestor</a>
       <a href="#" onclick="openLegal();return false" class="footer-link">legal</a>
       <a href="https://ko-fi.com/rainbowcatteck" target="_blank" class="footer-link">support us on ko-fi</a>
     </div>
