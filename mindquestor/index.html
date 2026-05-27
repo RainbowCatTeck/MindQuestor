@@ -411,17 +411,17 @@ footer{
 .scroll-top:hover{transform:translateY(-3px)}
 
 /* ── PROD GRID (ecosystem) ── */
-.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
-.prod-card{background:var(--sf);border:1px solid var(--sf2);border-radius:var(--rad);padding:22px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;transition:transform .2s,border-color .2s}
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.prod-card{background:var(--sf);border:1px solid var(--sf2);border-radius:var(--rad);padding:26px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;transition:transform .2s,border-color .2s}
 .prod-card:hover{transform:translateY(-4px)}
-.prod-bar{position:absolute;top:0;left:0;right:0;height:3px}
+.prod-bar{position:absolute;top:0;left:0;right:0;height:2px}
 .prod-top{display:flex;align-items:center;justify-content:space-between}
 .prod-icon{font-size:26px}
-.prod-badge{font-size:10px;padding:3px 10px;border-radius:99px;font-weight:700;letter-spacing:.4px}
+.prod-badge{font-size:10px;padding:3px 10px;border-radius:99px;font-weight:700}
 .badge-live{background:rgba(52,211,153,0.12);color:var(--g);border:1px solid rgba(52,211,153,0.25)}
 .badge-soon{background:rgba(129,140,248,0.12);color:var(--b);border:1px solid rgba(129,140,248,0.22)}
-.prod-name{font-size:16px;font-weight:700;letter-spacing:-0.3px;display:block}
-a.prod-name{text-decoration:none}a.prod-name:hover{opacity:.8}
+.prod-name{font-size:18px;font-weight:700;letter-spacing:-0.3px;display:block}
+a.prod-name{text-decoration:none}a.prod-name:hover{text-decoration:underline;text-underline-offset:3px;opacity:.85}
 .prod-tag{font-size:11px;color:var(--t3)}
 .prod-desc{font-size:12px;color:var(--t2);line-height:1.65;flex:1}
 .prod-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;margin-top:4px;text-decoration:none;transition:gap .2s}
@@ -455,7 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <!-- ══ NAV ══ -->
 <nav aria-label="main navigation">
   <div class="container nav-inner">
-    <a href="#" class="nav-logo" aria-label="mindquestor home"><span class="logo-word">mind<span>questor</span></span></a>
+    <a href="#" class="nav-logo" aria-label="mindquestor home">mind<span>questor</span></a>
     <div class="nav-links">
       <a class="nav-link" href="#features">features</a>
       <a class="nav-link" href="#why">why it works</a>
@@ -687,9 +687,9 @@ document.addEventListener('DOMContentLoaded', () => {
 <section class="section" id="ecosystem" style="background:var(--bg2);padding:70px 0">
   <div class="container">
     <div class="section-tag" style="text-align:center">part of a bigger world</div>
-    <h2 class="section-h2 reveal" style="text-align:center;margin-bottom:10px">the <em>moonbloom</em> family</h2>
-    <p style="text-align:center;color:var(--t2);font-size:15px;margin-bottom:42px;max-width:540px;margin-left:auto;margin-right:auto">
-      soft tools, slow stories, and gentle spaces — all built for minds that work differently
+    <h2 class="section-h2 reveal" style="text-align:center;letter-spacing:-0.5px;margin-bottom:12px">soft tools for <em>real brains</em></h2>
+    <p class="section-sub reveal" style="text-align:center;margin-left:auto;margin-right:auto">
+      each one built slowly, because we needed it — for minds that work differently
     </p>
     <div class="prod-grid">
 
