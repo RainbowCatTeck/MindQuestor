@@ -918,6 +918,22 @@ select option{background:var(--bg3)}
 .pn-ver{font-size:12px;font-weight:700;color:var(--brand)}
 .pn-date{font-size:10px;color:var(--t3);margin-left:6px}
 .pn-item{font-size:11px;color:var(--t2);margin-top:4px;line-height:1.6}
+/* roadmap modal */
+.rm-disclaimer{font-size:11px;color:var(--t3);line-height:1.7;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rad-s);padding:9px 12px;margin-bottom:16px}
+.rm-tier{margin-bottom:18px}.rm-tier:last-child{margin-bottom:0}
+.rm-tier-hdr{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--border)}
+.rm-tier-icon{font-size:16px;line-height:1}
+.rm-tier-name{font-size:13px;font-weight:700;color:var(--t)}
+.rm-tier-tag{font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:2px 7px;border-radius:99px;margin-left:auto}
+.rm-tag-active{background:rgba(192,132,252,.15);color:var(--brand);border:1px solid rgba(192,132,252,.3)}
+.rm-tag-queued{background:rgba(99,102,241,.15);color:var(--indigo);border:1px solid rgba(99,102,241,.3)}
+.rm-tag-dream{background:rgba(52,211,153,.1);color:var(--teal);border:1px solid rgba(52,211,153,.2)}
+.rm-item{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid var(--sf)}
+.rm-item:last-child{border-bottom:none}
+.rm-item-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.rm-dot-active{background:var(--brand)}.rm-dot-queued{background:var(--indigo)}.rm-dot-dream{background:var(--teal);opacity:.6}
+.rm-item-text{font-size:11px;color:var(--t2);line-height:1.5;flex:1}
+.rm-item-why{font-size:10px;color:var(--t3);margin-top:2px;line-height:1.4}
 .scroll-top{position:fixed;bottom:24px;right:20px;z-index:900;width:38px;height:38px;border-radius:50%;background:var(--brand-soft);border:1px solid var(--brand);color:var(--brand);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 2px 12px rgba(0,0,0,.35)}
 .scroll-top.visible{opacity:1;pointer-events:auto}
 .scroll-top:hover{transform:translateY(-3px)}
@@ -928,6 +944,7 @@ select option{background:var(--bg3)}
 .footer-dot{width:6px;height:6px;border-radius:50%;background:var(--brand)}
 .footer-links{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
 .footer-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end;min-width:0}
+.fl-roadmap{color:var(--brand)}
 .fl-news{color:var(--teal)}
 .fl-patch{color:var(--indigo)}
 .fl-faq{color:var(--amber)}
@@ -1949,6 +1966,7 @@ select option{background:var(--bg3)}
       <a class="fl-news" href="https://moonbloom.netlify.app" target="_blank">🌸 moonbloom</a>
       <a class="fl-news" href="#" onclick="openModal('modal-news');return false">📢 news</a>
       <a class="fl-patch" href="#" onclick="openModal('modal-patchnotes');return false">📋 patch notes</a>
+      <a class="fl-roadmap" href="#" onclick="openModal('modal-roadmap');return false">🗺️ roadmap</a>
       <a class="fl-faq" href="#" onclick="openModal('modal-faq');return false">❓ faq</a>
       <a class="fl-feedback" href="#" onclick="openModal('modal-feedback');return false">💬 feedback</a>
       <a class="fl-legal" href="#" onclick="openModal('modal-legal');return false">⚖️ legal</a>
@@ -1960,6 +1978,50 @@ select option{background:var(--bg3)}
   </div>
 </div>
 
+<div class="modal-overlay" id="modal-roadmap" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-title">🗺️ roadmap</div>
+    <div class="rm-disclaimer">this is a living wishlist, not a contract. things shift, priorities change, and that's okay 💜 nothing here is a promise — everything here is a possibility.</div>
+
+    <div class="rm-tier">
+      <div class="rm-tier-hdr">
+        <span class="rm-tier-icon">⚔️</span>
+        <span class="rm-tier-name">active quests</span>
+        <span class="rm-tier-tag rm-tag-active">in progress</span>
+      </div>
+      <div class="rm-item"><div class="rm-item-dot rm-dot-active"></div><div><div class="rm-item-text">🎨 more themes — visual kei, lofi night, adhd mode and more coming</div><div class="rm-item-why">personalisation matters. your space should feel like yours.</div></div></div>
+      <div class="rm-item"><div class="rm-item-dot rm-dot-active"></div><div><div class="rm-item-text">📝 better notes — notion-like block editor, slash commands, bookmarks</div><div class="rm-item-why">your notes deserve more than a plain textarea.</div></div></div>
+      <div class="rm-item"><div class="rm-item-dot rm-dot-active"></div><div><div class="rm-item-text">♿ accessibility polish — reduced motion, better keyboard nav, screen reader improvements</div><div class="rm-item-why">built for neurodivergent brains means accessibility is never optional.</div></div></div>
+    </div>
+
+    <div class="rm-tier">
+      <div class="rm-tier-hdr">
+        <span class="rm-tier-icon">📋</span>
+        <span class="rm-tier-name">queued quests</span>
+        <span class="rm-tier-tag rm-tag-queued">planned</span>
+      </div>
+      <div class="rm-item"><div class="rm-item-dot rm-dot-queued"></div><div><div class="rm-item-text">🌀 axie expressions — happy, sleepy, worried, dancing based on your session</div><div class="rm-item-why">emotional connection to your progress matters.</div></div></div>
+      <div class="rm-item"><div class="rm-item-dot rm-dot-queued"></div><div><div class="rm-item-text">🎮 multiple axie skins & colours</div><div class="rm-item-why">axie should be as unique as you are.</div></div></div>
+      <div class="rm-item"><div class="rm-item-dot rm-dot-queued"></div><div><div class="rm-item-text">🔇 gentle mode — softer notifications, optional streaks, no pressure</div><div class="rm-item-why">for when streaks feel like pressure instead of progress.</div></div></div>
+      <div class="rm-item"><div class="rm-item-dot rm-dot-queued"></div><div><div class="rm-item-text">🔁 recurring quests — tasks that reappear on set days automatically</div><div class="rm-item-why">some things just happen every monday. they should be there.</div></div></div>
+      <div class="rm-item"><div class="rm-item-dot rm-dot-queued"></div><div><div class="rm-item-text">📱 installable app (PWA) — add to home screen, works offline</div><div class="rm-item-why">feels more like a real app without needing an app store.</div></div></div>
+    </div>
+
+    <div class="rm-tier">
+      <div class="rm-tier-hdr">
+        <span class="rm-tier-icon">🌌</span>
+        <span class="rm-tier-name">dream quests</span>
+        <span class="rm-tier-tag rm-tag-dream">one day</span>
+      </div>
+      <div class="rm-item"><div class="rm-item-dot rm-dot-dream"></div><div><div class="rm-item-text">📲 android app — full app with NFC tag support (tap to start a timer, log a habit)</div><div class="rm-item-why">your desk, your rules. one tap and you're in focus mode.</div></div></div>
+      <div class="rm-item"><div class="rm-item-dot rm-dot-dream"></div><div><div class="rm-item-text">🔄 optional sync across devices — your data, everywhere, with your consent</div><div class="rm-item-why">no dark patterns. sync only if you want it.</div></div></div>
+      <div class="rm-item"><div class="rm-item-dot rm-dot-dream"></div><div><div class="rm-item-text">🫂 body doubling mode — work alongside someone else in real time</div><div class="rm-item-why">sometimes you just need to know someone else is there.</div></div></div>
+      <div class="rm-item"><div class="rm-item-dot rm-dot-dream"></div><div><div class="rm-item-text">🌍 multiple languages</div><div class="rm-item-why">neurodivergence is global. so should mindquestor be.</div></div></div>
+      <div class="rm-item"><div class="rm-item-dot rm-dot-dream"></div><div><div class="rm-item-text">🆘 crisis check-in button — a gentle reset when the day goes sideways</div><div class="rm-item-why">for the bad days. no judgment, just a soft landing.</div></div></div>
+    </div>
+  </div>
+</div>
 <div class="modal-overlay" id="modal-news" onclick="if(event.target===this)closeModal()">
   <div class="modal-box">
     <button class="modal-close" onclick="closeModal()">×</button>
