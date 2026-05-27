@@ -117,7 +117,7 @@ nav{
   border-bottom:1px solid rgba(61,53,88,0.5);
 }
 .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px}
-.nav-logo{font-size:22px;font-weight:700;color:var(--p);text-decoration:none;display:flex;align-items:center;gap:6px;letter-spacing:-0.5px}
+.nav-logo{font-size:20px;font-weight:700;color:var(--p);text-decoration:none;display:flex;align-items:center;gap:6px;letter-spacing:-0.5px}
 .nav-logo span{color:var(--g)}.logo-word{color:var(--p);letter-spacing:-0.5px}
 .nav-links{display:flex;align-items:center;gap:8px}
 .nav-link{color:var(--t3);font-size:13px;text-decoration:none;padding:6px 12px;border-radius:var(--rads);transition:all .2s}
@@ -409,23 +409,6 @@ footer{
 .scroll-top{position:fixed;bottom:28px;right:24px;z-index:500;width:40px;height:40px;border-radius:50%;background:#2b1e42;border:1px solid #c084fc60;color:#c084fc;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 3px 14px rgba(0,0,0,.4);font-family:inherit}
 .scroll-top.visible{opacity:1;pointer-events:auto}
 .scroll-top:hover{transform:translateY(-3px)}
-
-/* ── PROD GRID (ecosystem) ── */
-.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
-.prod-card{background:var(--sf);border:1px solid var(--sf2);border-radius:var(--rad);padding:22px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;transition:transform .2s,border-color .2s}
-.prod-card:hover{transform:translateY(-4px)}
-.prod-bar{position:absolute;top:0;left:0;right:0;height:3px}
-.prod-top{display:flex;align-items:center;justify-content:space-between}
-.prod-icon{font-size:26px}
-.prod-badge{font-size:10px;padding:3px 10px;border-radius:99px;font-weight:700;letter-spacing:.4px}
-.badge-live{background:rgba(52,211,153,0.12);color:var(--g);border:1px solid rgba(52,211,153,0.25)}
-.badge-soon{background:rgba(129,140,248,0.12);color:var(--b);border:1px solid rgba(129,140,248,0.22)}
-.prod-name{font-size:16px;font-weight:700;letter-spacing:-0.3px;display:block}
-a.prod-name{text-decoration:none}a.prod-name:hover{opacity:.8}
-.prod-tag{font-size:11px;color:var(--t3)}
-.prod-desc{font-size:12px;color:var(--t2);line-height:1.65;flex:1}
-.prod-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;margin-top:4px;text-decoration:none;transition:gap .2s}
-.prod-link:hover{gap:10px}
 </style>
 <script>
 // ── SITE CONFIGURATION — edit these when URLs change ──
@@ -455,7 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <!-- ══ NAV ══ -->
 <nav aria-label="main navigation">
   <div class="container nav-inner">
-    <a href="#" class="nav-logo" aria-label="mindquestor home"><span class="logo-word">mind<span>questor</span></span></a>
+    <a href="#" class="nav-logo" aria-label="mindquestor home"><span class="logo-word">mind<span>questor</span></span><span>🧠</span></a>
     <div class="nav-links">
       <a class="nav-link" href="#features">features</a>
       <a class="nav-link" href="#why">why it works</a>
@@ -691,57 +674,43 @@ document.addEventListener('DOMContentLoaded', () => {
     <p style="text-align:center;color:var(--t2);font-size:15px;margin-bottom:42px;max-width:540px;margin-left:auto;margin-right:auto">
       soft tools, slow stories, and gentle spaces — all built for minds that work differently
     </p>
-    <div class="prod-grid">
-
-      <!-- MindQuestor — live -->
-      <div class="prod-card reveal" style="border-color:rgba(192,132,252,0.3)">
-        <div class="prod-bar" style="background:var(--p)"></div>
-        <div class="prod-top">
-          <span class="prod-icon">🧠</span>
-          <span class="prod-badge badge-live">Live Now</span>
-        </div>
-        <a href="https://mindquestor.netlify.app/app" data-href="app" target="_blank" class="prod-name" style="color:var(--p)">mindquestor</a>
-        <div class="prod-tag">turn your day into a quest</div>
-        <div class="prod-desc">adhd-friendly productivity. quests instead of tasks, a dopamine menu for when you can't decide, nap scheduler, habit streaks, vision board. free. no account.</div>
-        <a class="prod-link" href="https://mindquestor.netlify.app/app" data-href="app" target="_blank" style="color:var(--p)">open the app →</a>
-      </div>
-
-      <!-- drift — coming soon -->
-      <div class="prod-card reveal reveal-delay-1" style="border-color:rgba(212,160,184,0.25)">
-        <div class="prod-bar" style="background:#d4a0b8;opacity:.6"></div>
-        <div class="prod-top">
-          <span class="prod-icon">🌙</span>
-          <span class="prod-badge badge-soon">Coming Soon</span>
-        </div>
-        <div class="prod-name" style="color:#d4a0b8">drift</div>
-        <div class="prod-tag">sleep podcast for adhd brains</div>
-        <div class="prod-desc">slow, safe, and unpredictable enough to keep you from waiting for the good part. built for listeners who need novelty to relax.</div>
-      </div>
-
-      <!-- ritual — coming soon -->
-      <div class="prod-card reveal reveal-delay-1" style="border-color:rgba(144,212,184,0.25)">
-        <div class="prod-bar" style="background:#90d4b8;opacity:.6"></div>
-        <div class="prod-top">
-          <span class="prod-icon">🪷</span>
-          <span class="prod-badge badge-soon">Coming Soon</span>
-        </div>
-        <div class="prod-name" style="color:#90d4b8">ritual</div>
-        <div class="prod-tag">shame-free skincare tracker</div>
-        <div class="prod-desc">no broken streak screens. built to feel like self-care, not a chore.</div>
-      </div>
-
-      <!-- scout — coming soon -->
-      <div class="prod-card reveal reveal-delay-1" style="border-color:rgba(144,184,216,0.25)">
-        <div class="prod-bar" style="background:#90b8d8;opacity:.6"></div>
-        <div class="prod-top">
-          <span class="prod-icon">🔍</span>
-          <span class="prod-badge badge-soon">Coming Soon</span>
-        </div>
-        <div class="prod-name" style="color:#90b8d8">scout</div>
-        <div class="prod-tag">k-beauty price tracker for eu</div>
-        <div class="prod-desc">price history and restock alerts for eu shops. a browser extension that helps you not miss a drop.</div>
-      </div>
-
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px">
+      <a href="https://mindquestor.netlify.app/app" data-href="app"
+        style="background:var(--sf);border:1px solid rgba(192,132,252,0.3);border-radius:var(--rad);padding:22px;text-decoration:none;display:flex;flex-direction:column;gap:8px;transition:transform .2s,border-color .2s"
+        onmouseover="this.style.transform='translateY(-3px)';this.style.borderColor='var(--p)'"
+        onmouseout="this.style.transform='';this.style.borderColor='rgba(192,132,252,0.3)'">
+        <div style="font-size:28px">🧠</div>
+        <div style="font-weight:700;color:var(--p);font-size:15px">mindquestor</div>
+        <div style="font-size:12px;color:var(--t2);line-height:1.5">adhd-friendly productivity. quests, timers, habits, dopamine menu. free to get started.</div>
+        <div style="font-size:11px;color:var(--g);margin-top:4px">✅ live now</div>
+      </a>
+      <a href="#drift"
+        style="background:var(--sf);border:1px solid rgba(212,160,184,0.3);border-radius:var(--rad);padding:22px;text-decoration:none;display:flex;flex-direction:column;gap:8px;transition:transform .2s,border-color .2s"
+        onmouseover="this.style.transform='translateY(-3px)'"
+        onmouseout="this.style.transform=''">
+        <div style="font-size:28px">🌙</div>
+        <div style="font-weight:700;color:#d4a0b8;font-size:15px">drift</div>
+        <div style="font-size:12px;color:var(--t2);line-height:1.5">sleep podcast built for adhd and autistic listeners. slow, safe, and unpredictable enough to keep you from waiting for the good part.</div>
+        <div style="font-size:11px;color:var(--t3);margin-top:4px">🔔 coming soon</div>
+      </a>
+      <a href="https://moonbloom.netlify.app" data-href="moonbloom" target="_blank"
+        style="background:var(--sf);border:1px solid rgba(144,212,184,0.3);border-radius:var(--rad);padding:22px;text-decoration:none;display:flex;flex-direction:column;gap:8px;transition:transform .2s,border-color .2s"
+        onmouseover="this.style.transform='translateY(-3px)'"
+        onmouseout="this.style.transform=''">
+        <div style="font-size:28px">🪷</div>
+        <div style="font-weight:700;color:#90d4b8;font-size:15px">ritual</div>
+        <div style="font-size:12px;color:var(--t2);line-height:1.5">shame-free skincare tracker. no broken streak screens. built to feel like self-care, not productivity.</div>
+        <div style="font-size:11px;color:var(--t3);margin-top:4px">🔔 coming soon</div>
+      </a>
+      <a href="https://moonbloom.netlify.app" data-href="moonbloom" target="_blank"
+        style="background:var(--sf);border:1px solid rgba(144,184,216,0.3);border-radius:var(--rad);padding:22px;text-decoration:none;display:flex;flex-direction:column;gap:8px;transition:transform .2s,border-color .2s"
+        onmouseover="this.style.transform='translateY(-3px)'"
+        onmouseout="this.style.transform=''">
+        <div style="font-size:28px">🔍</div>
+        <div style="font-weight:700;color:#90b8d8;font-size:15px">scout</div>
+        <div style="font-size:12px;color:var(--t2);line-height:1.5">k-beauty price history and restock alerts for eu shops. a browser extension that actually helps you not miss a drop.</div>
+        <div style="font-size:11px;color:var(--t3);margin-top:4px">🔔 coming soon</div>
+      </a>
     </div>
     <div style="text-align:center;margin-top:32px">
       <a href="https://moonbloom.netlify.app" data-href="moonbloom" target="_blank"
