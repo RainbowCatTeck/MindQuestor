@@ -421,6 +421,25 @@ footer{
 .scroll-top.visible{opacity:1;pointer-events:auto}
 .scroll-top:hover{transform:translateY(-3px)}
 
+/* ── ROADMAP ── */
+.rm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:42px}
+.rm-col{background:var(--sf);border:1px solid var(--sf2);border-radius:var(--rad);padding:22px;display:flex;flex-direction:column;gap:0;position:relative;overflow:hidden}
+.rm-col-bar{position:absolute;top:0;left:0;right:0;height:3px}
+.rm-col-hdr{display:flex;align-items:center;gap:8px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--sf2)}
+.rm-col-icon{font-size:20px;line-height:1}
+.rm-col-name{font-size:14px;font-weight:700;color:var(--t)}
+.rm-col-tag{font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;border-radius:99px;margin-left:auto}
+.rm-tag-active{background:rgba(192,132,252,.15);color:var(--p);border:1px solid rgba(192,132,252,.3)}
+.rm-tag-queued{background:rgba(129,140,248,.15);color:var(--b);border:1px solid rgba(129,140,248,.3)}
+.rm-tag-dream{background:rgba(52,211,153,.1);color:var(--g);border:1px solid rgba(52,211,153,.2)}
+.rm-entry{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.rm-entry:last-child{border-bottom:none}
+.rm-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.rm-dot-active{background:var(--p)}.rm-dot-queued{background:var(--b)}.rm-dot-dream{background:var(--g);opacity:.6}
+.rm-text{font-size:12px;color:var(--t2);line-height:1.55;flex:1}
+.rm-why{font-size:11px;color:var(--t3);margin-top:2px;line-height:1.4}
+.rm-disclaimer{font-size:12px;color:var(--t3);line-height:1.7;background:var(--sf);border:1px solid var(--sf2);border-radius:var(--rad);padding:12px 16px;margin-top:28px;text-align:center}
+
 /* ── PROD GRID (ecosystem) ── */
 .prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
 .prod-card{background:var(--sf);border:1px solid var(--sf2);border-radius:var(--rad);padding:26px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;transition:transform .2s,border-color .2s}
@@ -470,7 +489,8 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="nav-links">
       <a class="nav-link" href="#features">features</a>
       <a class="nav-link" href="#why">why it works</a>
-      <a class="nav-link" href="#faq">faq</a><a class="nav-link" data-href="moonbloom" href="https://moonbloom.netlify.app" target="_blank" style="color:rgba(196,170,237,0.8)">✦ moonbloom</a>
+      <a class="nav-link" href="#faq">faq</a>
+      <a class="nav-link" href="#roadmap">roadmap</a><a class="nav-link" data-href="moonbloom" href="https://moonbloom.netlify.app" target="_blank" style="color:rgba(196,170,237,0.8)">✦ moonbloom</a>
       <a class="nav-cta" data-href="app" href="https://mindquestor.netlify.app/app" target="_blank" rel="noopener noreferrer">open the app →</a>
     </div>
   </div>
@@ -690,6 +710,131 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="faq-a" hidden>because ADHD brains go through dopamine and executive function resources faster than neurotypical brains. a nap isn't optional for a lot of us — it's the reason we can function in the second half of the day. most planners treat rest as wasted time. mindquestor schedules it first.</div>
       </div>
     </div>
+  </div>
+</section>
+
+
+<!-- ══ ROADMAP ══ -->
+<section class="section" id="roadmap" style="padding:70px 0">
+  <div class="container">
+    <div class="section-tag" style="text-align:center">what's ahead</div>
+    <h2 class="section-h2 reveal" style="text-align:center;letter-spacing:-0.5px;margin-bottom:12px">the <em>quest log</em></h2>
+    <p class="section-sub reveal" style="text-align:center;margin-left:auto;margin-right:auto">
+      no timelines, no hype. just what we're working on, thinking about, and dreaming of.
+    </p>
+    <div class="rm-grid">
+
+      <!-- Active quests -->
+      <div class="rm-col reveal">
+        <div class="rm-col-bar" style="background:var(--p)"></div>
+        <div class="rm-col-hdr">
+          <span class="rm-col-icon">⚔️</span>
+          <span class="rm-col-name">active quests</span>
+          <span class="rm-col-tag rm-tag-active">in progress</span>
+        </div>
+        <div class="rm-entry">
+          <div class="rm-dot rm-dot-active"></div>
+          <div>
+            <div class="rm-text">📝 better notes</div>
+            <div class="rm-why">richer formatting, easier to reference later</div>
+          </div>
+        </div>
+        <div class="rm-entry">
+          <div class="rm-dot rm-dot-active"></div>
+          <div>
+            <div class="rm-text">♿ accessibility</div>
+            <div class="rm-why">keyboard navigation + screen reader support</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Queued quests -->
+      <div class="rm-col reveal reveal-delay-1">
+        <div class="rm-col-bar" style="background:var(--b)"></div>
+        <div class="rm-col-hdr">
+          <span class="rm-col-icon">🎒</span>
+          <span class="rm-col-name">queued quests</span>
+          <span class="rm-col-tag rm-tag-queued">up next</span>
+        </div>
+        <div class="rm-entry">
+          <div class="rm-dot rm-dot-queued"></div>
+          <div>
+            <div class="rm-text">🌀 axie expressions</div>
+            <div class="rm-why">more ways to show your axie's energy — from hyperfocus to sensory overload</div>
+          </div>
+        </div>
+        <div class="rm-entry">
+          <div class="rm-dot rm-dot-queued"></div>
+          <div>
+            <div class="rm-text">🎮 axie skins</div>
+            <div class="rm-why">cosmetic unlocks — potential paid option to support the project</div>
+          </div>
+        </div>
+        <div class="rm-entry">
+          <div class="rm-dot rm-dot-queued"></div>
+          <div>
+            <div class="rm-text">🔁 recurring quests</div>
+            <div class="rm-why">for the things that keep coming back</div>
+          </div>
+        </div>
+        <div class="rm-entry">
+          <div class="rm-dot rm-dot-queued"></div>
+          <div>
+            <div class="rm-text">📱 PWA</div>
+            <div class="rm-why">install it like an app, even offline</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dream quests -->
+      <div class="rm-col reveal reveal-delay-2">
+        <div class="rm-col-bar" style="background:var(--g);opacity:.7"></div>
+        <div class="rm-col-hdr">
+          <span class="rm-col-icon">🌙</span>
+          <span class="rm-col-name">dream quests</span>
+          <span class="rm-col-tag rm-tag-dream">someday</span>
+        </div>
+        <div class="rm-entry">
+          <div class="rm-dot rm-dot-dream"></div>
+          <div>
+            <div class="rm-text">📲 android app</div>
+            <div class="rm-why">native mobile, if it ever makes sense</div>
+          </div>
+        </div>
+        <div class="rm-entry">
+          <div class="rm-dot rm-dot-dream"></div>
+          <div>
+            <div class="rm-text">🔄 sync</div>
+            <div class="rm-why">sync only if you want it. always optional, always yours.</div>
+          </div>
+        </div>
+        <div class="rm-entry">
+          <div class="rm-dot rm-dot-dream"></div>
+          <div>
+            <div class="rm-text">🫂 body doubling</div>
+            <div class="rm-why">quiet co-working, for when you work better with someone nearby</div>
+          </div>
+        </div>
+        <div class="rm-entry">
+          <div class="rm-dot rm-dot-dream"></div>
+          <div>
+            <div class="rm-text">🌍 more languages</div>
+            <div class="rm-why">because neurodivergence isn't english-only</div>
+          </div>
+        </div>
+        <div class="rm-entry">
+          <div class="rm-dot rm-dot-dream"></div>
+          <div>
+            <div class="rm-text">🔋 low battery mode</div>
+            <div class="rm-why">stripped-back interface for the really hard days</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <p class="rm-disclaimer reveal">
+      this is a passion project built by one neurodivergent dev. there are no deadlines. things get built when there's capacity and they feel right. 💜
+    </p>
   </div>
 </section>
 
