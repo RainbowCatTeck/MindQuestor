@@ -378,6 +378,12 @@ input[type=text],input[type=number],select,input[type=time]{
 input:focus,select:focus{outline:none;border-color:var(--brand)}
 input::placeholder{color:var(--t4)}
 select option{background:var(--bg3)}
+/* ── CUSTOM SCROLLBAR ── */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(192,132,252,.3);border-radius:99px}
+::-webkit-scrollbar-thumb:hover{background:rgba(192,132,252,.6)}
+*{scrollbar-width:thin;scrollbar-color:rgba(192,132,252,.3) transparent}
 
 /* ── CARDS ──────────────────────────────────────────────────────────────────── */
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad);padding:18px;box-shadow:var(--shadow-s)}

@@ -87,6 +87,12 @@
 
 html{scroll-behavior:smooth}
 body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100vh;font-size:16px;line-height:1.7;overflow-x:hidden}
+/* ── CUSTOM SCROLLBAR ── */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(192,132,252,.3);border-radius:99px}
+::-webkit-scrollbar-thumb:hover{background:rgba(192,132,252,.6)}
+*{scrollbar-width:thin;scrollbar-color:rgba(192,132,252,.3) transparent}
 
 /* ── NOISE TEXTURE OVERLAY ── */
 body::before{
