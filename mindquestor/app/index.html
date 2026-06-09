@@ -779,6 +779,10 @@ html,body{scrollbar-width:thin;scrollbar-color:rgba(192,132,252,.3) transparent}
 .nb-block.nb-dragging{opacity:.25;pointer-events:none}
 .nb-drop-line{position:absolute;left:0;right:0;height:2px;background:var(--brand);border-radius:2px;pointer-events:none;z-index:10;display:none}
 .nb-drop-line.show{display:block}
+.nb-drop-col{position:absolute;top:2px;bottom:2px;width:3px;background:var(--brand);border-radius:2px;pointer-events:none;z-index:10;display:none}
+.nb-drop-col.show{display:block}
+.nb-drop-col-l{left:-3px}
+.nb-drop-col-r{right:-3px}
 /* drag ghost */
 .nb-drag-ghost{position:fixed;pointer-events:none;z-index:9999;background:var(--bg2);border:1px solid var(--brand);border-radius:var(--rad-s);padding:4px 10px 4px 4px;opacity:.88;box-shadow:0 8px 32px rgba(0,0,0,.5);max-width:520px;font-size:13px;color:var(--t);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.65}
 .nb-content{flex:1;outline:none;font-size:13px;color:var(--t);line-height:1.65;min-height:1.2em;word-break:break-word;padding:1px 0}
@@ -825,6 +829,7 @@ html,body{scrollbar-width:thin;scrollbar-color:rgba(192,132,252,.3) transparent}
 .nb-cp{display:none;flex-wrap:wrap;gap:5px;padding:7px 10px;border-bottom:1px solid var(--sf);align-items:center;flex-shrink:0;background:var(--bg3)}
 .nb-cp-sw{width:18px;height:18px;border-radius:50%;cursor:pointer;border:2px solid rgba(255,255,255,.1);flex-shrink:0;transition:transform .1s,border-color .1s}.nb-cp-sw:hover{transform:scale(1.25);border-color:rgba(255,255,255,.5)}
 .nb-cp-clr{font-size:10px;color:var(--t3);background:none;border:1px solid var(--sf);border-radius:99px;padding:2px 8px;cursor:pointer;font-family:var(--font)}.nb-cp-clr:hover{color:var(--t);border-color:var(--sf2)}
+.nb-cp-label{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.04em;flex-basis:100%;margin-bottom:1px}
 /* nb add button */
 .nb-add{opacity:0;cursor:pointer;color:var(--t4);font-size:14px;line-height:1.65;flex-shrink:0;user-select:none;transition:opacity .1s;width:14px;text-align:center;background:none;border:none;font-family:var(--font);padding:0}
 .nb-block:hover .nb-add,.nb-block:focus-within .nb-add{opacity:.45}.nb-add:hover{opacity:1!important;color:var(--t2)}
@@ -848,6 +853,7 @@ html,body{scrollbar-width:thin;scrollbar-color:rgba(192,132,252,.3) transparent}
 .nb-ctx-sub{padding:2px 8px 8px;display:flex;flex-wrap:wrap;gap:4px}
 .nb-ctx-chip{font-size:11px;padding:3px 9px;border-radius:99px;border:1px solid var(--sf);color:var(--t3);cursor:pointer;background:var(--bg3);user-select:none}.nb-ctx-chip:hover{border-color:var(--brand);color:var(--brand)}
 .nb-ctx-sw-row{padding:3px 8px 8px;display:flex;gap:5px;align-items:center;flex-wrap:wrap}
+.nb-ctx-sub-label{flex-basis:100%;font-size:10px;color:var(--t4);text-transform:uppercase;letter-spacing:.04em;padding:0 8px 2px}
 .nb-ctx-sw{width:20px;height:20px;border-radius:4px;cursor:pointer;border:2px solid rgba(255,255,255,.1);flex-shrink:0;transition:transform .1s}.nb-ctx-sw:hover{transform:scale(1.18);border-color:rgba(255,255,255,.5)}
 .nb-ctx-sw-none{background:var(--bg3)!important;display:flex!important;align-items:center;justify-content:center;font-size:11px;color:var(--t3)}
 .game-card{margin-top:12px;background:var(--bg3);border:1px solid var(--sf);border-radius:var(--rad-s);padding:12px}
@@ -1949,7 +1955,7 @@ html,body{scrollbar-width:thin;scrollbar-color:rgba(192,132,252,.3) transparent}
   <button class="nb-sel-btn" onmousedown="event.preventDefault();document.execCommand('strikeThrough');nbSave()" title="strikethrough" style="text-decoration:line-through">S</button>
   <div class="nb-sel-sep"></div>
   <button class="nb-sel-btn" onmousedown="event.preventDefault();nbSelLink()" title="link">🔗</button>
-  <button class="nb-sel-btn" onmousedown="event.preventDefault();nbToggleCp()" title="colour" style="font-weight:800;text-decoration:underline;text-decoration-color:var(--brand);text-underline-offset:2px">A</button>
+  <button class="nb-sel-btn" onmousedown="event.preventDefault();nbToggleCp()" title="text colour" style="font-weight:800;text-decoration:underline;text-decoration-color:var(--brand);text-underline-offset:2px">A</button>
 </div>
 <div class="nb-ctx" id="nb-ctx"></div>
 
@@ -3657,7 +3663,7 @@ function nbRender(){
   let num=0;
   function bHtml(b){
     const t=b.type;
-    const hdl='<div class="nb-drop-line"></div><button class="nb-add" onclick="nbAddBelow(\''+b.id+'\')" title="add block below">+</button><span class="nb-handle" onpointerdown="nbDragPointerDown(event,\''+b.id+'\')" onclick="nbOpenCtx(event,\''+b.id+'\')" title="drag to reorder · click for options">⠿</span>';
+    const hdl='<div class="nb-drop-line"></div><div class="nb-drop-col nb-drop-col-l"></div><div class="nb-drop-col nb-drop-col-r"></div><button class="nb-add" onclick="nbAddBelow(\''+b.id+'\')" title="add block below">+</button><span class="nb-handle" onpointerdown="nbDragPointerDown(event,\''+b.id+'\')" onclick="nbOpenCtx(event,\''+b.id+'\')" title="drag to reorder · click for options">⠿</span>';
     const bgAttr=b.bg?' data-bg="'+b.bg+'"':'';
     if(t==='divider')return '<div class="nb-block" data-id="'+b.id+'" data-type="divider"'+bgAttr+'>'+hdl+'<div class="nb-divider-line"></div></div>';
     if(t==='bookmark'){
@@ -3783,7 +3789,7 @@ function nbToggleCols(){
 function nbColOver(e,c){e.preventDefault();document.getElementById('nb-col'+c)?.classList.add('nb-col-hover');}
 function nbColLeave(c){document.getElementById('nb-col'+c)?.classList.remove('nb-col-hover');}
 function nbColDrop(e,c){e.preventDefault();document.getElementById('nb-col'+c)?.classList.remove('nb-col-hover');if(!nbDragId)return;nbCollect();const b=nbBlocks.find(x=>x.id===nbDragId);if(b){b.col=c;nbRender();nbSave();}}
-let _nbDragId=null,_nbDragGhost=null,_nbDragOverId=null,_nbDragActive=false,_nbDragSX=0,_nbDragSY=0;
+let _nbDragId=null,_nbDragGhost=null,_nbDragOverId=null,_nbDragOverSide=null,_nbDragActive=false,_nbDragSX=0,_nbDragSY=0;
 function nbDragPointerDown(e,id){
   if(e.button!==0)return;
   e.preventDefault();
@@ -3798,6 +3804,7 @@ function _nbOnPointerMove(e){
   if(!_nbDragActive){
     if(Math.hypot(e.clientX-_nbDragSX,e.clientY-_nbDragSY)<6)return;
     _nbDragActive=true;
+    nbCloseCtx();nbSlashClose();
     const block=document.querySelector('.nb-block[data-id="'+_nbDragId+'"]');
     const text=block?.querySelector('.nb-content')?.textContent?.trim()||'…';
     const ghost=document.createElement('div');
@@ -3809,26 +3816,46 @@ function _nbOnPointerMove(e){
   }
   if(_nbDragGhost){_nbDragGhost.style.left=(e.clientX+14)+'px';_nbDragGhost.style.top=(e.clientY-12)+'px';}
   const blocks=[...document.querySelectorAll('.nb-block:not(.nb-dragging)')];
-  document.querySelectorAll('.nb-drop-line.show').forEach(l=>l.classList.remove('show'));
+  document.querySelectorAll('.nb-drop-line.show,.nb-drop-col.show').forEach(l=>l.classList.remove('show'));
   let best=null,bestDist=Infinity;
   blocks.forEach(bl=>{
     const r=bl.getBoundingClientRect();
     const dist=Math.abs(e.clientY-(r.top+r.height/2));
     if(dist<bestDist){bestDist=dist;best=bl;}
   });
-  if(best){_nbDragOverId=best.dataset.id;best.querySelector('.nb-drop-line')?.classList.add('show');}
+  _nbDragOverSide=null;
+  if(best){
+    _nbDragOverId=best.dataset.id;
+    const r=best.getBoundingClientRect();
+    const relX=(e.clientX-r.left)/r.width;
+    const targetCol=nbBlocks.find(x=>x.id===best.dataset.id)?.col||1;
+    if(relX>.75&&targetCol===1){_nbDragOverSide='right';best.querySelector('.nb-drop-col-r')?.classList.add('show');}
+    else if(relX<.25&&targetCol===2){_nbDragOverSide='left';best.querySelector('.nb-drop-col-l')?.classList.add('show');}
+    else best.querySelector('.nb-drop-line')?.classList.add('show');
+  }
   else _nbDragOverId=null;
 }
 function _nbOnPointerUp(){
   document.removeEventListener('pointermove',_nbOnPointerMove);
   _nbDragGhost?.remove();_nbDragGhost=null;
   document.querySelectorAll('.nb-block.nb-dragging').forEach(x=>x.classList.remove('nb-dragging'));
-  document.querySelectorAll('.nb-drop-line.show').forEach(l=>l.classList.remove('show'));
+  document.querySelectorAll('.nb-drop-line.show,.nb-drop-col.show').forEach(l=>l.classList.remove('show'));
   if(_nbDragActive&&_nbDragOverId&&_nbDragOverId!==_nbDragId){
     const fi=nbBlocks.findIndex(x=>x.id===_nbDragId),ti=nbBlocks.findIndex(x=>x.id===_nbDragOverId);
-    if(fi>=0&&ti>=0){const[b]=nbBlocks.splice(fi,1);nbBlocks.splice(ti,0,b);nbRender();nbSave();}
+    if(fi>=0&&ti>=0){
+      if(_nbDragOverSide){
+        const[b]=nbBlocks.splice(fi,1);
+        const newTi=nbBlocks.findIndex(x=>x.id===_nbDragOverId);
+        b.col=_nbDragOverSide==='right'?2:1;
+        nbCols=true;
+        nbBlocks.splice(newTi+1,0,b);
+      }else{
+        const[b]=nbBlocks.splice(fi,1);nbBlocks.splice(ti,0,b);
+      }
+      nbRender();nbSave();
+    }
   }
-  _nbDragId=null;_nbDragOverId=null;_nbDragActive=false;
+  _nbDragId=null;_nbDragOverId=null;_nbDragActive=false;_nbDragOverSide=null;
 }
 function nbPaste(e,id){
   const text=(e.clipboardData||window.clipboardData).getData('text/plain');
@@ -3932,6 +3959,7 @@ function nbAddBelow(id){
     const el=document.querySelector('.nb-block[data-id="'+nid+'"] .nb-content');
     if(!el)return;
     el.focus();
+    nbCloseCtx();
     nbSlashId=nid;nbSlashQ='';nbSlashOpen(el);
   },0);
 }
@@ -3940,6 +3968,7 @@ let nbCtxId=null;
 const NB_BG_COLORS=[['none',null],['red','#f87171'],['orange','#fb923c'],['yellow','#fbbf24'],['green','#34d399'],['blue','#38bdf8'],['purple','#c084fc'],['pink','#f472b6']];
 function nbOpenCtx(e,id){
   e.stopPropagation();
+  nbSlashClose();
   nbCtxId=id;
   const menu=document.getElementById('nb-ctx');if(!menu)return;
   const b=nbBlocks.find(x=>x.id===id);if(!b)return;
@@ -3950,8 +3979,9 @@ function nbOpenCtx(e,id){
         '<span class="nb-ctx-chip" onmousedown="event.preventDefault();nbCtxApplyType(\''+x.type+'\')">'+x.icon+' '+x.label+'</span>'
       ).join('')+
     '</div></div>'+
-    '<div class="nb-ctx-item" onmousedown="event.preventDefault();nbCtxToggle(\'bg\')"><span class="nb-ctx-icon">🎨</span>Color<span class="nb-ctx-arr">›</span></div>'+
+    '<div class="nb-ctx-item" onmousedown="event.preventDefault();nbCtxToggle(\'bg\')"><span class="nb-ctx-icon">🎨</span>Background colour<span class="nb-ctx-arr">›</span></div>'+
     '<div id="nb-ctx-bg" style="display:none"><div class="nb-ctx-sw-row">'+
+      '<span class="nb-ctx-sub-label">block background</span>'+
       NB_BG_COLORS.map(([name,c])=>c
         ?'<div class="nb-ctx-sw" style="background:'+c+'30;border-color:'+c+'90" onmousedown="event.preventDefault();nbCtxApplyBg(\''+name+'\')" title="'+name+'"></div>'
         :'<div class="nb-ctx-sw nb-ctx-sw-none" onmousedown="event.preventDefault();nbCtxApplyBg(null)" title="none">✕</div>'
@@ -4035,7 +4065,8 @@ const NB_COLORS=['#f87171','#fb923c','#fbbf24','#a3e635','#34d399','#38bdf8','#8
 let _nbCpOpen=false;
 function nbInitCp(){
   const cp=document.getElementById('nb-cp');if(!cp)return;
-  cp.innerHTML=NB_COLORS.map(c=>'<div class="nb-cp-sw" style="background:'+c+'" onclick="nbSetColor(\''+c+'\')" title="'+c+'"></div>').join('')
+  cp.innerHTML='<span class="nb-cp-label">text colour</span>'
+    +NB_COLORS.map(c=>'<div class="nb-cp-sw" style="background:'+c+'" onclick="nbSetColor(\''+c+'\')" title="'+c+'"></div>').join('')
     +'<button class="nb-cp-clr" onclick="nbSetColor(null)">✕ remove</button>';
 }
 function nbToggleCp(){
