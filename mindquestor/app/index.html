@@ -390,6 +390,7 @@ select option{background:var(--bg3)}
 ::-webkit-scrollbar-thumb{background:rgba(192,132,252,.3);border-radius:99px}
 ::-webkit-scrollbar-thumb:hover{background:rgba(192,132,252,.6)}
 *{scrollbar-width:thin;scrollbar-color:rgba(192,132,252,.3) transparent}
+html,body{scrollbar-width:thin;scrollbar-color:rgba(192,132,252,.3) transparent}
 
 /* ── CARDS ──────────────────────────────────────────────────────────────────── */
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad);padding:18px;box-shadow:var(--shadow-s)}
@@ -770,12 +771,16 @@ select option{background:var(--bg3)}
 .q-note-rich ol{padding-left:18px;margin:4px 0}
 .q-note-rich li{margin:2px 0}
 /* ── block editor ── */
-.nb-editor{padding:2px 0;min-height:60px}
-.nb-block{display:flex;align-items:flex-start;gap:5px;padding:2px 0;border-radius:4px}
-.nb-block:hover .nb-handle,.nb-block:focus-within .nb-handle{opacity:.5}
-.nb-handle{opacity:0;cursor:grab;color:var(--t4);font-size:11px;line-height:1.65;flex-shrink:0;user-select:none;transition:opacity .12s;width:12px;text-align:center}
-.nb-handle:hover{opacity:1!important}.nb-handle:active{cursor:grabbing}
-.nb-block.nb-dragging{opacity:.3}.nb-block.nb-drop-after{border-bottom:2px solid var(--brand)}
+.nb-block{display:flex;align-items:flex-start;gap:5px;padding:2px 0;border-radius:4px;position:relative}
+.nb-block:hover .nb-handle,.nb-block:focus-within .nb-handle{opacity:.55}
+.nb-block:hover .nb-add,.nb-block:focus-within .nb-add{opacity:.45}
+.nb-handle{opacity:0;cursor:grab;color:var(--t4);font-size:12px;line-height:1.65;flex-shrink:0;user-select:none;transition:opacity .12s;width:14px;text-align:center;touch-action:none}
+.nb-handle:hover{opacity:1!important;color:var(--t2)}.nb-handle.nb-grabbing{cursor:grabbing;opacity:1!important}
+.nb-block.nb-dragging{opacity:.25;pointer-events:none}
+.nb-drop-line{position:absolute;left:0;right:0;height:2px;background:var(--brand);border-radius:2px;pointer-events:none;z-index:10;display:none}
+.nb-drop-line.show{display:block}
+/* drag ghost */
+.nb-drag-ghost{position:fixed;pointer-events:none;z-index:9999;background:var(--bg2);border:1px solid var(--brand);border-radius:var(--rad-s);padding:4px 10px 4px 4px;opacity:.88;box-shadow:0 8px 32px rgba(0,0,0,.5);max-width:520px;font-size:13px;color:var(--t);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.65}
 .nb-content{flex:1;outline:none;font-size:13px;color:var(--t);line-height:1.65;min-height:1.2em;word-break:break-word;padding:1px 0}
 .nb-content:empty::before{content:attr(data-ph);color:var(--t4);pointer-events:none}
 .nb-content a{color:var(--teal);text-decoration:underline}
@@ -812,9 +817,8 @@ select option{background:var(--bg3)}
 .nb-float-title{display:none}
 .nb-float-close{display:none}
 /* in-page note */
-#shared-note{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad);padding:16px;box-shadow:var(--shadow-s);margin-top:14px}
-.nb-toolbar-wrap{padding:0 0 6px;border-bottom:1px solid var(--sf);margin-bottom:6px}
-#nb-editor{min-height:60px;padding:6px 0 2px}
+#shared-note{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad);padding:16px 16px 16px 8px;box-shadow:var(--shadow-s);margin-top:14px}
+#nb-editor{min-height:60px;padding:6px 0 2px;position:relative}
 .nb-url-bar{display:none;align-items:center;gap:5px;padding:5px 10px;border-bottom:1px solid var(--sf);flex-shrink:0;background:var(--bg3)}
 .nb-url-in{flex:1;background:var(--bg2);border:1px solid var(--sf);border-radius:var(--rad-s);color:var(--t);font-family:var(--font);font-size:12px;padding:4px 9px;outline:none}.nb-url-in:focus{border-color:var(--teal)}
 .nb-url-label{font-size:10px;color:var(--t3);white-space:nowrap;flex-shrink:0}
@@ -1927,30 +1931,6 @@ select option{background:var(--bg3)}
 <div class="quick-hub" id="shared-note">
   <div class="qh-header" style="margin-bottom:6px">
     <div class="qh-title">📝 don't you forget about me</div>
-  </div>
-  <div class="nb-toolbar-wrap">
-    <div class="qh-toolbar">
-      <button class="qtb" onclick="nbFmt('bold')" title="bold"><b>B</b></button>
-      <button class="qtb" onclick="nbFmt('italic')" title="italic"><i>I</i></button>
-      <div class="nb-sep"></div>
-      <button class="qtb" onclick="nbSetType('h1')" title="heading 1">H1</button>
-      <button class="qtb" onclick="nbSetType('h2')" title="heading 2">H2</button>
-      <button class="qtb" onclick="nbSetType('h3')" title="heading 3">H3</button>
-      <div class="nb-sep"></div>
-      <button class="qtb" onclick="nbSetType('bullet')" title="bullet list">•</button>
-      <button class="qtb" onclick="nbSetType('numbered')" title="numbered list">1.</button>
-      <div class="nb-sep"></div>
-      <button class="qtb" onclick="nbSetType('quote')" title="quote">"</button>
-      <button class="qtb" onclick="nbSetType('callout')" title="callout box">💡</button>
-      <button class="qtb" onclick="nbAddDivider()" title="divider">—</button>
-      <div class="nb-sep"></div>
-      <button class="qtb" onclick="nbOpenUrlBar('link')" title="link selected text">🔗</button>
-      <button class="qtb" onclick="nbOpenUrlBar('bookmark')" title="bookmark card">⊞</button>
-      <div class="nb-sep"></div>
-      <button class="qtb" id="qtb-cols" onclick="nbToggleCols()" title="two columns">⊟</button>
-      <div class="nb-sep"></div>
-      <button class="qtb" id="qtb-cp" onclick="nbToggleCp()" title="text colour" style="font-weight:800;text-decoration:underline;text-decoration-color:var(--brand);text-underline-offset:2px">A</button>
-    </div>
   </div>
   <div class="nb-cp" id="nb-cp"></div>
   <div class="nb-url-bar" id="nb-url-bar">
@@ -3603,8 +3583,8 @@ function updateProfileHeader(){
 }
 
 function updateGreeting(){const tag=document.getElementById('axie-tagline');if(tag)tag.textContent=userName?`axie says hi, ${userName}! 🌸`:'axie says hi! 🌸'}
-function showAxieGreeting(){const list=allMotivations();const m=list[Math.floor(Math.random()*list.length)]||'you got this ✨';const b=document.getElementById('axie-bubble');const axieEl=document.querySelector('[title="axie 🌸"]');if(axieEl){const r=axieEl.getBoundingClientRect();b.style.left=r.left+'px';b.style.top=(r.bottom+10)+'px'}b.textContent='axie: '+m;b.classList.add('show');clearTimeout(b._t);b._t=setTimeout(()=>b.classList.remove('show'),3500)}
-function toggleSettings(){if(typeof activeTab!=='undefined'&&activeTab==='settings'){switchTab(prevTab||'timers',document.getElementById('btn-'+(prevTab||'timers')))}else{prevTab=activeTab||'timers';switchTab('settings')}}
+function showAxieGreeting(){const list=allMotivations();const m=list[Math.floor(Math.random()*list.length)]||'you got this ✨';const b=document.getElementById('axie-bubble');const axieEl=document.getElementById('axie-head-svg');if(axieEl){const r=axieEl.getBoundingClientRect();b.style.left=r.left+'px';b.style.top=(r.bottom+10)+'px'}b.textContent='axie: '+m;b.classList.add('show');clearTimeout(b._t);b._t=setTimeout(()=>b.classList.remove('show'),3500)}
+function toggleSettings(){if(typeof activeTab!=='undefined'&&activeTab==='settings'){switchTab(prevTab||'timers',document.getElementById('tbtn-'+(prevTab||'timers')))}else{prevTab=activeTab||'timers';switchTab('settings')}}
 let bstEnabled=false;
 function toggleBST(){bstEnabled=!bstEnabled;periodTracker.enabled=bstEnabled;renderBSTState();saveQuickHub()}
 function renderBSTState(){const wrap=document.getElementById('tracker-wrap');const settTog=document.getElementById('settings-bst-toggle');const settContent=document.getElementById('tracker-settings-content');if(wrap)wrap.style.display=bstEnabled?'':'none';if(settTog)settTog.className='tog-sw'+(bstEnabled?' on':'');if(settContent)settContent.style.display=bstEnabled?'':'none';}
@@ -3626,6 +3606,8 @@ const NB_SLASH_ITEMS=[
   {type:'callout',icon:'💡',label:'Callout',   desc:'coloured callout box'},
   {type:'divider',icon:'—', label:'Divider',   desc:'horizontal line'},
   {type:'bookmark',icon:'⊞',label:'Bookmark', desc:'link preview card'},
+  {type:'columns', icon:'⊟', label:'Columns',  desc:'toggle two-column layout'},
+  {type:'color',   icon:'A',  label:'Color',    desc:'highlight block background'},
 ];
 const NB_CALLOUT_ICONS=['💡','⚠️','✅','🔥','💬','📌','🎯','⭐','💜','🌙','🚀','🧠'];
 let nbBlocks=[],nbCols=false,nbDragId=null,nbFocusId=null;
@@ -3675,25 +3657,25 @@ function nbRender(){
   let num=0;
   function bHtml(b){
     const t=b.type;
-    const hdl='<button class="nb-add" onclick="nbAddBelow(\''+b.id+'\')" title="add block">+</button><span class="nb-handle" draggable="true" ondragstart="nbDragStart(event,\''+b.id+'\')" ondragend="nbDragEnd()" onclick="nbOpenCtx(event,\''+b.id+'\')" title="drag or click for options">⠿</span>';
+    const hdl='<div class="nb-drop-line"></div><button class="nb-add" onclick="nbAddBelow(\''+b.id+'\')" title="add block below">+</button><span class="nb-handle" onpointerdown="nbDragPointerDown(event,\''+b.id+'\')" onclick="nbOpenCtx(event,\''+b.id+'\')" title="drag to reorder · click for options">⠿</span>';
     const bgAttr=b.bg?' data-bg="'+b.bg+'"':'';
-    if(t==='divider')return '<div class="nb-block" data-id="'+b.id+'" data-type="divider"'+bgAttr+' ondragover="nbDragOver(event,\''+b.id+'\')" ondrop="nbDrop(event,\''+b.id+'\')">'+hdl+'<div class="nb-divider-line"></div></div>';
+    if(t==='divider')return '<div class="nb-block" data-id="'+b.id+'" data-type="divider"'+bgAttr+'>'+hdl+'<div class="nb-divider-line"></div></div>';
     if(t==='bookmark'){
       const url=b.url||'';let host='';try{host=new URL(url.startsWith('http')?url:'https://'+url).hostname;}catch(e){}
       const fav='https://www.google.com/s2/favicons?domain='+host+'&sz=16';
-      return '<div class="nb-block" data-id="'+b.id+'" data-type="bookmark"'+bgAttr+' ondragover="nbDragOver(event,\''+b.id+'\')" ondrop="nbDrop(event,\''+b.id+'\')">'+hdl+'<div class="nb-bm-wrap"><a class="nb-bookmark" href="'+url+'" target="_blank" rel="noopener"><img class="nb-bm-fav" src="'+fav+'" onerror="this.style.display=\'none\'"><div class="nb-bm-info"><span class="nb-bm-title">'+esc(b.title||host||url)+'</span><span class="nb-bm-url">'+esc(host)+'</span></div></a><button class="nb-bm-del" onclick="nbDeleteBlock(\''+b.id+'\')" title="remove">×</button></div></div>';
+      return '<div class="nb-block" data-id="'+b.id+'" data-type="bookmark"'+bgAttr+'>'+hdl+'<div class="nb-bm-wrap"><a class="nb-bookmark" href="'+url+'" target="_blank" rel="noopener"><img class="nb-bm-fav" src="'+fav+'" onerror="this.style.display=\'none\'"><div class="nb-bm-info"><span class="nb-bm-title">'+esc(b.title||host||url)+'</span><span class="nb-bm-url">'+esc(host)+'</span></div></a><button class="nb-bm-del" onclick="nbDeleteBlock(\''+b.id+'\')" title="remove">×</button></div></div>';
     }
     if(t==='numbered'){num++;}else{num=0;}
     const prefix=t==='bullet'?'<span class="nb-prefix">•</span>':t==='numbered'?'<span class="nb-prefix">'+num+'.</span>':'';
     const icon=t==='callout'?'<span class="nb-callout-icon" onclick="nbCycleIcon(\''+b.id+'\')">'+(b.icon||'💡')+'</span>':'';
     const phMap={p:'type something, or / for commands…',h1:'Heading 1',h2:'Heading 2',h3:'Heading 3',bullet:'list item',numbered:'list item',quote:'a quote…',callout:'callout note…'};
-    return '<div class="nb-block" data-id="'+b.id+'" data-type="'+t+'"'+bgAttr+' ondragover="nbDragOver(event,\''+b.id+'\')" ondrop="nbDrop(event,\''+b.id+'\')">'+hdl+icon+prefix+'<div class="nb-content" contenteditable="true" spellcheck="true" data-ph="'+(phMap[t]||'')+'" oninput="nbInput(event,\''+b.id+'\')" onkeydown="nbKeydown(event,\''+b.id+'\')" onpaste="nbPaste(event,\''+b.id+'\')" onfocus="nbFocusId=\''+b.id+'\'"></div></div>';
+    return '<div class="nb-block" data-id="'+b.id+'" data-type="'+t+'"'+bgAttr+'>'+hdl+icon+prefix+'<div class="nb-content" contenteditable="true" spellcheck="true" data-ph="'+(phMap[t]||'')+'" oninput="nbInput(event,\''+b.id+'\')" onkeydown="nbKeydown(event,\''+b.id+'\')" onpaste="nbPaste(event,\''+b.id+'\')" onfocus="nbFocusId=\''+b.id+'\'"></div></div>';
   }
   if(nbCols){
     const c1=nbBlocks.filter(b=>b.col!==2),c2=nbBlocks.filter(b=>b.col===2);
     num=0;const h1=c1.map(b=>bHtml(b)).join('');
     num=0;const h2=c2.map(b=>bHtml(b)).join('');
-    editor.innerHTML='<div class="nb-cols-wrap"><div class="nb-col" id="nb-col1" ondragover="nbColOver(event,1)" ondragleave="nbColLeave(1)" ondrop="nbColDrop(event,1)">'+h1+'</div><div class="nb-col" id="nb-col2" ondragover="nbColOver(event,2)" ondragleave="nbColLeave(2)" ondrop="nbColDrop(event,2)">'+h2+'</div></div>';
+    editor.innerHTML='<div class="nb-cols-wrap"><div class="nb-col" id="nb-col1">'+h1+'</div><div class="nb-col" id="nb-col2">'+h2+'</div></div>';
   }else{
     num=0;editor.innerHTML=nbBlocks.map(b=>bHtml(b)).join('');
   }
@@ -3801,10 +3783,53 @@ function nbToggleCols(){
 function nbColOver(e,c){e.preventDefault();document.getElementById('nb-col'+c)?.classList.add('nb-col-hover');}
 function nbColLeave(c){document.getElementById('nb-col'+c)?.classList.remove('nb-col-hover');}
 function nbColDrop(e,c){e.preventDefault();document.getElementById('nb-col'+c)?.classList.remove('nb-col-hover');if(!nbDragId)return;nbCollect();const b=nbBlocks.find(x=>x.id===nbDragId);if(b){b.col=c;nbRender();nbSave();}}
-function nbDragStart(e,id){nbCollect();nbDragId=id;e.dataTransfer.effectAllowed='move';setTimeout(()=>document.querySelector('.nb-block[data-id="'+id+'"]')?.classList.add('nb-dragging'),0);}
-function nbDragEnd(){document.querySelectorAll('.nb-block.nb-dragging,.nb-block.nb-drop-after').forEach(x=>x.classList.remove('nb-dragging','nb-drop-after'));nbDragId=null;}
-function nbDragOver(e,overId){e.preventDefault();if(!nbDragId||nbDragId===overId)return;document.querySelectorAll('.nb-block.nb-drop-after').forEach(x=>x.classList.remove('nb-drop-after'));document.querySelector('.nb-block[data-id="'+overId+'"]')?.classList.add('nb-drop-after');}
-function nbDrop(e,overId){e.preventDefault();document.querySelectorAll('.nb-block.nb-drop-after').forEach(x=>x.classList.remove('nb-drop-after'));if(!nbDragId||nbDragId===overId)return;const fi=nbBlocks.findIndex(x=>x.id===nbDragId),ti=nbBlocks.findIndex(x=>x.id===overId);if(fi<0||ti<0)return;const[b]=nbBlocks.splice(fi,1);nbBlocks.splice(ti,0,b);nbRender();nbSave();}
+let _nbDragId=null,_nbDragGhost=null,_nbDragOverId=null,_nbDragActive=false,_nbDragSX=0,_nbDragSY=0;
+function nbDragPointerDown(e,id){
+  if(e.button!==0)return;
+  e.preventDefault();
+  nbCollect();
+  _nbDragId=id;_nbDragActive=false;
+  _nbDragSX=e.clientX;_nbDragSY=e.clientY;
+  document.addEventListener('pointermove',_nbOnPointerMove);
+  document.addEventListener('pointerup',_nbOnPointerUp,{once:true});
+}
+function _nbOnPointerMove(e){
+  if(!_nbDragId)return;
+  if(!_nbDragActive){
+    if(Math.hypot(e.clientX-_nbDragSX,e.clientY-_nbDragSY)<6)return;
+    _nbDragActive=true;
+    const block=document.querySelector('.nb-block[data-id="'+_nbDragId+'"]');
+    const text=block?.querySelector('.nb-content')?.textContent?.trim()||'…';
+    const ghost=document.createElement('div');
+    ghost.className='nb-drag-ghost';
+    ghost.textContent=text.length>60?text.slice(0,60)+'…':text;
+    document.body.appendChild(ghost);
+    _nbDragGhost=ghost;
+    block?.classList.add('nb-dragging');
+  }
+  if(_nbDragGhost){_nbDragGhost.style.left=(e.clientX+14)+'px';_nbDragGhost.style.top=(e.clientY-12)+'px';}
+  const blocks=[...document.querySelectorAll('.nb-block:not(.nb-dragging)')];
+  document.querySelectorAll('.nb-drop-line.show').forEach(l=>l.classList.remove('show'));
+  let best=null,bestDist=Infinity;
+  blocks.forEach(bl=>{
+    const r=bl.getBoundingClientRect();
+    const dist=Math.abs(e.clientY-(r.top+r.height/2));
+    if(dist<bestDist){bestDist=dist;best=bl;}
+  });
+  if(best){_nbDragOverId=best.dataset.id;best.querySelector('.nb-drop-line')?.classList.add('show');}
+  else _nbDragOverId=null;
+}
+function _nbOnPointerUp(){
+  document.removeEventListener('pointermove',_nbOnPointerMove);
+  _nbDragGhost?.remove();_nbDragGhost=null;
+  document.querySelectorAll('.nb-block.nb-dragging').forEach(x=>x.classList.remove('nb-dragging'));
+  document.querySelectorAll('.nb-drop-line.show').forEach(l=>l.classList.remove('show'));
+  if(_nbDragActive&&_nbDragOverId&&_nbDragOverId!==_nbDragId){
+    const fi=nbBlocks.findIndex(x=>x.id===_nbDragId),ti=nbBlocks.findIndex(x=>x.id===_nbDragOverId);
+    if(fi>=0&&ti>=0){const[b]=nbBlocks.splice(fi,1);nbBlocks.splice(ti,0,b);nbRender();nbSave();}
+  }
+  _nbDragId=null;_nbDragOverId=null;_nbDragActive=false;
+}
 function nbPaste(e,id){
   const text=(e.clipboardData||window.clipboardData).getData('text/plain');
   if(!text)return;
@@ -3850,8 +3875,14 @@ function nbSlashApplyType(type){
   if(!nbSlashId)return;
   const sid=nbSlashId;nbSlashClose();nbCollect();
   if(type==='bookmark'){nbOpenUrlBar('bookmark',sid);return;}
-  if(type==='divider'){const b=nbBlocks.find(x=>x.id===nbSlashId);if(b){b.type='divider';b.content='';}nbRender();nbSave();return;}
-  const b=nbBlocks.find(x=>x.id===nbSlashId);
+  if(type==='columns'){nbToggleCols();return;}
+  if(type==='color'){
+    const el=document.querySelector('.nb-block[data-id="'+sid+'"] .nb-content');
+    if(el){el.focus();nbCtxId=sid;nbToggleCp();}
+    return;
+  }
+  if(type==='divider'){const b=nbBlocks.find(x=>x.id===sid);if(b){b.type='divider';b.content='';}nbRender();nbSave();return;}
+  const b=nbBlocks.find(x=>x.id===sid);
   if(b){b.type=type;b.content='';nbRender();nbSave();setTimeout(()=>document.querySelector('.nb-block[data-id="'+b.id+'"] .nb-content')?.focus(),0);}
 }
 function nbSlashClose(){const m=document.getElementById('nb-slash');if(m)m.style.display='none';nbSlashId=null;nbSlashQ='';nbSlashIdx=0;nbSlashList=[];}
@@ -3897,7 +3928,12 @@ function nbAddBelow(id){
   nbCollect();
   const b=nbBlocks.find(x=>x.id===id);
   const nid=nbInsertAfter(id,'p',b?b.col:1);
-  setTimeout(()=>document.querySelector('.nb-block[data-id="'+nid+'"] .nb-content')?.focus(),0);
+  setTimeout(()=>{
+    const el=document.querySelector('.nb-block[data-id="'+nid+'"] .nb-content');
+    if(!el)return;
+    el.focus();
+    nbSlashId=nid;nbSlashQ='';nbSlashOpen(el);
+  },0);
 }
 // ── CONTEXT MENU ──
 let nbCtxId=null;
@@ -3910,7 +3946,7 @@ function nbOpenCtx(e,id){
   menu.innerHTML=
     '<div class="nb-ctx-item" onmousedown="event.preventDefault();nbCtxToggle(\'ti\')"><span class="nb-ctx-icon">↩</span>Turn into<span class="nb-ctx-arr">›</span></div>'+
     '<div id="nb-ctx-ti" style="display:none"><div class="nb-ctx-sub">'+
-      NB_SLASH_ITEMS.filter(x=>x.type!=='bookmark'&&x.type!=='divider').map(x=>
+      NB_SLASH_ITEMS.filter(x=>x.type!=='bookmark'&&x.type!=='divider'&&x.type!=='columns'&&x.type!=='color').map(x=>
         '<span class="nb-ctx-chip" onmousedown="event.preventDefault();nbCtxApplyType(\''+x.type+'\')">'+x.icon+' '+x.label+'</span>'
       ).join('')+
     '</div></div>'+
