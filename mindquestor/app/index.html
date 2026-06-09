@@ -3854,19 +3854,44 @@ function _nbOnPointerUp(){
     if(fi>=0){
       const[b]=nbBlocks.splice(fi,1);
       const target=nbBlocks.find(x=>x.id===_nbDragOverId);
-      let ti=nbBlocks.findIndex(x=>x.id===_nbDragOverId);
-      if(ti<0)ti=nbBlocks.length;
-      if(_nbDragOverSide){
+      if(target&&_nbDragOverSide){
+        const destCol=_nbDragOverSide==='right'?2:1;
         if(!nbCols){
           nbCols=true;
-          if(_nbDragOverSide==='left'&&target)target.col=2;
+          if(destCol===1){
+            target.col=2;b.col=1;
+            nbBlocks.splice(nbBlocks.indexOf(target),0,b);
+          }else{
+            const tIdx=nbBlocks.indexOf(target);
+            nbBlocks.splice(tIdx,1);
+            b.col=2;
+            nbBlocks.unshift(target,b);
+          }
+        }else{
+          b.col=destCol;
+          const targetCol=target.col===2?2:1;
+          if(destCol===targetCol){
+            const ti=nbBlocks.indexOf(target);
+            nbBlocks.splice(_nbDragOverPos==='after'?ti+1:ti,0,b);
+          }else{
+            const colList=nbBlocks.filter(x=>(x.col===2?2:1)===targetCol);
+            let rowIdx=colList.indexOf(target);
+            if(_nbDragOverPos==='after')rowIdx++;
+            const destList=nbBlocks.filter(x=>(x.col===2?2:1)===destCol);
+            let insertIdx;
+            if(rowIdx<destList.length)insertIdx=nbBlocks.indexOf(destList[rowIdx]);
+            else if(destList.length)insertIdx=nbBlocks.indexOf(destList[destList.length-1])+1;
+            else insertIdx=nbBlocks.indexOf(target)+(_nbDragOverPos==='after'?1:0);
+            nbBlocks.splice(insertIdx,0,b);
+          }
         }
-        b.col=_nbDragOverSide==='right'?2:1;
       }else{
-        b.col=target?(target.col||1):1;
+        let ti=nbBlocks.findIndex(x=>x.id===_nbDragOverId);
+        if(ti<0)ti=nbBlocks.length;
+        b.col=target?(target.col===2?2:1):1;
+        const insertIdx=_nbDragOverPos==='after'?ti+1:ti;
+        nbBlocks.splice(insertIdx,0,b);
       }
-      const insertIdx=_nbDragOverPos==='after'?ti+1:ti;
-      nbBlocks.splice(insertIdx,0,b);
       nbRender();nbSave();
     }
   }
