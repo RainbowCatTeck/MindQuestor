@@ -1090,7 +1090,7 @@ html,body{scrollbar-width:thin;scrollbar-color:rgba(192,132,252,.3) transparent}
       </div>
     </div>
     <!-- profile + settings -->
-    <button class="btn bgh" onclick="switchTab('profile',null)" title="profile" style="padding:8px 10px;font-size:15px">👤</button>
+    <button class="btn bgh" onclick="toggleProfile()" title="profile" style="padding:8px 10px;font-size:15px">👤</button>
     <button class="btn bgh" onclick="toggleSettings()" title="settings" style="padding:8px 10px;font-size:15px">⚙️</button>
     <a class="glink" href="https://goblin.tools" target="_blank">🔧 goblin tools ↗</a>
   </div>
@@ -3666,6 +3666,7 @@ function updateProfileHeader(){
 
 function updateGreeting(){const tag=document.getElementById('axie-tagline');if(tag)tag.textContent=userName?`axie says hi, ${userName}! 🌸`:'axie says hi! 🌸'}
 function showAxieGreeting(){const list=allMotivations();const m=list[Math.floor(Math.random()*list.length)]||'you got this ✨';const b=document.getElementById('axie-bubble');const axieEl=document.getElementById('axie-head-svg');if(axieEl){const r=axieEl.getBoundingClientRect();b.style.left=r.left+'px';b.style.top=(r.bottom+10)+'px'}b.textContent='axie: '+m;b.classList.add('show');clearTimeout(b._t);b._t=setTimeout(()=>b.classList.remove('show'),3500)}
+function toggleProfile(){if(typeof activeTab!=='undefined'&&activeTab==='profile'){switchTab(prevTab||'timers',document.getElementById('tbtn-'+(prevTab||'timers')))}else{prevTab=activeTab||'timers';switchTab('profile',null)}}
 function toggleSettings(){if(typeof activeTab!=='undefined'&&activeTab==='settings'){switchTab(prevTab||'timers',document.getElementById('tbtn-'+(prevTab||'timers')))}else{prevTab=activeTab||'timers';switchTab('settings')}}
 let bstEnabled=false;
 function toggleBST(){bstEnabled=!bstEnabled;periodTracker.enabled=bstEnabled;renderBSTState();saveQuickHub()}
