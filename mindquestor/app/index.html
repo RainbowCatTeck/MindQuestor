@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html><head><meta charset="UTF-8"><title>MindQuestor — your brain isn't broken. it's just different.</title>
+<html lang="en"><head><meta charset="UTF-8"><title>MindQuestor — your brain isn't broken. it's just different.</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="a free, no-account productivity app for ADHD, autistic, and neurodivergent brains. timers, quests, habits, and naps — built by someone who needed it.">
 <meta name="theme-color" content="#1a1625">
@@ -55,7 +55,7 @@
   --t:#f0e8ff;
   --t2:#c4b5d4;
   --t3:#8b7aa0;
-  --t4:#5c4e72;
+  --t4:#9b8ab8;
 
   /* typography */
   --font:'OD','Comic Sans MS',Arial,Verdana,sans-serif;
@@ -95,7 +95,7 @@
   --t:#160d2e;
   --t2:#30215a;
   --t3:#5c4285;
-  --t4:#8b6db5;
+  --t4:#5c3d9e;
   /* brand — darken for contrast on light bg (original #c084fc is too pale) */
   --brand:#7c3aed;
   --brand-soft:rgba(124,58,237,.15);
@@ -164,12 +164,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100v
 .profile-name{font-size:14px;font-weight:700;color:var(--t)}
 .profile-sub{font-size:11px;color:var(--t3);margin-top:2px}
 .profile-banner-wrap{position:relative;border-radius:var(--rad);overflow:visible;margin-bottom:52px}
-.profile-banner{height:130px;border-radius:var(--rad);overflow:hidden;position:relative;cursor:pointer;background:linear-gradient(135deg,#4c1d95 0%,#c084fc 60%,#f472b6 100%)}
+.profile-banner{height:130px;border-radius:var(--rad);overflow:hidden;position:relative;cursor:pointer;background:linear-gradient(135deg,#4c1d95 0%,#c084fc 60%,#f472b6 100%);border:none;padding:0;width:100%;display:block;text-align:left}
 .profile-banner img{width:100%;height:100%;object-fit:cover;display:block}
 .profile-banner-hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;background:rgba(0,0,0,.35);color:white;font-size:11px;transition:opacity .2s;border-radius:var(--rad)}
 .profile-banner:hover .profile-banner-hint{opacity:1}
 .profile-pic-wrap{position:absolute;bottom:-40px;left:18px}
-.profile-pic{width:78px;height:78px;border-radius:50%;border:3px solid var(--bg);background:var(--brand-soft);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;font-size:30px;box-shadow:0 3px 14px rgba(0,0,0,.45);position:relative}
+.profile-pic{width:78px;height:78px;border-radius:50%;border:3px solid var(--bg);background:var(--brand-soft);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;font-size:30px;box-shadow:0 3px 14px rgba(0,0,0,.45);position:relative;padding:0;font-family:inherit}
 .profile-pic img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
 .profile-pic-hint{position:absolute;inset:0;border-radius:50%;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;font-size:18px}
 .profile-pic:hover .profile-pic-hint{opacity:1}
@@ -376,6 +376,12 @@ input[type=text],input[type=number],select,input[type=time]{
   transition:border-color .15s
 }
 input:focus,select:focus{outline:none;border-color:var(--brand)}
+/* ── SCREEN READER ONLY ── */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ── FOCUS RING (keyboard nav) ── */
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:3px}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none;border-color:var(--brand);box-shadow:0 0 0 2px rgba(192,132,252,.35)}
 input::placeholder{color:var(--t4)}
 select option{background:var(--bg3)}
 /* ── CUSTOM SCROLLBAR ── */
@@ -384,6 +390,7 @@ select option{background:var(--bg3)}
 ::-webkit-scrollbar-thumb{background:rgba(192,132,252,.3);border-radius:99px}
 ::-webkit-scrollbar-thumb:hover{background:rgba(192,132,252,.6)}
 *{scrollbar-width:thin;scrollbar-color:rgba(192,132,252,.3) transparent}
+html,body{scrollbar-width:thin;scrollbar-color:rgba(192,132,252,.3) transparent}
 
 /* ── CARDS ──────────────────────────────────────────────────────────────────── */
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad);padding:18px;box-shadow:var(--shadow-s)}
@@ -686,7 +693,7 @@ select option{background:var(--bg3)}
 .dopa-layout{display:flex;flex-direction:column;gap:16px}
 .dopa-top{display:flex;gap:14px;align-items:flex-start}
 .dice-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad);padding:20px;display:flex;flex-direction:column;align-items:center;gap:12px;width:160px;flex:0 0 160px;order:-1;box-shadow:var(--shadow-s)}
-.dice-face{width:82px;height:82px;background:var(--bg3);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:42px;cursor:pointer;transition:transform .15s,box-shadow .15s;border:2px solid var(--sf);user-select:none}
+.dice-face{width:82px;height:82px;background:var(--bg3);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:42px;cursor:pointer;transition:transform .15s,box-shadow .15s;border:2px solid var(--sf);user-select:none;font-family:inherit;padding:0}
 .dice-face:hover{transform:scale(1.06);box-shadow:0 6px 24px var(--brand-glow);border-color:var(--brand)}
 .dice-face.roll{animation:rolldie .5s ease-out}
 @keyframes rolldie{0%{transform:rotate(0)}25%{transform:rotate(-20deg) scale(1.1)}75%{transform:rotate(20deg) scale(1.1)}100%{transform:rotate(0) scale(1)}}
@@ -764,12 +771,21 @@ select option{background:var(--bg3)}
 .q-note-rich ol{padding-left:18px;margin:4px 0}
 .q-note-rich li{margin:2px 0}
 /* ── block editor ── */
-.nb-editor{padding:2px 0;min-height:60px}
-.nb-block{display:flex;align-items:flex-start;gap:5px;padding:2px 0;border-radius:4px}
-.nb-block:hover .nb-handle,.nb-block:focus-within .nb-handle{opacity:.5}
-.nb-handle{opacity:0;cursor:grab;color:var(--t4);font-size:11px;line-height:1.65;flex-shrink:0;user-select:none;transition:opacity .12s;width:12px;text-align:center}
-.nb-handle:hover{opacity:1!important}.nb-handle:active{cursor:grabbing}
-.nb-block.nb-dragging{opacity:.3}.nb-block.nb-drop-after{border-bottom:2px solid var(--brand)}
+.nb-block{display:flex;align-items:flex-start;gap:5px;padding:2px 0;border-radius:4px;position:relative}
+.nb-block:hover .nb-handle,.nb-block:focus-within .nb-handle{opacity:.55}
+.nb-block:hover .nb-add,.nb-block:focus-within .nb-add{opacity:.45}
+.nb-handle{opacity:0;cursor:grab;color:var(--t4);font-size:12px;line-height:1.65;flex-shrink:0;user-select:none;transition:opacity .12s;width:14px;text-align:center;touch-action:none}
+.nb-handle:hover{opacity:1!important;color:var(--t2)}.nb-handle.nb-grabbing{cursor:grabbing;opacity:1!important}
+.nb-block.nb-dragging{opacity:.25;pointer-events:none}
+.nb-drop-line{position:absolute;left:0;right:0;top:-2px;height:2px;background:var(--brand);border-radius:2px;pointer-events:none;z-index:10;display:none}
+.nb-drop-line.show{display:block}
+.nb-drop-line.show-after{top:auto;bottom:-2px}
+.nb-drop-col{position:absolute;top:2px;bottom:2px;width:3px;background:var(--brand);border-radius:2px;pointer-events:none;z-index:10;display:none}
+.nb-drop-col.show{display:block}
+.nb-drop-col-l{left:-3px}
+.nb-drop-col-r{right:-3px}
+/* drag ghost */
+.nb-drag-ghost{position:fixed;pointer-events:none;z-index:9999;background:var(--bg2);border:1px solid var(--brand);border-radius:var(--rad-s);padding:4px 10px 4px 4px;opacity:.88;box-shadow:0 8px 32px rgba(0,0,0,.5);max-width:520px;font-size:13px;color:var(--t);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.65}
 .nb-content{flex:1;outline:none;font-size:13px;color:var(--t);line-height:1.65;min-height:1.2em;word-break:break-word;padding:1px 0}
 .nb-content:empty::before{content:attr(data-ph);color:var(--t4);pointer-events:none}
 .nb-content a{color:var(--teal);text-decoration:underline}
@@ -791,11 +807,13 @@ select option{background:var(--bg3)}
 .nb-bm-title{font-size:12px;font-weight:600;color:var(--t);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nb-bm-url{font-size:10px;color:var(--t3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nb-bm-del{flex-shrink:0;background:none;border:none;color:var(--t4);cursor:pointer;font-size:16px;line-height:1;padding:2px 4px;border-radius:3px}.nb-bm-del:hover{color:var(--t);background:var(--sf)}
-.nb-slash{position:fixed;z-index:9999;background:var(--bg2);border:1px solid var(--sf2);border-radius:var(--rad-s);box-shadow:0 6px 24px rgba(0,0,0,.45);width:210px;max-height:260px;overflow-y:auto;display:none}
-.nb-slash-item{display:flex;align-items:center;gap:8px;padding:6px 10px;font-size:12px;color:var(--t2);cursor:pointer}
+.nb-slash{position:fixed;z-index:9999;background:var(--bg2);border:1px solid var(--sf2);border-radius:var(--rad-s);box-shadow:0 6px 24px rgba(0,0,0,.45);width:230px;max-height:280px;overflow-y:auto;display:none}
+.nb-slash-item{display:flex;align-items:center;gap:10px;padding:6px 10px;font-size:12px;color:var(--t2);cursor:pointer}
 .nb-slash-item:hover,.nb-slash-item.nbs-on{background:var(--sf)}
 .nb-si-icon{font-size:12px;font-weight:700;color:var(--t3);width:20px;text-align:center;flex-shrink:0}
-.nb-si-label{flex:1;font-size:12px}.nb-si-sub{font-size:10px;color:var(--t4)}
+.nb-si-text{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1}
+.nb-si-label{font-size:12px;color:var(--t)}
+.nb-si-sub{font-size:10px;color:var(--t4);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nb-cols-wrap{display:flex;gap:10px}
 .nb-col{flex:1;min-width:0;border:1px dashed transparent;border-radius:var(--rad-s);padding:4px;transition:border-color .15s}
 .nb-col.nb-col-hover{border-color:var(--brand)}
@@ -806,15 +824,15 @@ select option{background:var(--bg3)}
 .nb-float-title{display:none}
 .nb-float-close{display:none}
 /* in-page note */
-#shared-note{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad);padding:16px;box-shadow:var(--shadow-s);margin-top:14px}
-.nb-toolbar-wrap{padding:0 0 6px;border-bottom:1px solid var(--sf);margin-bottom:6px}
-#nb-editor{min-height:60px;padding:6px 0 2px}
+#shared-note{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad);padding:16px 16px 16px 8px;box-shadow:var(--shadow-s);margin-top:14px}
+#nb-editor{min-height:60px;padding:6px 0 2px;position:relative}
 .nb-url-bar{display:none;align-items:center;gap:5px;padding:5px 10px;border-bottom:1px solid var(--sf);flex-shrink:0;background:var(--bg3)}
 .nb-url-in{flex:1;background:var(--bg2);border:1px solid var(--sf);border-radius:var(--rad-s);color:var(--t);font-family:var(--font);font-size:12px;padding:4px 9px;outline:none}.nb-url-in:focus{border-color:var(--teal)}
 .nb-url-label{font-size:10px;color:var(--t3);white-space:nowrap;flex-shrink:0}
 .nb-cp{display:none;flex-wrap:wrap;gap:5px;padding:7px 10px;border-bottom:1px solid var(--sf);align-items:center;flex-shrink:0;background:var(--bg3)}
 .nb-cp-sw{width:18px;height:18px;border-radius:50%;cursor:pointer;border:2px solid rgba(255,255,255,.1);flex-shrink:0;transition:transform .1s,border-color .1s}.nb-cp-sw:hover{transform:scale(1.25);border-color:rgba(255,255,255,.5)}
 .nb-cp-clr{font-size:10px;color:var(--t3);background:none;border:1px solid var(--sf);border-radius:99px;padding:2px 8px;cursor:pointer;font-family:var(--font)}.nb-cp-clr:hover{color:var(--t);border-color:var(--sf2)}
+.nb-cp-label{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.04em;flex-basis:100%;margin-bottom:1px}
 /* nb add button */
 .nb-add{opacity:0;cursor:pointer;color:var(--t4);font-size:14px;line-height:1.65;flex-shrink:0;user-select:none;transition:opacity .1s;width:14px;text-align:center;background:none;border:none;font-family:var(--font);padding:0}
 .nb-block:hover .nb-add,.nb-block:focus-within .nb-add{opacity:.45}.nb-add:hover{opacity:1!important;color:var(--t2)}
@@ -838,6 +856,7 @@ select option{background:var(--bg3)}
 .nb-ctx-sub{padding:2px 8px 8px;display:flex;flex-wrap:wrap;gap:4px}
 .nb-ctx-chip{font-size:11px;padding:3px 9px;border-radius:99px;border:1px solid var(--sf);color:var(--t3);cursor:pointer;background:var(--bg3);user-select:none}.nb-ctx-chip:hover{border-color:var(--brand);color:var(--brand)}
 .nb-ctx-sw-row{padding:3px 8px 8px;display:flex;gap:5px;align-items:center;flex-wrap:wrap}
+.nb-ctx-sub-label{flex-basis:100%;font-size:10px;color:var(--t4);text-transform:uppercase;letter-spacing:.04em;padding:0 8px 2px}
 .nb-ctx-sw{width:20px;height:20px;border-radius:4px;cursor:pointer;border:2px solid rgba(255,255,255,.1);flex-shrink:0;transition:transform .1s}.nb-ctx-sw:hover{transform:scale(1.18);border-color:rgba(255,255,255,.5)}
 .nb-ctx-sw-none{background:var(--bg3)!important;display:flex!important;align-items:center;justify-content:center;font-size:11px;color:var(--t3)}
 .game-card{margin-top:12px;background:var(--bg3);border:1px solid var(--sf);border-radius:var(--rad-s);padding:12px}
@@ -996,7 +1015,8 @@ select option{background:var(--bg3)}
   <div class="logo-wrap">
     <div style="display:flex;align-items:center;gap:12px">
       <!-- AXIE — brand mascot, header -->
-      <svg id="axie-head-svg" onclick="showAxieGreeting()" title="axie 🌸"
+      <svg id="axie-head-svg" onclick="showAxieGreeting()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showAxieGreeting();}"
+        role="button" tabindex="0" aria-label="say hello to your axie"
         viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"
         style="width:52px;height:52px;flex-shrink:0;cursor:pointer;filter:drop-shadow(0 3px 10px rgba(192,132,252,.3));animation:float-idle 3s ease-in-out infinite">
         <!-- gills left -->
@@ -1050,9 +1070,9 @@ select option{background:var(--bg3)}
         <div class="cycle-title" style="margin-bottom:10px" id="bst-title">🌊 flow tracker</div>
         <div id="bst-content">
           <div class="need-row">
-            <button class="btn bgh need-side" onclick="shiftPeriodDay(-1)">←</button>
+            <button class="btn bgh need-side" onclick="shiftPeriodDay(-1)" aria-label="previous day">←</button>
             <div class="need-goal-mid"><span class="phase-badge" id="p-phase">day 1 · phase 1</span></div>
-            <button class="btn bp need-side" onclick="shiftPeriodDay(1)">→</button>
+            <button class="btn bp need-side" onclick="shiftPeriodDay(1)" aria-label="next day">→</button>
           </div>
           <div class="need-count" id="p-day" style="margin-top:6px">ritual day: 1 / 28</div>
           <div class="need-vis" id="p-vis" style="margin-top:6px"></div>
@@ -1115,16 +1135,19 @@ select option{background:var(--bg3)}
 </div>
 <div class="notif" id="notif"><span id="notif-t">timer done!</span></div>
 
-<div class="tabs">
-  <button class="tbtn active" onclick="switchTab('timers',this)">⏱ timers</button>
-  <button class="tbtn" onclick="switchTab('planner',this)">⚔️ campaign</button>
-  <button class="tbtn" onclick="switchTab('habits',this)">🎮 mini games</button>
-  <button class="tbtn" onclick="switchTab('dopa',this)">🍽 dopa-menu</button>
-  <button class="tbtn" onclick="switchTab('whimsy',this)">🌀 whimsy</button>
+<nav aria-label="main navigation">
+<div class="tabs" role="tablist">
+  <button class="tbtn active" role="tab" aria-selected="true" aria-controls="tab-timers" id="tbtn-timers" onclick="switchTab('timers',this)">⏱ timers</button>
+  <button class="tbtn" role="tab" aria-selected="false" aria-controls="tab-planner" id="tbtn-planner" onclick="switchTab('planner',this)">⚔️ campaign</button>
+  <button class="tbtn" role="tab" aria-selected="false" aria-controls="tab-habits" id="tbtn-habits" onclick="switchTab('habits',this)">🎮 mini games</button>
+  <button class="tbtn" role="tab" aria-selected="false" aria-controls="tab-dopa" id="tbtn-dopa" onclick="switchTab('dopa',this)">🍽 dopa-menu</button>
+  <button class="tbtn" role="tab" aria-selected="false" aria-controls="tab-whimsy" id="tbtn-whimsy" onclick="switchTab('whimsy',this)">🌀 whimsy</button>
 </div>
+</nav>
+<main id="main-content">
 
 <!-- ===== TIMERS ===== -->
-<div class="tpanel active" id="tab-timers">
+<div class="tpanel active" id="tab-timers" role="tabpanel" aria-labelledby="tbtn-timers">
   <div class="tgrid">
     <!-- POMO -->
     <div class="tcard pomo">
@@ -1188,7 +1211,7 @@ select option{background:var(--bg3)}
       <div class="tphase" id="pp">session 1 · focus time</div>
       <div class="sdots" id="sdots"></div>
       <div class="tcur"><div class="tcurl">current quest</div><div class="tcurt" id="ptask">— nothing set —</div></div>
-      <div class="tirow"><input type="text" id="pti" placeholder="what are we doing?" maxlength="80"><button class="btn bgh" onclick="setPTask()">set</button></div>
+      <div class="tirow"><label for="pti" class="sr-only">current quest label</label><input type="text" id="pti" placeholder="what are we doing?" maxlength="80" aria-label="what are we doing?"><button class="btn bgh" onclick="setPTask()">set</button></div>
       <div class="tctrl">
         <button class="btn bp" id="pbtn" onclick="togPomo()" style="flex:1">start</button>
         <button class="btn bgh" onclick="resetPomo()">reset</button>
@@ -1231,7 +1254,7 @@ select option{background:var(--bg3)}
       <div class="tring"><div class="tringf" id="fr" style="width:100%"></div></div>
       <div class="tphase" id="fp">ready to start</div>
       <div class="tcur"><div class="tcurl">current quest</div><div class="tcurt" id="ftask">— nothing set —</div></div>
-      <div class="tirow"><input type="text" id="fti" placeholder="what are we doing?" maxlength="80"><button class="btn bgh" onclick="setFTask()">set</button></div>
+      <div class="tirow"><label for="fti" class="sr-only">current quest label</label><input type="text" id="fti" placeholder="what are we doing?" maxlength="80" aria-label="what are we doing?"><button class="btn bgh" onclick="setFTask()">set</button></div>
       <div class="tctrl">
         <button class="btn bg" id="fbtn" onclick="togFree()" style="flex:1">start</button>
         <button class="btn bgh" onclick="resetFree()">reset</button>
@@ -1266,15 +1289,15 @@ select option{background:var(--bg3)}
 </div>
 
 <!-- ===== PLANNER ===== -->
-<div class="tpanel" id="tab-planner">
+<div class="tpanel" id="tab-planner" role="tabpanel" aria-labelledby="tbtn-planner">
   <div class="nap-banner">
     <div class="nb-icon">😴</div>
     <div class="nb-info">
       <div class="nb-title">nap — mandatory maintenance, not a treat</div>
       <div class="nb-desc">ADHD brains burn through dopamine faster. a nap mid-day is maintenance, not laziness.</div>
       <div class="nb-ctrl">
-        <label>at hour</label><input type="number" id="nhr" value="7" min="1" max="20" step=".5" oninput="updateNapWall()">
-        <label>for</label><input type="number" id="ndur" value="30" min="10" max="120">
+        <label for="nhr">at hour</label><input type="number" id="nhr" value="7" min="1" max="20" step=".5" aria-label="nap start hour" oninput="updateNapWall()">
+        <label for="ndur">for</label><input type="number" id="ndur" value="30" min="10" max="120" aria-label="nap duration in minutes">
         <label>min</label>
         <span class="nb-wall" id="nwall"></span>
         <button class="btn bo" onclick="addNap()" style="font-size:12px">+ add nap</button>
@@ -1292,12 +1315,12 @@ select option{background:var(--bg3)}
         <div class="qfield"><label>duration</label><div style="display:flex;align-items:center;gap:6px"><input type="number" id="qdur-h" value="0" min="0" max="12" step="1" style="width:48px;padding:5px 6px"><span style="font-size:12px;color:var(--t3)">h</span><input type="number" id="qdur-m" value="30" min="0" max="55" step="5" style="width:48px;padding:5px 6px"><span style="font-size:12px;color:var(--t3)">min</span></div></div>
         <div class="qfield">
           <label>quest type</label>
-          <div class="priority-btns">
-            <div class="pbtn sel-main" id="pb-main" onclick="selPri('main')"><span class="pi">⚔️</span><span class="pt">main</span></div>
-            <div class="pbtn" id="pb-escort" onclick="selPri('escort')"><span class="pi">🛡️</span><span class="pt">escort</span></div>
-            <div class="pbtn" id="pb-fetch" onclick="selPri('fetch')"><span class="pi">🎒</span><span class="pt">fetch</span></div>
-            <div class="pbtn" id="pb-delivery" onclick="selPri('delivery')"><span class="pi">📦</span><span class="pt">delivery</span></div>
-            <div class="pbtn" id="pb-side" onclick="selPri('side')"><span class="pi">🗡️</span><span class="pt">side</span></div>
+          <div class="priority-btns" role="group" aria-label="quest type">
+            <button class="pbtn sel-main" id="pb-main" onclick="selPri('main')" aria-pressed="true"><span class="pi">⚔️</span><span class="pt">main</span></button>
+            <button class="pbtn" id="pb-escort" onclick="selPri('escort')" aria-pressed="false"><span class="pi">🛡️</span><span class="pt">escort</span></button>
+            <button class="pbtn" id="pb-fetch" onclick="selPri('fetch')" aria-pressed="false"><span class="pi">🎒</span><span class="pt">fetch</span></button>
+            <button class="pbtn" id="pb-delivery" onclick="selPri('delivery')" aria-pressed="false"><span class="pi">📦</span><span class="pt">delivery</span></button>
+            <button class="pbtn" id="pb-side" onclick="selPri('side')" aria-pressed="false"><span class="pi">🗡️</span><span class="pt">side</span></button>
           </div>
         </div>
         <button class="btn bp" onclick="addQuest()" style="width:100%">+ add quest</button>
@@ -1348,7 +1371,7 @@ select option{background:var(--bg3)}
 </div>
 
 <!-- ===== HABITS / MINI GAMES ===== -->
-<div class="tpanel" id="tab-habits">
+<div class="tpanel" id="tab-habits" role="tabpanel" aria-labelledby="tbtn-habits">
   <div class="hgrid">
     <div class="hcard">
       <div class="hcard-title">🎮 daily quests</div>
@@ -1375,9 +1398,9 @@ select option{background:var(--bg3)}
             <div class="need-title">💧 hydration</div><div style="font-size:10px;color:var(--t3);margin-top:1px">tap + each glass you drink</div>
           </div>
           <div class="need-row">
-            <button class="btn bgh need-side" onclick="changeNeed('water',-1)">−</button>
-            <div class="need-goal-mid">goal <input type="number" id="w-goal" min="1" max="20" value="8" oninput="setNeedGoal('water',this.value)"></div>
-            <button class="btn bg need-side" onclick="changeNeed('water',1)">+</button>
+            <button class="btn bgh need-side" onclick="changeNeed('water',-1)" aria-label="remove water">−</button>
+            <div class="need-goal-mid">goal <input type="number" id="w-goal" min="1" max="20" value="8" aria-label="water goal" oninput="setNeedGoal('water',this.value)"></div>
+            <button class="btn bg need-side" onclick="changeNeed('water',1)" aria-label="add water">+</button>
           </div>
           <div class="need-count" id="w-count">0 / 8 glasses</div>
           <div class="need-vis" id="w-vis"></div>
@@ -1387,9 +1410,9 @@ select option{background:var(--bg3)}
             <div class="need-title">🌙 last night</div><div style="font-size:10px;color:var(--t3);margin-top:1px">tap + for each hour you slept</div>
           </div>
           <div class="need-row">
-            <button class="btn bgh need-side" onclick="changeNeed('sleep',-1)">−</button>
-            <div class="need-goal-mid">goal <input type="number" id="s-goal" min="1" max="16" value="8" oninput="setNeedGoal('sleep',this.value)"></div>
-            <button class="btn bp need-side" onclick="changeNeed('sleep',1)">+</button>
+            <button class="btn bgh need-side" onclick="changeNeed('sleep',-1)" aria-label="remove sleep hour">−</button>
+            <div class="need-goal-mid">goal <input type="number" id="s-goal" min="1" max="16" value="8" aria-label="sleep goal" oninput="setNeedGoal('sleep',this.value)"></div>
+            <button class="btn bp need-side" onclick="changeNeed('sleep',1)" aria-label="add sleep hour">+</button>
           </div>
           <div class="need-count" id="s-count">0 / 8 hours</div>
           <div class="need-vis" id="s-vis"></div>
@@ -1399,9 +1422,9 @@ select option{background:var(--bg3)}
             <div class="need-title">🍽 meals today</div><div style="font-size:10px;color:var(--t3);margin-top:1px">tap + after each meal</div>
           </div>
           <div class="need-row">
-            <button class="btn bgh need-side" onclick="changeNeed('food',-1)">−</button>
-            <div class="need-goal-mid">goal <input type="number" id="f-goal" min="1" max="10" value="3" oninput="setNeedGoal('food',this.value)"></div>
-            <button class="btn bo need-side" onclick="changeNeed('food',1)">+</button>
+            <button class="btn bgh need-side" onclick="changeNeed('food',-1)" aria-label="remove meal">−</button>
+            <div class="need-goal-mid">goal <input type="number" id="f-goal" min="1" max="10" value="3" aria-label="food goal" oninput="setNeedGoal('food',this.value)"></div>
+            <button class="btn bo need-side" onclick="changeNeed('food',1)" aria-label="add meal">+</button>
           </div>
           <div class="need-count" id="f-count">0 / 3 meals</div>
           <div class="need-vis" id="f-vis"></div>
@@ -1423,14 +1446,14 @@ select option{background:var(--bg3)}
 </div>
 
 <!-- ===== DOPA MENU ===== -->
-<div class="tpanel" id="tab-dopa">
+<div class="tpanel" id="tab-dopa" role="tabpanel" aria-labelledby="tbtn-dopa">
   <div class="dopa-layout">
     <div class="dopa-top">
       <!-- DICE -->
       <div class="dice-card">
         <div style="font-size:13px;font-weight:700;color:var(--t)">🎲 what should i do?</div>
         <div style="font-size:11px;color:var(--t3);text-align:center">can't decide? roll the dice!</div>
-        <div class="dice-face" id="dice" onclick="rollDice()">🎲</div>
+        <button class="dice-face" id="dice" onclick="rollDice()" aria-label="roll dice for random activity">🎲</button>
         <div class="dice-result" id="dice-res">tap the dice to get a random activity from your menu ✨</div>
         <div class="dice-cat" id="dice-cat"></div>
       </div>
@@ -1470,7 +1493,7 @@ select option{background:var(--bg3)}
 </div>
 
 <!-- ===== WHIMSY ===== -->
-<div class="tpanel" id="tab-whimsy">
+<div class="tpanel" id="tab-whimsy" role="tabpanel" aria-labelledby="tbtn-whimsy">
   <div style="display:flex;flex-direction:column;gap:14px">
 
     <!-- today's whimsy -->
@@ -1485,7 +1508,7 @@ select option{background:var(--bg3)}
       <div class="dice-card" style="width:170px;flex:0 0 170px">
         <div style="font-size:13px;font-weight:700;color:var(--t);text-align:center">feeling overwhelmed?</div>
         <div style="font-size:11px;color:var(--t3);text-align:center">roll for a tiny joyful act</div>
-        <div class="dice-face" id="whimsy-dice" onclick="rollWhimsy()">🌀</div>
+        <button class="dice-face" id="whimsy-dice" onclick="rollWhimsy()" aria-label="roll dice for random whimsy">🌀</button>
         <div class="dice-result" id="whimsy-res">tap the dice for a random whimsy ✨</div>
       </div>
 
@@ -1504,21 +1527,23 @@ select option{background:var(--bg3)}
   </div>
 </div>
 
+</main>
+
 <!-- ===== PROFILE ===== -->
 <div class="tpanel" id="tab-profile">
 
   <!-- banner + pic -->
   <div class="profile-banner-wrap">
-    <div class="profile-banner" id="profile-banner" onclick="uploadProfileBanner()" title="click to change banner">
-      <img id="profile-banner-img" src="" alt="" style="display:none">
+    <button class="profile-banner" id="profile-banner" onclick="uploadProfileBanner()" aria-label="change profile banner">
+      <img id="profile-banner-img" src="" alt="your profile banner" style="display:none">
       <div class="profile-banner-hint">🖼 change banner</div>
-    </div>
+    </button>
     <input type="file" id="profile-banner-input" accept="image/*,.gif" style="display:none" onchange="applyProfileBanner(this)">
     <div class="profile-pic-wrap">
-      <div class="profile-pic" id="profile-pic" onclick="uploadProfilePic()" title="click to change picture">
+      <button class="profile-pic" id="profile-pic" onclick="uploadProfilePic()" aria-label="change profile picture">
         <span id="profile-pic-text">🌸</span>
         <div class="profile-pic-hint">📷</div>
-      </div>
+      </button>
       <input type="file" id="profile-pic-input" accept="image/*,.gif" style="display:none" onchange="applyProfilePic(this)">
     </div>
   </div>
@@ -1916,30 +1941,6 @@ select option{background:var(--bg3)}
   <div class="qh-header" style="margin-bottom:6px">
     <div class="qh-title">📝 don't you forget about me</div>
   </div>
-  <div class="nb-toolbar-wrap">
-    <div class="qh-toolbar">
-      <button class="qtb" onclick="nbFmt('bold')" title="bold"><b>B</b></button>
-      <button class="qtb" onclick="nbFmt('italic')" title="italic"><i>I</i></button>
-      <div class="nb-sep"></div>
-      <button class="qtb" onclick="nbSetType('h1')" title="heading 1">H1</button>
-      <button class="qtb" onclick="nbSetType('h2')" title="heading 2">H2</button>
-      <button class="qtb" onclick="nbSetType('h3')" title="heading 3">H3</button>
-      <div class="nb-sep"></div>
-      <button class="qtb" onclick="nbSetType('bullet')" title="bullet list">•</button>
-      <button class="qtb" onclick="nbSetType('numbered')" title="numbered list">1.</button>
-      <div class="nb-sep"></div>
-      <button class="qtb" onclick="nbSetType('quote')" title="quote">"</button>
-      <button class="qtb" onclick="nbSetType('callout')" title="callout box">💡</button>
-      <button class="qtb" onclick="nbAddDivider()" title="divider">—</button>
-      <div class="nb-sep"></div>
-      <button class="qtb" onclick="nbOpenUrlBar('link')" title="link selected text">🔗</button>
-      <button class="qtb" onclick="nbOpenUrlBar('bookmark')" title="bookmark card">⊞</button>
-      <div class="nb-sep"></div>
-      <button class="qtb" id="qtb-cols" onclick="nbToggleCols()" title="two columns">⊟</button>
-      <div class="nb-sep"></div>
-      <button class="qtb" id="qtb-cp" onclick="nbToggleCp()" title="text colour" style="font-weight:800;text-decoration:underline;text-decoration-color:var(--brand);text-underline-offset:2px">A</button>
-    </div>
-  </div>
   <div class="nb-cp" id="nb-cp"></div>
   <div class="nb-url-bar" id="nb-url-bar">
     <span class="nb-url-label" id="nb-url-label">link:</span>
@@ -1957,7 +1958,7 @@ select option{background:var(--bg3)}
   <button class="nb-sel-btn" onmousedown="event.preventDefault();document.execCommand('strikeThrough');nbSave()" title="strikethrough" style="text-decoration:line-through">S</button>
   <div class="nb-sel-sep"></div>
   <button class="nb-sel-btn" onmousedown="event.preventDefault();nbSelLink()" title="link">🔗</button>
-  <button class="nb-sel-btn" onmousedown="event.preventDefault();nbToggleCp()" title="colour" style="font-weight:800;text-decoration:underline;text-decoration-color:var(--brand);text-underline-offset:2px">A</button>
+  <button class="nb-sel-btn" onmousedown="event.preventDefault();nbToggleCp()" title="text colour" style="font-weight:800;text-decoration:underline;text-decoration-color:var(--brand);text-underline-offset:2px">A</button>
 </div>
 <div class="nb-ctx" id="nb-ctx"></div>
 
@@ -1986,9 +1987,9 @@ select option{background:var(--bg3)}
 </div>
 
 <div class="modal-overlay" id="modal-roadmap" onclick="if(event.target===this)closeModal()">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">×</button>
-    <div class="modal-title">🗺️ roadmap</div>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-roadmap-title">
+    <button class="modal-close" onclick="closeModal()" aria-label="close">×</button>
+    <div class="modal-title" id="modal-roadmap-title">🗺️ roadmap</div>
     <div class="rm-disclaimer">this is a living wishlist, not a contract. things shift, priorities change, and that's okay 💜 nothing here is a promise — everything here is a possibility.</div>
 
     <div class="rm-tier">
@@ -2028,9 +2029,9 @@ select option{background:var(--bg3)}
 </div>
 
 <div class="modal-overlay" id="modal-news" onclick="if(event.target===this)closeModal()">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">×</button>
-    <div class="modal-title">📢 news</div>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-news-title">
+    <button class="modal-close" onclick="closeModal()" aria-label="close">×</button>
+    <div class="modal-title" id="modal-news-title">📢 news</div>
     <div style="text-align:center;padding:24px 0">
       <div style="font-size:28px;margin-bottom:10px">🌸</div>
       <div style="font-size:13px;color:var(--t2);font-weight:700">no announcements right now</div>
@@ -2039,9 +2040,16 @@ select option{background:var(--bg3)}
   </div>
 </div>
 <div class="modal-overlay" id="modal-patchnotes" onclick="if(event.target===this)closeModal()">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">×</button>
-    <div class="modal-title">📋 patch notes</div>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-patchnotes-title">
+    <button class="modal-close" onclick="closeModal()" aria-label="close">×</button>
+    <div class="modal-title" id="modal-patchnotes-title">📋 patch notes</div>
+    <div class="pn-entry">
+      <span class="pn-ver">v0.2.0</span><span class="pn-date">june 2026 — notes redesign</span>
+      <div class="pn-item">📝 notes rebuilt as a Notion-style block editor — type / for quick commands, drag blocks to reorder</div>
+      <div class="pn-item">📑 multi-column layout — drag a block to an edge to split into up to 3 columns</div>
+      <div class="pn-item">⭐ star list block for quick highlights</div>
+      <div class="pn-item">🎨 per-block text and background colours</div>
+    </div>
     <div class="pn-entry">
       <span class="pn-ver">v0.1.0</span><span class="pn-date">may 2026 — initial release</span>
       <div class="pn-item">⚔️ campaign tab — quest board with 5 quest types, loadouts, auto-scheduler</div>
@@ -2057,9 +2065,9 @@ select option{background:var(--bg3)}
   </div>
 </div>
 <div class="modal-overlay" id="modal-legal" onclick="if(event.target===this)closeModal()">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">×</button>
-    <div class="modal-title">⚖️ legal</div>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-legal-title">
+    <button class="modal-close" onclick="closeModal()" aria-label="close">×</button>
+    <div class="modal-title" id="modal-legal-title">⚖️ legal</div>
     <div class="modal-section">
       <h3>privacy policy</h3>
       <p>mindquestor does not collect, store, or transmit any personal data. everything you add to the app — habits, quests, vision board images, settings — is stored entirely in your browser's localStorage. nothing is sent to any server. no account is needed to use mindquestor. there is no required login, no email, no analytics, and no tracking of any kind.</p>
@@ -2086,9 +2094,9 @@ select option{background:var(--bg3)}
   </div>
 </div>
 <div class="modal-overlay" id="modal-faq" onclick="if(event.target===this)closeModal()">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">×</button>
-    <div class="modal-title">❓ faq</div>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-faq-title">
+    <button class="modal-close" onclick="closeModal()" aria-label="close">×</button>
+    <div class="modal-title" id="modal-faq-title">❓ faq</div>
     <div class="modal-section"><h3>what is mindquestor?</h3><p>a free productivity app built by and for neurodivergent people — ADHD, autistic, chronically ill, disabled. no clinical tone, no dark patterns, no "just try harder".</p></div>
     <div class="modal-section"><h3>does it cost anything?</h3><p>mindquestor is free forever. no subscription, no premium tier, no hidden costs. if you want to support development you can buy us a coffee on ko-fi — but you never have to.</p></div>
     <div class="modal-section"><h3>do i need an account?</h3><p>no account is needed to get started — open the app and use it straight away. no email, no sign-up required.</p></div>
@@ -2100,9 +2108,9 @@ select option{background:var(--bg3)}
   </div>
 </div>
 <div class="modal-overlay" id="modal-feedback" onclick="if(event.target===this)closeModal()">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">×</button>
-    <div class="modal-title">💬 feedback</div>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-feedback-title">
+    <button class="modal-close" onclick="closeModal()" aria-label="close">×</button>
+    <div class="modal-title" id="modal-feedback-title">💬 feedback</div>
     <p style="font-size:12px;color:var(--t2);line-height:1.7;margin-bottom:14px">mindquestor is built by one person, for people like us. your feedback shapes what gets built next 💜</p>
     <form name="feedback" method="POST" data-netlify="true" id="fb-form" onsubmit="submitFbForm(event)">
       <input type="hidden" name="form-name" value="feedback">
@@ -2135,7 +2143,27 @@ select option{background:var(--bg3)}
 <script>
 function _debounce(fn,ms){let t;return function(){clearTimeout(t);t=setTimeout(fn,ms);};}
 const updateDayDebounced=_debounce(function(){updateDay();},300);
-function openModal(id){document.querySelectorAll(".modal-overlay").forEach(m=>m.classList.remove("open"));const el=document.getElementById(id);if(el)el.classList.add("open");}
+let _modalPrevFocus=null;
+function openModal(id){
+  document.querySelectorAll(".modal-overlay").forEach(m=>m.classList.remove("open"));
+  const el=document.getElementById(id);
+  if(!el)return;
+  _modalPrevFocus=document.activeElement;
+  el.classList.add("open");
+  const box=el.querySelector(".modal-box");
+  const firstFocusable=box&&box.querySelector('button,a,[tabindex]:not([tabindex="-1"])');
+  if(firstFocusable)firstFocusable.focus();
+  if(box)box.addEventListener("keydown",_trapFocus,{capture:true});
+}
+function _trapFocus(e){
+  if(e.key!=="Tab")return;
+  const box=e.currentTarget;
+  const focusable=Array.from(box.querySelectorAll('button,a,input,select,textarea,[tabindex]:not([tabindex="-1"])')).filter(el=>!el.disabled&&el.offsetParent!==null);
+  if(!focusable.length)return;
+  const first=focusable[0],last=focusable[focusable.length-1];
+  if(e.shiftKey){if(document.activeElement===first){e.preventDefault();last.focus();}}
+  else{if(document.activeElement===last){e.preventDefault();first.focus();}}
+}
 function setFbType(el,type){
   document.querySelectorAll(".fb-type-btn").forEach(b=>b.classList.remove("active"));
   el.classList.add("active");
@@ -2159,7 +2187,13 @@ async function submitFbForm(e){
   }
 }
 function closeModal(){
-  document.querySelectorAll(".modal-overlay").forEach(m=>m.classList.remove("open"));
+  document.querySelectorAll(".modal-overlay").forEach(m=>{
+    m.classList.remove("open");
+    const box=m.querySelector(".modal-box");
+    if(box)box.removeEventListener("keydown",_trapFocus,{capture:true});
+  });
+  if(_modalPrevFocus&&_modalPrevFocus.focus)_modalPrevFocus.focus();
+  _modalPrevFocus=null;
   const form=document.getElementById("fb-form");
   const suc=document.getElementById("fb-success");
   if(form){form.reset();form.style.display="";}
@@ -2609,7 +2643,7 @@ function switchProfileSection(s,el){
   if(s==="vision")renderVisionBoard();
   if(s==="shelf"&&activeBook)openBook(activeBook);
 }
-function switchTab(n,el){activeTab=n;localStorage.setItem('fb-tab',n);document.querySelectorAll('.tpanel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));const panel=document.getElementById('tab-'+n);if(panel)panel.classList.add('active');if(el)el.classList.add('active');updateSharedNoteVisibility();if(n==='profile'){updateProfileHeader();loadProfileMeta();loadNote();if(activeProfileSection==='vision')renderVisionBoard();}if(tourActive&&(TOUR_STEPS[tourStep]?.tab===n||TOUR_STEPS[tourStep]?.highlightAll))setTimeout(tourNext,220);}
+function switchTab(n,el){activeTab=n;localStorage.setItem('fb-tab',n);document.querySelectorAll('.tpanel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tbtn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});const panel=document.getElementById('tab-'+n);if(panel)panel.classList.add('active');if(el){el.classList.add('active');el.setAttribute('aria-selected','true');}updateSharedNoteVisibility();if(n==='profile'){updateProfileHeader();loadProfileMeta();loadNote();if(activeProfileSection==='vision')renderVisionBoard();}if(tourActive&&(TOUR_STEPS[tourStep]?.tab===n||TOUR_STEPS[tourStep]?.highlightAll))setTimeout(tourNext,220);}
 
 // ===================== NOTIF =====================
 let nT;function showNotif(m){const b=document.getElementById('notif');document.getElementById('notif-t').textContent=m;b.classList.add('show');clearTimeout(nT);nT=setTimeout(()=>b.classList.remove('show'),5000);try{const c=new AudioContext(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.setValueAtTime(520,c.currentTime);o.frequency.setValueAtTime(680,c.currentTime+.1);g.gain.setValueAtTime(.15,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.45);o.start();o.stop(c.currentTime+.45)}catch(e){}}
@@ -2673,7 +2707,7 @@ const RECOMMENDED_QUESTS=[
   {name:'✏️ journal or brain dump',dur:0.33,pri:'side'},
   {name:'🌿 walk or fresh air',dur:0.5,pri:'side'},
 ];
-function selPri(p){qPri=p;['main','escort','fetch','delivery','side'].forEach(pr=>{document.getElementById('pb-'+pr).className='pbtn'+(p===pr?' sel-'+pr:'');})}
+function selPri(p){qPri=p;['main','escort','fetch','delivery','side'].forEach(pr=>{const btn=document.getElementById('pb-'+pr);btn.className='pbtn'+(p===pr?' sel-'+pr:'');btn.setAttribute('aria-pressed',p===pr?'true':'false');})}
 function addQuest(){const n=document.getElementById('qname').value.trim();const dh=parseInt(document.getElementById('qdur-h').value)||0;const dm=parseInt(document.getElementById('qdur-m').value)||0;const d=dh+dm/60||0.25;if(!n)return document.getElementById('qname').focus();quests.push({id:Date.now(),name:n,dur:d,pri:qPri});document.getElementById('qname').value='';document.getElementById('qdur-h').value='0';document.getElementById('qdur-m').value='30';renderQList();saveQuickHub()}
 function addRecommendedQuest(idx){const q=RECOMMENDED_QUESTS[idx];if(!q)return;quests.push({id:Date.now()+Math.random(),name:q.name,dur:q.dur,pri:q.pri});renderQList();saveQuickHub()}
 function renderPlannerRecs(){const el=document.getElementById('planner-recs');if(!el)return;el.innerHTML=RECOMMENDED_QUESTS.map((q,i)=>{const e={main:'⚔️',escort:'🛡️',fetch:'🎒',delivery:'📦',side:'🗡️'}[q.pri]||'⚔️';return`<button class="rec-pill" onclick="addRecommendedQuest(${i})">${e} ${esc(q.name)} · ${hLbl(q.dur)}</button>`}).join('')}
@@ -3565,8 +3599,8 @@ function updateProfileHeader(){
 }
 
 function updateGreeting(){const tag=document.getElementById('axie-tagline');if(tag)tag.textContent=userName?`axie says hi, ${userName}! 🌸`:'axie says hi! 🌸'}
-function showAxieGreeting(){const list=allMotivations();const m=list[Math.floor(Math.random()*list.length)]||'you got this ✨';const b=document.getElementById('axie-bubble');const axieEl=document.querySelector('[title="axie 🌸"]');if(axieEl){const r=axieEl.getBoundingClientRect();b.style.left=r.left+'px';b.style.top=(r.bottom+10)+'px'}b.textContent='axie: '+m;b.classList.add('show');clearTimeout(b._t);b._t=setTimeout(()=>b.classList.remove('show'),3500)}
-function toggleSettings(){if(typeof activeTab!=='undefined'&&activeTab==='settings'){switchTab(prevTab||'timers',document.getElementById('btn-'+(prevTab||'timers')))}else{prevTab=activeTab||'timers';switchTab('settings')}}
+function showAxieGreeting(){const list=allMotivations();const m=list[Math.floor(Math.random()*list.length)]||'you got this ✨';const b=document.getElementById('axie-bubble');const axieEl=document.getElementById('axie-head-svg');if(axieEl){const r=axieEl.getBoundingClientRect();b.style.left=r.left+'px';b.style.top=(r.bottom+10)+'px'}b.textContent='axie: '+m;b.classList.add('show');clearTimeout(b._t);b._t=setTimeout(()=>b.classList.remove('show'),3500)}
+function toggleSettings(){if(typeof activeTab!=='undefined'&&activeTab==='settings'){switchTab(prevTab||'timers',document.getElementById('tbtn-'+(prevTab||'timers')))}else{prevTab=activeTab||'timers';switchTab('settings')}}
 let bstEnabled=false;
 function toggleBST(){bstEnabled=!bstEnabled;periodTracker.enabled=bstEnabled;renderBSTState();saveQuickHub()}
 function renderBSTState(){const wrap=document.getElementById('tracker-wrap');const settTog=document.getElementById('settings-bst-toggle');const settContent=document.getElementById('tracker-settings-content');if(wrap)wrap.style.display=bstEnabled?'':'none';if(settTog)settTog.className='tog-sw'+(bstEnabled?' on':'');if(settContent)settContent.style.display=bstEnabled?'':'none';}
@@ -3583,14 +3617,17 @@ const NB_SLASH_ITEMS=[
   {type:'h2',    icon:'H2', label:'Heading 2', desc:'section title'},
   {type:'h3',    icon:'H3', label:'Heading 3', desc:'small label'},
   {type:'bullet',icon:'•',  label:'Bullet',    desc:'unordered list'},
+  {type:'star',  icon:'★',  label:'Star list', desc:'starred list'},
   {type:'numbered',icon:'1.',label:'Numbered', desc:'ordered list'},
   {type:'quote', icon:'"',  label:'Quote',     desc:'highlighted quote'},
   {type:'callout',icon:'💡',label:'Callout',   desc:'coloured callout box'},
   {type:'divider',icon:'—', label:'Divider',   desc:'horizontal line'},
   {type:'bookmark',icon:'⊞',label:'Bookmark', desc:'link preview card'},
+  {type:'columns', icon:'⊟', label:'Columns',  desc:'toggle two-column layout'},
+  {type:'color',   icon:'A',  label:'Color',    desc:'highlight block background'},
 ];
 const NB_CALLOUT_ICONS=['💡','⚠️','✅','🔥','💬','📌','🎯','⭐','💜','🌙','🚀','🧠'];
-let nbBlocks=[],nbCols=false,nbDragId=null,nbFocusId=null;
+let nbBlocks=[],nbCols=false,nbColOrder=[1],nbDragId=null,nbFocusId=null;
 let nbSlashId=null,nbSlashQ='',nbSlashIdx=0,nbSlashList=[];
 function _nbId(){return 'nb'+Date.now().toString(36)+Math.random().toString(36).slice(2);}
 function nbCollect(){
@@ -3602,7 +3639,7 @@ function nbCollect(){
 }
 function nbSave(){
   nbCollect();
-  localStorage.setItem('fb-note2',JSON.stringify({blocks:nbBlocks,cols:nbCols}));
+  localStorage.setItem('fb-note2',JSON.stringify({blocks:nbBlocks,cols:nbCols,colOrder:nbColOrder}));
   const pn=document.getElementById('note-profile');
   if(pn&&pn!==document.activeElement){
     pn.innerHTML=nbBlocks.filter(b=>b.content).map(b=>{
@@ -3617,45 +3654,58 @@ function nbSave(){
 function nbLoad(){
   try{
     const r2=localStorage.getItem('fb-note2');
-    if(r2){const d=JSON.parse(r2);nbBlocks=d.blocks||[];nbCols=!!d.cols;nbRender();return;}
+    if(r2){const d=JSON.parse(r2);nbBlocks=d.blocks||[];nbCols=!!d.cols;nbColOrder=d.colOrder||[1];nbRender();return;}
     const r1=localStorage.getItem('fb-note');
     if(r1){
       const d=JSON.parse(r1);
       nbBlocks=[{id:_nbId(),type:'p',content:d.a||'',col:1}];
       if(d.b&&d.cols)nbBlocks.push({id:_nbId(),type:'p',content:d.b,col:2});
-      nbCols=!!d.cols;nbRender();nbSave();return;
+      nbCols=!!d.cols;nbColOrder=nbCols?[1,2]:[1];nbRender();nbSave();return;
     }
   }catch(e){}
   nbBlocks=[{id:_nbId(),type:'p',content:'',col:1}];
   nbRender();
 }
 function loadNote(){nbLoad();}
+function nbCleanupCols(){
+  if(!nbCols){nbColOrder=[1];return;}
+  const present=[...new Set(nbBlocks.map(b=>b.col||1))];
+  nbColOrder=nbColOrder.filter(c=>present.includes(c));
+  present.forEach(c=>{if(!nbColOrder.includes(c))nbColOrder.push(c);});
+  if(nbColOrder.length<2){nbCols=false;nbColOrder=[1];nbBlocks.forEach(b=>{b.col=1;});}
+  else if(nbColOrder.length>3)nbColOrder=nbColOrder.slice(0,3);
+}
+function nbColIdx(c){const i=nbColOrder.indexOf(c);return i<0?0:i;}
+function nbUnusedColId(){return [1,2,3].find(c=>!nbColOrder.includes(c));}
 function nbRender(){
   const editor=document.getElementById('nb-editor');
   if(!editor)return;
+  nbCleanupCols();
   document.getElementById('qtb-cols')?.classList.toggle('qtb-on',nbCols);
   let num=0;
   function bHtml(b){
     const t=b.type;
-    const hdl='<button class="nb-add" onclick="nbAddBelow(\''+b.id+'\')" title="add block">+</button><span class="nb-handle" draggable="true" ondragstart="nbDragStart(event,\''+b.id+'\')" ondragend="nbDragEnd()" onclick="nbOpenCtx(event,\''+b.id+'\')" title="drag or click for options">⠿</span>';
+    const hdl='<div class="nb-drop-line"></div><div class="nb-drop-col nb-drop-col-l"></div><div class="nb-drop-col nb-drop-col-r"></div><button class="nb-add" onclick="nbAddBelow(\''+b.id+'\')" title="add block below">+</button><span class="nb-handle" onpointerdown="nbDragPointerDown(event,\''+b.id+'\')" onclick="nbOpenCtx(event,\''+b.id+'\')" title="drag to reorder · click for options">⠿</span>';
     const bgAttr=b.bg?' data-bg="'+b.bg+'"':'';
-    if(t==='divider')return '<div class="nb-block" data-id="'+b.id+'" data-type="divider"'+bgAttr+' ondragover="nbDragOver(event,\''+b.id+'\')" ondrop="nbDrop(event,\''+b.id+'\')">'+hdl+'<div class="nb-divider-line"></div></div>';
+    if(t==='divider')return '<div class="nb-block" data-id="'+b.id+'" data-type="divider"'+bgAttr+'>'+hdl+'<div class="nb-divider-line"></div></div>';
     if(t==='bookmark'){
       const url=b.url||'';let host='';try{host=new URL(url.startsWith('http')?url:'https://'+url).hostname;}catch(e){}
       const fav='https://www.google.com/s2/favicons?domain='+host+'&sz=16';
-      return '<div class="nb-block" data-id="'+b.id+'" data-type="bookmark"'+bgAttr+' ondragover="nbDragOver(event,\''+b.id+'\')" ondrop="nbDrop(event,\''+b.id+'\')">'+hdl+'<div class="nb-bm-wrap"><a class="nb-bookmark" href="'+url+'" target="_blank" rel="noopener"><img class="nb-bm-fav" src="'+fav+'" onerror="this.style.display=\'none\'"><div class="nb-bm-info"><span class="nb-bm-title">'+esc(b.title||host||url)+'</span><span class="nb-bm-url">'+esc(host)+'</span></div></a><button class="nb-bm-del" onclick="nbDeleteBlock(\''+b.id+'\')" title="remove">×</button></div></div>';
+      return '<div class="nb-block" data-id="'+b.id+'" data-type="bookmark"'+bgAttr+'>'+hdl+'<div class="nb-bm-wrap"><a class="nb-bookmark" href="'+url+'" target="_blank" rel="noopener"><img class="nb-bm-fav" src="'+fav+'" onerror="this.style.display=\'none\'"><div class="nb-bm-info"><span class="nb-bm-title">'+esc(b.title||host||url)+'</span><span class="nb-bm-url">'+esc(host)+'</span></div></a><button class="nb-bm-del" onclick="nbDeleteBlock(\''+b.id+'\')" title="remove">×</button></div></div>';
     }
     if(t==='numbered'){num++;}else{num=0;}
-    const prefix=t==='bullet'?'<span class="nb-prefix">•</span>':t==='numbered'?'<span class="nb-prefix">'+num+'.</span>':'';
+    const prefix=t==='bullet'?'<span class="nb-prefix">•</span>':t==='star'?'<span class="nb-prefix">★</span>':t==='numbered'?'<span class="nb-prefix">'+num+'.</span>':'';
     const icon=t==='callout'?'<span class="nb-callout-icon" onclick="nbCycleIcon(\''+b.id+'\')">'+(b.icon||'💡')+'</span>':'';
-    const phMap={p:'type something, or / for commands…',h1:'Heading 1',h2:'Heading 2',h3:'Heading 3',bullet:'list item',numbered:'list item',quote:'a quote…',callout:'callout note…'};
-    return '<div class="nb-block" data-id="'+b.id+'" data-type="'+t+'"'+bgAttr+' ondragover="nbDragOver(event,\''+b.id+'\')" ondrop="nbDrop(event,\''+b.id+'\')">'+hdl+icon+prefix+'<div class="nb-content" contenteditable="true" spellcheck="true" data-ph="'+(phMap[t]||'')+'" oninput="nbInput(event,\''+b.id+'\')" onkeydown="nbKeydown(event,\''+b.id+'\')" onpaste="nbPaste(event,\''+b.id+'\')" onfocus="nbFocusId=\''+b.id+'\'"></div></div>';
+    const phMap={p:'type something, or / for commands…',h1:'Heading 1',h2:'Heading 2',h3:'Heading 3',bullet:'list item',star:'list item',numbered:'list item',quote:'a quote…',callout:'callout note…'};
+    return '<div class="nb-block" data-id="'+b.id+'" data-type="'+t+'"'+bgAttr+'>'+hdl+icon+prefix+'<div class="nb-content" contenteditable="true" spellcheck="true" data-ph="'+(phMap[t]||'')+'" oninput="nbInput(event,\''+b.id+'\')" onkeydown="nbKeydown(event,\''+b.id+'\')" onpaste="nbPaste(event,\''+b.id+'\')" onfocus="nbFocusId=\''+b.id+'\'"></div></div>';
   }
   if(nbCols){
-    const c1=nbBlocks.filter(b=>b.col!==2),c2=nbBlocks.filter(b=>b.col===2);
-    num=0;const h1=c1.map(b=>bHtml(b)).join('');
-    num=0;const h2=c2.map(b=>bHtml(b)).join('');
-    editor.innerHTML='<div class="nb-cols-wrap"><div class="nb-col" id="nb-col1" ondragover="nbColOver(event,1)" ondragleave="nbColLeave(1)" ondrop="nbColDrop(event,1)">'+h1+'</div><div class="nb-col" id="nb-col2" ondragover="nbColOver(event,2)" ondragleave="nbColLeave(2)" ondrop="nbColDrop(event,2)">'+h2+'</div></div>';
+    const cols=nbColOrder.map((c,i)=>{
+      const list=nbBlocks.filter(b=>(b.col||1)===c);
+      num=0;const h=list.map(b=>bHtml(b)).join('');
+      return '<div class="nb-col" id="nb-col'+(i+1)+'">'+h+'</div>';
+    });
+    editor.innerHTML='<div class="nb-cols-wrap">'+cols.join('')+'</div>';
   }else{
     num=0;editor.innerHTML=nbBlocks.map(b=>bHtml(b)).join('');
   }
@@ -3689,7 +3739,7 @@ function nbKeydown(e,id){
     e.preventDefault();
     nbCollect();
     const b=nbBlocks.find(x=>x.id===id);
-    const nt=(b&&(b.type==='bullet'||b.type==='numbered'))?b.type:'p';
+    const nt=(b&&(b.type==='bullet'||b.type==='numbered'||b.type==='star'))?b.type:'p';
     const nid=nbInsertAfter(id,nt,b?b.col:1);
     setTimeout(()=>document.querySelector('.nb-block[data-id="'+nid+'"] .nb-content')?.focus(),0);
     return;
@@ -3756,17 +3806,129 @@ function nbFmt(cmd){document.execCommand(cmd,false,null);nbSave();}
 function nbInlineLink(){nbOpenUrlBar('link');}
 function nbToggleCols(){
   nbCollect();nbCols=!nbCols;
-  if(nbCols){const mid=Math.ceil(nbBlocks.length/2);nbBlocks.forEach((b,i)=>{b.col=i<mid?1:2;});}
-  else nbBlocks.forEach(b=>{b.col=1;});
+  if(nbCols){const mid=Math.ceil(nbBlocks.length/2);nbBlocks.forEach((b,i)=>{b.col=i<mid?1:2;});nbColOrder=[1,2];}
+  else{nbBlocks.forEach(b=>{b.col=1;});nbColOrder=[1];}
   nbRender();nbSave();
 }
 function nbColOver(e,c){e.preventDefault();document.getElementById('nb-col'+c)?.classList.add('nb-col-hover');}
 function nbColLeave(c){document.getElementById('nb-col'+c)?.classList.remove('nb-col-hover');}
 function nbColDrop(e,c){e.preventDefault();document.getElementById('nb-col'+c)?.classList.remove('nb-col-hover');if(!nbDragId)return;nbCollect();const b=nbBlocks.find(x=>x.id===nbDragId);if(b){b.col=c;nbRender();nbSave();}}
-function nbDragStart(e,id){nbCollect();nbDragId=id;e.dataTransfer.effectAllowed='move';setTimeout(()=>document.querySelector('.nb-block[data-id="'+id+'"]')?.classList.add('nb-dragging'),0);}
-function nbDragEnd(){document.querySelectorAll('.nb-block.nb-dragging,.nb-block.nb-drop-after').forEach(x=>x.classList.remove('nb-dragging','nb-drop-after'));nbDragId=null;}
-function nbDragOver(e,overId){e.preventDefault();if(!nbDragId||nbDragId===overId)return;document.querySelectorAll('.nb-block.nb-drop-after').forEach(x=>x.classList.remove('nb-drop-after'));document.querySelector('.nb-block[data-id="'+overId+'"]')?.classList.add('nb-drop-after');}
-function nbDrop(e,overId){e.preventDefault();document.querySelectorAll('.nb-block.nb-drop-after').forEach(x=>x.classList.remove('nb-drop-after'));if(!nbDragId||nbDragId===overId)return;const fi=nbBlocks.findIndex(x=>x.id===nbDragId),ti=nbBlocks.findIndex(x=>x.id===overId);if(fi<0||ti<0)return;const[b]=nbBlocks.splice(fi,1);nbBlocks.splice(ti,0,b);nbRender();nbSave();}
+let _nbDragId=null,_nbDragGhost=null,_nbDragOverId=null,_nbDragOverSide=null,_nbDragOverPos=null,_nbDragActive=false,_nbDragSX=0,_nbDragSY=0;
+function nbDragPointerDown(e,id){
+  if(e.button!==0)return;
+  e.preventDefault();
+  nbCollect();
+  _nbDragId=id;_nbDragActive=false;
+  _nbDragSX=e.clientX;_nbDragSY=e.clientY;
+  document.addEventListener('pointermove',_nbOnPointerMove);
+  document.addEventListener('pointerup',_nbOnPointerUp,{once:true});
+}
+function _nbOnPointerMove(e){
+  if(!_nbDragId)return;
+  if(!_nbDragActive){
+    if(Math.hypot(e.clientX-_nbDragSX,e.clientY-_nbDragSY)<6)return;
+    _nbDragActive=true;
+    nbCloseCtx();nbSlashClose();
+    const block=document.querySelector('.nb-block[data-id="'+_nbDragId+'"]');
+    const text=block?.querySelector('.nb-content')?.textContent?.trim()||'…';
+    const ghost=document.createElement('div');
+    ghost.className='nb-drag-ghost';
+    ghost.textContent=text.length>60?text.slice(0,60)+'…':text;
+    document.body.appendChild(ghost);
+    _nbDragGhost=ghost;
+    block?.classList.add('nb-dragging');
+  }
+  if(_nbDragGhost){_nbDragGhost.style.left=(e.clientX+14)+'px';_nbDragGhost.style.top=(e.clientY-12)+'px';}
+  const blocks=[...document.querySelectorAll('.nb-block:not(.nb-dragging)')];
+  document.querySelectorAll('.nb-drop-line.show').forEach(l=>l.classList.remove('show','show-after'));
+  document.querySelectorAll('.nb-drop-col.show').forEach(l=>l.classList.remove('show'));
+  let best=null,bestDist=Infinity;
+  blocks.forEach(bl=>{
+    const r=bl.getBoundingClientRect();
+    const dist=Math.abs(e.clientY-(r.top+r.height/2));
+    if(dist<bestDist){bestDist=dist;best=bl;}
+  });
+  _nbDragOverSide=null;_nbDragOverPos=null;
+  if(best){
+    _nbDragOverId=best.dataset.id;
+    const r=best.getBoundingClientRect();
+    const relX=(e.clientX-r.left)/r.width;
+    _nbDragOverPos=(e.clientY-r.top)/r.height<.5?'before':'after';
+    const tb=nbBlocks.find(x=>x.id===best.dataset.id);
+    const tCol=tb?(tb.col||1):1;
+    const idx=nbCols?nbColIdx(tCol):0;
+    const ncols=nbCols?nbColOrder.length:1;
+    const rightOK=!(idx===ncols-1&&ncols>=3);
+    const leftOK=!(idx===0&&ncols>=3);
+    if(relX>.75&&rightOK){_nbDragOverSide='right';best.querySelector('.nb-drop-col-r')?.classList.add('show');}
+    else if(relX<.25&&leftOK){_nbDragOverSide='left';best.querySelector('.nb-drop-col-l')?.classList.add('show');}
+    else{
+      const line=best.querySelector('.nb-drop-line');
+      if(line){line.classList.add('show');if(_nbDragOverPos==='after')line.classList.add('show-after');}
+    }
+  }
+  else _nbDragOverId=null;
+}
+function _nbOnPointerUp(){
+  document.removeEventListener('pointermove',_nbOnPointerMove);
+  _nbDragGhost?.remove();_nbDragGhost=null;
+  document.querySelectorAll('.nb-block.nb-dragging').forEach(x=>x.classList.remove('nb-dragging'));
+  document.querySelectorAll('.nb-drop-line.show').forEach(l=>l.classList.remove('show','show-after'));
+  document.querySelectorAll('.nb-drop-col.show').forEach(l=>l.classList.remove('show'));
+  if(_nbDragActive&&_nbDragOverId&&_nbDragOverId!==_nbDragId){
+    const fi=nbBlocks.findIndex(x=>x.id===_nbDragId);
+    if(fi>=0){
+      const[b]=nbBlocks.splice(fi,1);
+      const target=nbBlocks.find(x=>x.id===_nbDragOverId);
+      if(target&&_nbDragOverSide){
+        const targetCol=target.col||1;
+        const idx=nbCols?nbColIdx(targetCol):0;
+        const ncols=nbCols?nbColOrder.length:1;
+        let destCol=null,isNew=false,insertOrderIdx=-1;
+        if(_nbDragOverSide==='right'){
+          if(idx===ncols-1){if(ncols<3){destCol=nbUnusedColId();isNew=true;insertOrderIdx=ncols;}}
+          else if(ncols<3){destCol=nbUnusedColId();isNew=true;insertOrderIdx=idx+1;}
+          else destCol=nbColOrder[idx+1];
+        }else{
+          if(idx===0){if(ncols<3){destCol=nbUnusedColId();isNew=true;insertOrderIdx=0;}}
+          else if(ncols<3){destCol=nbUnusedColId();isNew=true;insertOrderIdx=idx;}
+          else destCol=nbColOrder[idx-1];
+        }
+        if(destCol==null){
+          b.col=targetCol;
+          const ti=nbBlocks.indexOf(target);
+          nbBlocks.splice(_nbDragOverPos==='after'?ti+1:ti,0,b);
+        }else{
+          if(!nbCols)nbCols=true;
+          if(isNew)nbColOrder.splice(insertOrderIdx,0,destCol);
+          b.col=destCol;
+          if(isNew){
+            const ti=nbBlocks.indexOf(target);
+            nbBlocks.splice(_nbDragOverSide==='left'?ti:ti+1,0,b);
+          }else{
+            const colList=nbBlocks.filter(x=>(x.col||1)===targetCol);
+            let rowIdx=colList.indexOf(target);
+            if(_nbDragOverPos==='after')rowIdx++;
+            const destList=nbBlocks.filter(x=>(x.col||1)===destCol);
+            let insertIdx;
+            if(rowIdx<destList.length)insertIdx=nbBlocks.indexOf(destList[rowIdx]);
+            else if(destList.length)insertIdx=nbBlocks.indexOf(destList[destList.length-1])+1;
+            else insertIdx=nbBlocks.indexOf(target)+(_nbDragOverPos==='after'?1:0);
+            nbBlocks.splice(insertIdx,0,b);
+          }
+        }
+      }else{
+        let ti=nbBlocks.findIndex(x=>x.id===_nbDragOverId);
+        if(ti<0)ti=nbBlocks.length;
+        b.col=target?(target.col||1):1;
+        const insertIdx=_nbDragOverPos==='after'?ti+1:ti;
+        nbBlocks.splice(insertIdx,0,b);
+      }
+      nbRender();nbSave();
+    }
+  }
+  _nbDragId=null;_nbDragOverId=null;_nbDragActive=false;_nbDragOverSide=null;_nbDragOverPos=null;
+}
 function nbPaste(e,id){
   const text=(e.clipboardData||window.clipboardData).getData('text/plain');
   if(!text)return;
@@ -3804,7 +3966,7 @@ function nbSlashOpen(el){
 function nbSlashRefresh(){
   const menu=document.getElementById('nb-slash');if(!menu)return;
   nbSlashList=nbSlashQ?NB_SLASH_ITEMS.filter(x=>x.label.toLowerCase().includes(nbSlashQ)||x.type.startsWith(nbSlashQ)):NB_SLASH_ITEMS;
-  menu.innerHTML=nbSlashList.map((x,i)=>'<div class="nb-slash-item'+(i===nbSlashIdx?' nbs-on':'')+'" onmousedown="event.preventDefault();nbSlashApplyType(\''+x.type+'\')"><span class="nb-si-icon">'+x.icon+'</span><span class="nb-si-label">'+x.label+'</span><span class="nb-si-sub">'+x.desc+'</span></div>').join('');
+  menu.innerHTML=nbSlashList.map((x,i)=>'<div class="nb-slash-item'+(i===nbSlashIdx?' nbs-on':'')+'" onmousedown="event.preventDefault();nbSlashApplyType(\''+x.type+'\')"><span class="nb-si-icon">'+x.icon+'</span><div class="nb-si-text"><span class="nb-si-label">'+x.label+'</span><span class="nb-si-sub">'+x.desc+'</span></div></div>').join('');
 }
 function nbSlashMove(d){nbSlashIdx=Math.max(0,Math.min(nbSlashList.length-1,nbSlashIdx+d));nbSlashRefresh();}
 function nbSlashApply(){if(nbSlashList[nbSlashIdx])nbSlashApplyType(nbSlashList[nbSlashIdx].type);}
@@ -3812,8 +3974,14 @@ function nbSlashApplyType(type){
   if(!nbSlashId)return;
   const sid=nbSlashId;nbSlashClose();nbCollect();
   if(type==='bookmark'){nbOpenUrlBar('bookmark',sid);return;}
-  if(type==='divider'){const b=nbBlocks.find(x=>x.id===nbSlashId);if(b){b.type='divider';b.content='';}nbRender();nbSave();return;}
-  const b=nbBlocks.find(x=>x.id===nbSlashId);
+  if(type==='columns'){nbToggleCols();return;}
+  if(type==='color'){
+    const el=document.querySelector('.nb-block[data-id="'+sid+'"] .nb-content');
+    if(el){el.focus();nbCtxId=sid;nbToggleCp();}
+    return;
+  }
+  if(type==='divider'){const b=nbBlocks.find(x=>x.id===sid);if(b){b.type='divider';b.content='';}nbRender();nbSave();return;}
+  const b=nbBlocks.find(x=>x.id===sid);
   if(b){b.type=type;b.content='';nbRender();nbSave();setTimeout(()=>document.querySelector('.nb-block[data-id="'+b.id+'"] .nb-content')?.focus(),0);}
 }
 function nbSlashClose(){const m=document.getElementById('nb-slash');if(m)m.style.display='none';nbSlashId=null;nbSlashQ='';nbSlashIdx=0;nbSlashList=[];}
@@ -3859,25 +4027,33 @@ function nbAddBelow(id){
   nbCollect();
   const b=nbBlocks.find(x=>x.id===id);
   const nid=nbInsertAfter(id,'p',b?b.col:1);
-  setTimeout(()=>document.querySelector('.nb-block[data-id="'+nid+'"] .nb-content')?.focus(),0);
+  setTimeout(()=>{
+    const el=document.querySelector('.nb-block[data-id="'+nid+'"] .nb-content');
+    if(!el)return;
+    el.focus();
+    nbCloseCtx();
+    nbSlashId=nid;nbSlashQ='';nbSlashOpen(el);
+  },0);
 }
 // ── CONTEXT MENU ──
 let nbCtxId=null;
 const NB_BG_COLORS=[['none',null],['red','#f87171'],['orange','#fb923c'],['yellow','#fbbf24'],['green','#34d399'],['blue','#38bdf8'],['purple','#c084fc'],['pink','#f472b6']];
 function nbOpenCtx(e,id){
   e.stopPropagation();
+  nbSlashClose();
   nbCtxId=id;
   const menu=document.getElementById('nb-ctx');if(!menu)return;
   const b=nbBlocks.find(x=>x.id===id);if(!b)return;
   menu.innerHTML=
     '<div class="nb-ctx-item" onmousedown="event.preventDefault();nbCtxToggle(\'ti\')"><span class="nb-ctx-icon">↩</span>Turn into<span class="nb-ctx-arr">›</span></div>'+
     '<div id="nb-ctx-ti" style="display:none"><div class="nb-ctx-sub">'+
-      NB_SLASH_ITEMS.filter(x=>x.type!=='bookmark'&&x.type!=='divider').map(x=>
+      NB_SLASH_ITEMS.filter(x=>x.type!=='bookmark'&&x.type!=='divider'&&x.type!=='columns'&&x.type!=='color').map(x=>
         '<span class="nb-ctx-chip" onmousedown="event.preventDefault();nbCtxApplyType(\''+x.type+'\')">'+x.icon+' '+x.label+'</span>'
       ).join('')+
     '</div></div>'+
-    '<div class="nb-ctx-item" onmousedown="event.preventDefault();nbCtxToggle(\'bg\')"><span class="nb-ctx-icon">🎨</span>Color<span class="nb-ctx-arr">›</span></div>'+
+    '<div class="nb-ctx-item" onmousedown="event.preventDefault();nbCtxToggle(\'bg\')"><span class="nb-ctx-icon">🎨</span>Background colour<span class="nb-ctx-arr">›</span></div>'+
     '<div id="nb-ctx-bg" style="display:none"><div class="nb-ctx-sw-row">'+
+      '<span class="nb-ctx-sub-label">block background</span>'+
       NB_BG_COLORS.map(([name,c])=>c
         ?'<div class="nb-ctx-sw" style="background:'+c+'30;border-color:'+c+'90" onmousedown="event.preventDefault();nbCtxApplyBg(\''+name+'\')" title="'+name+'"></div>'
         :'<div class="nb-ctx-sw nb-ctx-sw-none" onmousedown="event.preventDefault();nbCtxApplyBg(null)" title="none">✕</div>'
@@ -3923,7 +4099,7 @@ function syncNoteFromProfile(){
   nbCollect();
   if(nbBlocks.length&&nbBlocks[0].type==='p')nbBlocks[0].content=pn.innerHTML;
   else nbBlocks.unshift({id:_nbId(),type:'p',content:pn.innerHTML,col:1});
-  localStorage.setItem('fb-note2',JSON.stringify({blocks:nbBlocks,cols:nbCols}));
+  localStorage.setItem('fb-note2',JSON.stringify({blocks:nbBlocks,cols:nbCols,colOrder:nbColOrder}));
 }
 function nFmt2(cmd){document.getElementById('note-profile').focus();document.execCommand(cmd,false,null);syncNoteFromProfile();}
 function nInsertLink2(){
@@ -3961,7 +4137,8 @@ const NB_COLORS=['#f87171','#fb923c','#fbbf24','#a3e635','#34d399','#38bdf8','#8
 let _nbCpOpen=false;
 function nbInitCp(){
   const cp=document.getElementById('nb-cp');if(!cp)return;
-  cp.innerHTML=NB_COLORS.map(c=>'<div class="nb-cp-sw" style="background:'+c+'" onclick="nbSetColor(\''+c+'\')" title="'+c+'"></div>').join('')
+  cp.innerHTML='<span class="nb-cp-label">text colour</span>'
+    +NB_COLORS.map(c=>'<div class="nb-cp-sw" style="background:'+c+'" onclick="nbSetColor(\''+c+'\')" title="'+c+'"></div>').join('')
     +'<button class="nb-cp-clr" onclick="nbSetColor(null)">✕ remove</button>';
 }
 function nbToggleCp(){
