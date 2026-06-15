@@ -471,6 +471,11 @@ a.prod-name{text-decoration:none}a.prod-name:hover{text-decoration:underline;tex
 .prod-desc{font-size:12px;color:var(--t2);line-height:1.65;flex:1}
 .prod-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;margin-top:4px;text-decoration:none;transition:gap .2s}
 .prod-link:hover{gap:10px}
+
+/* ── REDUCED MOTION ──────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}
+}
 </style>
 <script>
 // ── SITE CONFIGURATION — edit these when URLs change ──

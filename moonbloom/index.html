@@ -512,6 +512,11 @@ footer{border-top:1px solid var(--b);padding:36px 0}
 .scroll-top{position:fixed;bottom:28px;right:24px;z-index:500;width:40px;height:40px;border-radius:50%;background:#070814;border:1px solid #b8a8f060;color:#b8a8f0;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 3px 14px rgba(0,0,0,.4);font-family:inherit}
 .scroll-top.visible{opacity:1;pointer-events:auto}
 .scroll-top:hover{transform:translateY(-3px)}
+
+/* ── REDUCED MOTION ──────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}
+}
 </style>
 
 <script>
