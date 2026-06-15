@@ -394,6 +394,21 @@ footer{
 .foot-link{font-size:12px;color:var(--t3);text-decoration:none}.foot-link:hover{color:var(--t2)}
 .foot-sup-link{font-size:11px;color:var(--t3);text-decoration:none}.foot-sup-link:hover{color:var(--t2)}
 
+/* ══════════════════════════════════
+   RESOURCES MODAL
+══════════════════════════════════ */
+.res-overlay{position:fixed;inset:0;background:rgba(7,8,20,.88);z-index:200;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(8px)}
+.res-overlay.open{display:flex}
+.res-box{background:var(--bg2);border:1px solid var(--sf2);border-radius:var(--rad);padding:32px;max-width:520px;width:100%;max-height:80vh;overflow-y:auto}
+.res-close{float:right;background:none;border:none;color:var(--t3);font-size:22px;cursor:pointer;line-height:1;transition:color .15s}
+.res-close:hover{color:var(--t)}
+.res-title{font-size:17px;font-weight:700;color:var(--p);margin-bottom:20px}
+.res-section{margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--sf)}
+.res-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.res-section h3{font-size:12px;font-weight:700;color:var(--t);margin-bottom:6px;letter-spacing:.3px}
+.res-section p,.res-section li{font-size:12px;color:var(--t2);line-height:1.75}
+.res-section ul{padding-left:16px}.res-section li{margin-bottom:4px}
+
 /* ── ANIMATION UTILITY ── */
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
@@ -905,6 +920,50 @@ document.addEventListener('DOMContentLoaded', () => {
 </section>
 </main>
 
+<!-- RESOURCES MODAL -->
+<div class="res-overlay" id="resources-overlay" onclick="if(event.target===this)closeResources()">
+  <div class="res-box">
+    <button class="res-close" onclick="closeResources()">×</button>
+    <div class="res-title">🧭 resources</div>
+    <p style="font-size:12px;color:var(--t2);line-height:1.7;margin-bottom:16px">a small collection of things that might help. none of this is medical advice — just links we've found useful or worth knowing about.</p>
+    <div class="res-section">
+      <h3>💜 you are not alone</h3>
+      <ul>
+        <li><a href="https://988lifeline.org" target="_blank" style="color:var(--p)">988 Suicide & Crisis Lifeline (US)</a> — call or text 988</li>
+        <li><a href="https://www.crisistextline.org" target="_blank" style="color:var(--p)">Crisis Text Line</a> — text HOME to 741741</li>
+        <li><a href="https://www.samaritans.org" target="_blank" style="color:var(--p)">Samaritans (UK & ROI)</a> — call 116 123, free, any time</li>
+        <li><a href="https://www.iasp.info/resources/Crisis_Centres/" target="_blank" style="color:var(--p)">IASP crisis centre directory</a> — find a helpline wherever you are</li>
+        <li><a href="https://worldpopulationreview.com/country-rankings/autism-rates-by-country" target="_blank" style="color:var(--p)">autism rates by country</a> — you're not as rare as you might feel</li>
+        <li><a href="https://worldpopulationreview.com/country-rankings/adhd-rates-by-country" target="_blank" style="color:var(--p)">ADHD rates by country</a> — same goes for this</li>
+      </ul>
+    </div>
+    <div class="res-section">
+      <h3>🧠 adhd & autism self-checks</h3>
+      <ul>
+        <li><a href="https://autism.org/is-it-autism/" target="_blank" style="color:var(--p)">is it autism? — Autism Research Institute</a></li>
+        <li><a href="https://www.clinical-partners.co.uk/for-adults/autism-and-aspergers/adult-autism-test/" target="_blank" style="color:var(--p)">adult autism test — Clinical Partners</a></li>
+        <li><a href="https://www.healthline.com/health/adhd" target="_blank" style="color:var(--p)">ADHD overview — Healthline</a></li>
+        <li><a href="https://www.clinical-partners.co.uk/for-adults/adult-adhd-add/test-for-adhd" target="_blank" style="color:var(--p)">adult ADHD test — Clinical Partners</a></li>
+      </ul>
+    </div>
+    <div class="res-section">
+      <h3>♿ chronic illness & disability</h3>
+      <ul>
+        <li><a href="https://themighty.com" target="_blank" style="color:var(--p)">The Mighty</a> — community & stories for chronic illness and disability</li>
+        <li><a href="https://www.disabled-world.com" target="_blank" style="color:var(--p)">Disabled World</a> — disability news and resources</li>
+        <li><a href="https://www.consilium.europa.eu/en/policies/european-disability-card/" target="_blank" style="color:var(--p)">European Disability Card</a> — for EU citizens, recognised across member states</li>
+      </ul>
+    </div>
+    <div class="res-section">
+      <h3>📒 templates & tools</h3>
+      <ul>
+        <li><a href="https://ko-fi.com/s/e64f450146" target="_blank" style="color:var(--p)">disability tracker — Notion template</a> — meds, appointments, and quick resources</li>
+        <li><a href="https://www.notion.com/@moonbloom" target="_blank" style="color:var(--p)">moonbloom on Notion</a> — more templates as they're made</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 <!-- ══ FOOTER ══ -->
 <footer>
   <div class="container">
@@ -919,6 +978,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="foot-right">
         <div class="foot-links">
           <a class="foot-link" href="#faq">faq</a>
+          <a class="foot-link" href="#" onclick="openResources();return false">🧭 resources</a>
           <a class="foot-link" data-href="github" href="https://github.com/RainbowCatTeck/MindQuestor" target="_blank" rel="noopener noreferrer">github</a>
           <a class="foot-link" data-href="kofi" href="https://ko-fi.com/rainbowcatteck" target="_blank" rel="noopener noreferrer">☕ support our work</a>
         </div>
@@ -932,6 +992,10 @@ document.addEventListener('DOMContentLoaded', () => {
 </footer>
 
 <script>
+// ── RESOURCES MODAL ──
+function openResources(){document.getElementById('resources-overlay').classList.add('open');}
+function closeResources(){document.getElementById('resources-overlay').classList.remove('open');}
+
 // ── FAQ TOGGLE ──
 function togFaq(btn){
   const item = btn.closest('.faq-item');
