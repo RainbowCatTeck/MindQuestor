@@ -962,17 +962,18 @@ html,body{scrollbar-width:thin;scrollbar-color:rgba(192,132,252,.3) transparent}
 .scroll-top{position:fixed;bottom:24px;right:20px;z-index:900;width:38px;height:38px;border-radius:50%;background:var(--brand-soft);border:1px solid var(--brand);color:var(--brand);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 2px 12px rgba(0,0,0,.35)}
 .scroll-top.visible{opacity:1;pointer-events:auto}
 .scroll-top:hover{transform:translateY(-3px)}
-.footer{margin-top:20px;padding:14px 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--t3);min-width:0;width:100%;box-sizing:border-box;overflow:hidden}
+.footer{margin-top:20px;padding:14px 0;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:14px;font-size:11px;color:var(--t3);min-width:0;width:100%;box-sizing:border-box;overflow:hidden}
 .footer a{text-decoration:none;transition:opacity .15s}
 .footer a:hover{opacity:.7;text-decoration:underline}
-.footer-brand{display:flex;align-items:center;gap:8px}
+.footer-links{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.footer-col{display:flex;flex-direction:column;gap:6px;min-width:0}
+.footer-bottom{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--border);text-align:center}
 .footer-dot{width:6px;height:6px;border-radius:50%;background:var(--brand)}
-.footer-links{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
-.footer-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end;min-width:0}
 .fl-roadmap{color:var(--brand)}
 .fl-news{color:var(--teal)}
 .fl-patch{color:var(--indigo)}
 .fl-faq{color:var(--amber)}
+.fl-resources{color:var(--pink)}
 .fl-feedback{color:var(--brand)}
 .fl-legal{color:var(--t3)}
 .fl-support{color:var(--teal);opacity:.75}
@@ -1963,26 +1964,28 @@ html,body{scrollbar-width:thin;scrollbar-color:rgba(192,132,252,.3) transparent}
 <div class="nb-ctx" id="nb-ctx"></div>
 
 <div class="footer">
-  <div class="footer-brand">
-    <div class="footer-dot"></div>
-    <span>made with love 💜 · © <span id="f-year"></span> <strong style="color:var(--brand)">mindquestor</strong></span>
-    <span style="display:inline-flex;align-items:center;gap:4px;color:var(--t3)">part of <a href="https://moonbloom.netlify.app" target="_blank" style="display:inline-flex;align-items:center;gap:3px;color:rgba(196,170,237,0.8);text-decoration:none"><svg width="24" height="24" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;margin-top:5px"><polygon points="50,50 44,50 40,18 48,14 54,18 56,50" fill="#b8a8f0" opacity="0.75"/><polygon points="50,50 56,50 72,26 66,20 60,24 54,50" fill="#b8a8f0" opacity="0.55"/><polygon points="50,50 44,50 28,30 34,24 40,28 46,50" fill="#b8a8f0" opacity="0.45"/><polygon points="50,50 56,50 80,44 78,36 70,38 54,50" fill="#b8a8f0" opacity="0.30"/><polygon points="50,50 44,50 20,46 22,38 30,40 46,50" fill="#b8a8f0" opacity="0.22"/><circle cx="50" cy="50" r="8" fill="#0f0c1a"/><circle cx="50" cy="50" r="5" fill="#b8a8f0" opacity="0.95"/></svg>moonbloom</a></span>
-  </div>
   <div class="footer-links">
-    <div class="footer-row">
-      <a class="fl-news" href="https://mindquestor.netlify.app" target="_blank">🏠 home</a>
+    <div class="footer-col">
       <a class="fl-news" href="#" onclick="openModal('modal-news');return false">📢 news</a>
       <a class="fl-patch" href="#" onclick="openModal('modal-patchnotes');return false">📋 patch notes</a>
       <a class="fl-roadmap" href="#" onclick="openModal('modal-roadmap');return false">🗺️ roadmap</a>
+    </div>
+    <div class="footer-col">
+      <a class="fl-resources" href="#" onclick="openModal('modal-resources');return false">🧭 resources</a>
       <a class="fl-faq" href="#" onclick="openModal('modal-faq');return false">❓ faq</a>
       <a class="fl-feedback" href="#" onclick="openModal('modal-feedback');return false">💬 feedback</a>
       <a class="fl-legal" href="#" onclick="openModal('modal-legal');return false">⚖️ legal</a>
     </div>
-    <div class="footer-row">
+    <div class="footer-col">
+      <a class="fl-support" href="https://ko-fi.com/rainbowcatteck" target="_blank">☕ support our work</a>
       <a class="fl-support" href="https://ko-fi.com/goblintools" target="_blank">☕ support goblin.tools</a>
       <a class="fl-support" href="https://www.patreon.com/opendyslexic" target="_blank">💜 support opendyslexic</a>
-      <a class="fl-support" href="https://ko-fi.com/rainbowcatteck" target="_blank">☕ support our work</a>
     </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-dot"></div>
+    <span>made with love 💜 · © <span id="f-year"></span> <strong style="color:var(--brand)">mindquestor</strong></span>
+    <span style="display:inline-flex;align-items:center;gap:4px;color:var(--t3)">part of <a href="https://moonbloom.netlify.app" target="_blank" style="display:inline-flex;align-items:center;gap:3px;color:rgba(196,170,237,0.8);text-decoration:none"><svg width="24" height="24" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;margin-top:5px"><polygon points="50,50 44,50 40,18 48,14 54,18 56,50" fill="#b8a8f0" opacity="0.75"/><polygon points="50,50 56,50 72,26 66,20 60,24 54,50" fill="#b8a8f0" opacity="0.55"/><polygon points="50,50 44,50 28,30 34,24 40,28 46,50" fill="#b8a8f0" opacity="0.45"/><polygon points="50,50 56,50 80,44 78,36 70,38 54,50" fill="#b8a8f0" opacity="0.30"/><polygon points="50,50 44,50 20,46 22,38 30,40 46,50" fill="#b8a8f0" opacity="0.22"/><circle cx="50" cy="50" r="8" fill="#0f0c1a"/><circle cx="50" cy="50" r="5" fill="#b8a8f0" opacity="0.95"/></svg>moonbloom</a></span>
   </div>
 </div>
 
@@ -2044,14 +2047,30 @@ html,body{scrollbar-width:thin;scrollbar-color:rgba(192,132,252,.3) transparent}
     <button class="modal-close" onclick="closeModal()" aria-label="close">×</button>
     <div class="modal-title" id="modal-patchnotes-title">📋 patch notes</div>
     <div class="pn-entry">
-      <span class="pn-ver">v0.2.0</span><span class="pn-date">june 2026 — notes redesign</span>
+      <span class="pn-ver">v1.2.0</span><span class="pn-date">june 2026 — notes redesign & resources</span>
       <div class="pn-item">📝 notes rebuilt as a Notion-style block editor — type / for quick commands, drag blocks to reorder</div>
       <div class="pn-item">📑 multi-column layout — drag a block to an edge to split into up to 3 columns</div>
       <div class="pn-item">⭐ star list block for quick highlights</div>
       <div class="pn-item">🎨 per-block text and background colours</div>
+      <div class="pn-item">🧭 resources page added to the footer — crisis support, adhd/autism info, chronic illness resources & templates</div>
     </div>
     <div class="pn-entry">
-      <span class="pn-ver">v0.1.0</span><span class="pn-date">may 2026 — initial release</span>
+      <span class="pn-ver">v1.1.0</span><span class="pn-date">may 2026 — quality of life update</span>
+      <div class="pn-item">🌸 emotion wheel — 3-level feelings check-in with an identification guide</div>
+      <div class="pn-item">📖 reflections (formerly journal) — redesigned library-card layout, monthly memories</div>
+      <div class="pn-item">✨ whimsy tab + gentle mode — calmer, on-brand light theme</div>
+      <div class="pn-item">📊 stats block added to your profile</div>
+      <div class="pn-item">⚔️ quest board polish — loadout improvements, auto-schedule tooltip, live hours-queued bar</div>
+      <div class="pn-item">🔔 redesigned notifications — visible pills throughout the app</div>
+      <div class="pn-item">⚙️ settings reorganised — custom category order for quick links, tabs remember where you left off</div>
+      <div class="pn-item">🔗 quick links expanded — proton mail, notion mail & calendar, passwords category, soundcloud + refreshed inspo links</div>
+      <div class="pn-item">👋 first-time tour for new users</div>
+      <div class="pn-item">♿ accessibility pass — WCAG 2.1 AA improvements</div>
+      <div class="pn-item">🖱 custom scrollbar across mindquestor, the app, and moonbloom</div>
+      <div class="pn-item">🗺 roadmap added to the landing page</div>
+    </div>
+    <div class="pn-entry">
+      <span class="pn-ver">v1.0.0</span><span class="pn-date">may 2026 — initial release</span>
       <div class="pn-item">⚔️ campaign tab — quest board with 5 quest types, loadouts, auto-scheduler</div>
       <div class="pn-item">⏱ timers — pomodoro with hammy 🐹 + free timer with gecki 🍃</div>
       <div class="pn-item">🎮 daily quests — habit tracking with streaks + quest log</div>
@@ -2061,6 +2080,48 @@ html,body{scrollbar-width:thin;scrollbar-color:rgba(192,132,252,.3) transparent}
       <div class="pn-item">🌸 axie the axolotl — header mascot with motivational messages</div>
       <div class="pn-item">OpenDyslexic font embedded — no external font requests</div>
       <div class="pn-item">no account needed to get started · no server · everything stays in your browser</div>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-resources" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-resources-title">
+    <button class="modal-close" onclick="closeModal()" aria-label="close">×</button>
+    <div class="modal-title" id="modal-resources-title">🧭 resources</div>
+    <p style="font-size:12px;color:var(--t2);line-height:1.7;margin-bottom:14px">a small collection of things that might help. none of this is medical advice — just links we've found useful or worth knowing about.</p>
+    <div class="modal-section">
+      <h3>💜 you are not alone</h3>
+      <ul>
+        <li><a href="https://988lifeline.org" target="_blank" style="color:var(--brand)">988 Suicide & Crisis Lifeline (US)</a> — call or text 988</li>
+        <li><a href="https://www.crisistextline.org" target="_blank" style="color:var(--brand)">Crisis Text Line</a> — text HOME to 741741</li>
+        <li><a href="https://www.samaritans.org" target="_blank" style="color:var(--brand)">Samaritans (UK & ROI)</a> — call 116 123, free, any time</li>
+        <li><a href="https://www.iasp.info/resources/Crisis_Centres/" target="_blank" style="color:var(--brand)">IASP crisis centre directory</a> — find a helpline wherever you are</li>
+        <li><a href="https://worldpopulationreview.com/country-rankings/autism-rates-by-country" target="_blank" style="color:var(--brand)">autism rates by country</a> — you're not as rare as you might feel</li>
+        <li><a href="https://worldpopulationreview.com/country-rankings/adhd-rates-by-country" target="_blank" style="color:var(--brand)">ADHD rates by country</a> — same goes for this</li>
+      </ul>
+    </div>
+    <div class="modal-section">
+      <h3>🧠 adhd & autism self-checks</h3>
+      <ul>
+        <li><a href="https://autism.org/is-it-autism/" target="_blank" style="color:var(--brand)">is it autism? — Autism Research Institute</a></li>
+        <li><a href="https://www.clinical-partners.co.uk/for-adults/autism-and-aspergers/adult-autism-test/" target="_blank" style="color:var(--brand)">adult autism test — Clinical Partners</a></li>
+        <li><a href="https://www.healthline.com/health/adhd" target="_blank" style="color:var(--brand)">ADHD overview — Healthline</a></li>
+        <li><a href="https://www.clinical-partners.co.uk/for-adults/adult-adhd-add/test-for-adhd" target="_blank" style="color:var(--brand)">adult ADHD test — Clinical Partners</a></li>
+      </ul>
+    </div>
+    <div class="modal-section">
+      <h3>♿ chronic illness & disability</h3>
+      <ul>
+        <li><a href="https://themighty.com" target="_blank" style="color:var(--brand)">The Mighty</a> — community & stories for chronic illness and disability</li>
+        <li><a href="https://www.disabled-world.com" target="_blank" style="color:var(--brand)">Disabled World</a> — disability news and resources</li>
+        <li><a href="https://www.consilium.europa.eu/en/policies/european-disability-card/" target="_blank" style="color:var(--brand)">European Disability Card</a> — for EU citizens, recognised across member states</li>
+      </ul>
+    </div>
+    <div class="modal-section">
+      <h3>📒 templates & tools</h3>
+      <ul>
+        <li><a href="https://ko-fi.com/s/e64f450146" target="_blank" style="color:var(--brand)">disability tracker — Notion template</a> — meds, appointments, and quick resources</li>
+        <li><a href="https://www.notion.com/@moonbloom" target="_blank" style="color:var(--brand)">moonbloom on Notion</a> — more templates as they're made</li>
+      </ul>
     </div>
   </div>
 </div>
