@@ -321,6 +321,7 @@ footer{border-top:1px solid var(--b);padding:36px 0}
         <h2 class="about-title">one brain,<br><em>blooming slowly</em></h2>
         <p class="about-body">Hi, I'm Nex — neurospicy and building tools I needed but couldn't find. Moonbloom started from a simple frustration: most tools assume a neurotypical brain, a nine-to-five schedule, and skin that doesn't have opinions about textures.</p>
         <p class="about-body">Deeply into East Asian culture, late-night gaming, and linguistics — my oldest and truest special interest. Slow builds and soft days, with room for whimsy.</p>
+        <p class="about-body" style="color:var(--tf);font-size:13px;margin-top:4px">moonbloom is step one of something bigger — there's more i want to build, slowly, for people like us. 🌱</p>
         <div class="about-tags">
           <span class="about-tag">neurospicy</span>
           <span class="about-tag">East Asian culture</span>
@@ -367,10 +368,10 @@ footer{border-top:1px solid var(--b);padding:36px 0}
         <circle cx="50" cy="50" r="5" fill="#d4c084" opacity="0.97"/>
       </svg>
       <h2 class="support-title">always free,<br><em>no strings</em></h2>
-      <p class="support-desc">Everything moonbloom makes is free to use — no paywalls, no accounts, no catch. If something helps and you want to say thanks, ko-fi is the place. It genuinely keeps us going.</p>
+      <p class="support-desc">Everything moonbloom makes is free to use — no paywalls, no accounts, no catch. If something helps and you want to say thanks, ko-fi is the place. It genuinely keeps us going. 🌙</p>
       <a href="https://ko-fi.com/rainbowcatteck" target="_blank" class="kofi-btn">☕ support us on Ko-fi</a>
       <p class="support-note">no pressure · only if it feels right</p>
-      <p class="support-note" style="margin-top:10px">we use <a href="https://www.patreon.com/opendyslexic" target="_blank" style="color:var(--brand);text-decoration:none">OpenDyslexic</a> — if it helps you too, consider <a href="https://www.patreon.com/opendyslexic" target="_blank" style="color:var(--brand);text-decoration:none">supporting it on patreon 💜</a></p>
+      <p class="support-note" style="margin-top:10px">we use <a href="https://opendyslexic.org/" target="_blank" style="color:var(--brand);text-decoration:none">OpenDyslexic</a> — if it helps you too, consider <a href="https://www.patreon.com/opendyslexic" target="_blank" style="color:var(--brand);text-decoration:none">supporting it on patreon 💜</a></p>
     </div>
   </div>
 </section>
@@ -418,6 +419,47 @@ footer{border-top:1px solid var(--b);padding:36px 0}
   </div>
 </div>
 
+<!-- RESOURCES -->
+<div class="legal-overlay" id="resources-overlay" onclick="if(event.target===this)closeResources()">
+  <div class="legal-box">
+    <button class="legal-close" onclick="closeResources()">×</button>
+    <div class="legal-title">🧭 resources</div>
+    <p style="font-size:12px;color:var(--td);line-height:1.7;margin-bottom:16px">a small collection of things that might help. none of this is medical advice — just links we've found useful or worth knowing about.</p>
+    <div class="legal-section">
+      <h3>💜 if you need someone to talk to</h3>
+      <ul>
+        <li><a href="https://988lifeline.org" target="_blank" style="color:var(--brand)">988 Suicide & Crisis Lifeline (US)</a> — call or text 988</li>
+        <li><a href="https://www.crisistextline.org" target="_blank" style="color:var(--brand)">Crisis Text Line</a> — text HOME to 741741</li>
+        <li><a href="https://www.samaritans.org" target="_blank" style="color:var(--brand)">Samaritans (UK & ROI)</a> — call 116 123, free, any time</li>
+        <li><a href="https://www.iasp.info/resources/Crisis_Centres/" target="_blank" style="color:var(--brand)">IASP crisis centre directory</a> — find a helpline wherever you are</li>
+      </ul>
+    </div>
+    <div class="legal-section">
+      <h3>🧠 adhd & autism self-checks</h3>
+      <ul>
+        <li><a href="https://autism.org/is-it-autism/" target="_blank" style="color:var(--brand)">is it autism? — Autism Research Institute</a></li>
+        <li><a href="https://www.clinical-partners.co.uk/for-adults/autism-and-aspergers/adult-autism-test/" target="_blank" style="color:var(--brand)">adult autism test — Clinical Partners</a></li>
+        <li><a href="https://www.healthline.com/health/adhd" target="_blank" style="color:var(--brand)">ADHD overview — Healthline</a></li>
+        <li><a href="https://www.clinical-partners.co.uk/for-adults/adult-adhd-add/test-for-adhd" target="_blank" style="color:var(--brand)">adult ADHD test — Clinical Partners</a></li>
+      </ul>
+    </div>
+    <div class="legal-section">
+      <h3>♿ chronic illness & disability</h3>
+      <ul>
+        <li><a href="https://themighty.com" target="_blank" style="color:var(--brand)">The Mighty</a> — community & stories for chronic illness and disability</li>
+        <li><a href="https://www.disabled-world.com" target="_blank" style="color:var(--brand)">Disabled World</a> — disability news and resources</li>
+        <li><a href="https://www.consilium.europa.eu/en/policies/european-disability-card/" target="_blank" style="color:var(--brand)">European Disability Card</a> — for EU citizens, recognised across member states</li>
+      </ul>
+    </div>
+    <div class="legal-section">
+      <h3>📒 templates & tools</h3>
+      <ul>
+        <li><a href="https://rainbowcatteck.notion.site/Disability-Tracker-cefcb6108f4a40a8bd5b2388da86c3c9" target="_blank" style="color:var(--brand)">disability tracker — Notion template</a> — meds, appointments, and quick resources, free to duplicate</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
@@ -433,9 +475,10 @@ footer{border-top:1px solid var(--b);padding:36px 0}
       </svg>
       <span class="footer-name">moonbloom</span>
     </div>
-    <p class="footer-tagline">for minds that bloom at night ✦</p>
+    <p class="footer-tagline">for minds that bloom at night · building toward something bigger ✦</p>
     <div class="footer-links">
       <a href="https://mindquestor.netlify.app" target="_blank" class="footer-link">mindquestor</a>
+      <a href="#" onclick="openResources();return false" class="footer-link">resources</a>
       <a href="#" onclick="openLegal();return false" class="footer-link">legal</a>
       <a href="https://ko-fi.com/rainbowcatteck" target="_blank" class="footer-link">support us on ko-fi</a>
     </div>
@@ -503,6 +546,9 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 // legal modal
 function openLegal(){document.getElementById('legal-overlay').classList.add('open');}
 function closeLegal(){document.getElementById('legal-overlay').classList.remove('open');}
+// resources modal
+function openResources(){document.getElementById('resources-overlay').classList.add('open');}
+function closeResources(){document.getElementById('resources-overlay').classList.remove('open');}
 // contact form
 function submitContact(e){
   e.preventDefault();
