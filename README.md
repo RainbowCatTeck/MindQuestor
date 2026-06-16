@@ -1,31 +1,32 @@
-# MindQuestor / Moonbloom
+# MindQuestor
 
-Neurodivergent-first productivity tools by [Nex (RainbowCatTeck)](https://ko-fi.com/rainbowcatteck).
+Free neurodivergent-first productivity tools by [Nex](https://rainbowcatteck.notion.site/Link-Directory-130127c6a16980d7bf78f03a1cef88cf).  
+Part of [moonbloom](https://moonbloom.quest) — a soft studio for neurospicy brains.
 
 ## Repo layout
 
 ```
 mindquestor/
-  index.html        ← MindQuestor landing page  (mindquestor.netlify.app)
+  index.html        ← landing page   (mindquestor.quest)
   app/
-    index.html      ← MindQuestor app            (mindquestor.netlify.app/app)
-  netlify.toml      ← Netlify config for the MindQuestor site
-
-moonbloom/
-  index.html        ← Moonbloom landing page     (moonbloom.netlify.app)
-  netlify.toml      ← Netlify config for the Moonbloom site
+    index.html      ← app            (mindquestor.quest/app)
+  netlify.toml      ← Netlify config
+  sitemap.xml
+  robots.txt
 ```
 
-## Netlify deploy setup
+## Branches
 
-Two separate Netlify sites, both pointing at this repo:
+| Branch | Purpose |
+|---|---|
+| `dev` | active development — all work goes here |
+| `main` | production — merging here triggers a Netlify deploy |
 
-| Site | Base directory | Publish directory |
-|---|---|---|
-| mindquestor.netlify.app | `mindquestor` | `.` |
-| moonbloom.netlify.app | `moonbloom` | `.` |
+## Netlify setup
 
-Set **Base directory** in each site's *Build & deploy → Build settings* in the Netlify dashboard.
+| Site | Base directory | Publish directory | Deploy branch |
+|---|---|---|---|
+| mindquestor.quest | `mindquestor` | `.` | `main` |
 
 ## Tech
 
