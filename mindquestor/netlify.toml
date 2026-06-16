@@ -25,3 +25,10 @@
   for = "/app/index.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
+
+# ── Redirect Netlify subdomain to custom domain ───────────────────────────────
+[[redirects]]
+  from    = "https://mindquestor.netlify.app/*"
+  to      = "https://mindquestor.quest/:splat"
+  status  = 301
+  force   = true
