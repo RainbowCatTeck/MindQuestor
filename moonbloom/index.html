@@ -240,11 +240,21 @@ footer{border-top:1px solid var(--b);padding:36px 0}
     <div id="hero-parallax" style="will-change:transform">
     <div class="hero-mark">
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="100" height="100">
-        <polygon points="50,50 44,50 40,12 48,7 54,12 56,50" fill="#b8a8f0" opacity="0.85" style="animation:shardIn .9s .08s both cubic-bezier(.22,1,.36,1)"/>
-        <polygon points="50,50 56,50 76,22 69,15 62,20 54,50" fill="#b8a8f0" opacity="0.62" style="animation:shardIn .9s .22s both cubic-bezier(.22,1,.36,1)"/>
-        <polygon points="50,50 44,50 24,28 30,21 38,25 46,50" fill="#b8a8f0" opacity="0.50" style="animation:shardIn .9s .36s both cubic-bezier(.22,1,.36,1)"/>
-        <polygon points="50,50 56,50 84,42 81,33 72,36 54,50" fill="#b8a8f0" opacity="0.35" style="animation:shardIn .9s .50s both cubic-bezier(.22,1,.36,1)"/>
-        <polygon points="50,50 44,50 16,44 18,35 28,38 46,50" fill="#b8a8f0" opacity="0.25" style="animation:shardIn .9s .64s both cubic-bezier(.22,1,.36,1)"/>
+        <polygon points="50,50 44,50 40,12 48,7 54,12 56,50" fill="#b8a8f0" opacity="0.85" style="animation:shardIn .9s .08s both cubic-bezier(.22,1,.36,1)">
+          <animate id="h-a1" attributeName="points" from="50,50 44,50 47,39 49,37 51,39 56,50" to="50,50 44,50 40,12 48,7 54,12 56,50" dur="1s" begin="indefinite" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1" keyTimes="0;1"/>
+        </polygon>
+        <polygon points="50,50 56,50 76,22 69,15 62,20 54,50" fill="#b8a8f0" opacity="0.62" style="animation:shardIn .9s .22s both cubic-bezier(.22,1,.36,1)">
+          <animate id="h-a2" attributeName="points" from="50,50 56,50 58,42 56,40 54,41 54,50" to="50,50 56,50 76,22 69,15 62,20 54,50" dur="1s" begin="indefinite" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1" keyTimes="0;1"/>
+        </polygon>
+        <polygon points="50,50 44,50 24,28 30,21 38,25 46,50" fill="#b8a8f0" opacity="0.50" style="animation:shardIn .9s .36s both cubic-bezier(.22,1,.36,1)">
+          <animate id="h-a3" attributeName="points" from="50,50 44,50 42,43 44,41 46,43 46,50" to="50,50 44,50 24,28 30,21 38,25 46,50" dur="1s" begin="indefinite" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1" keyTimes="0;1"/>
+        </polygon>
+        <polygon points="50,50 56,50 84,42 81,33 72,36 54,50" fill="#b8a8f0" opacity="0.35" style="animation:shardIn .9s .50s both cubic-bezier(.22,1,.36,1)">
+          <animate id="h-a4" attributeName="points" from="50,50 56,50 60,48 59,45 57,46 54,50" to="50,50 56,50 84,42 81,33 72,36 54,50" dur="1s" begin="indefinite" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1" keyTimes="0;1"/>
+        </polygon>
+        <polygon points="50,50 44,50 16,44 18,35 28,38 46,50" fill="#b8a8f0" opacity="0.25" style="animation:shardIn .9s .64s both cubic-bezier(.22,1,.36,1)">
+          <animate id="h-a5" attributeName="points" from="50,50 44,50 40,48 40,46 43,46 46,50" to="50,50 44,50 16,44 18,35 28,38 46,50" dur="1s" begin="indefinite" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1" keyTimes="0;1"/>
+        </polygon>
         <circle cx="50" cy="50" r="9" fill="#070814"/>
         <circle cx="50" cy="50" r="6" fill="#b8a8f0" opacity="0.97" style="animation:dotBloom 3s 1s both"/>
       </svg>
@@ -339,9 +349,15 @@ footer{border-top:1px solid var(--b);padding:36px 0}
           <circle cx="60" cy="60" r="50" fill="none"/>
           <path d="M60,15 A45,45,0,1,0,60,105 A30,30,0,1,1,60,15" fill="#b8a8f0" opacity="0.18"/>
           <!-- crystal shard on moon -->
-          <polygon points="60,55 56,55 52,28 59,23 64,28 66,55" fill="#b8a8f0" opacity="0.75"/>
-          <polygon points="60,55 64,55 76,38 70,32 65,36 62,55" fill="#b8a8f0" opacity="0.55"/>
-          <polygon points="60,55 56,55 44,40 50,34 55,38 58,55" fill="#b8a8f0" opacity="0.45"/>
+          <polygon points="60,55 56,55 52,28 59,23 64,28 66,55" fill="#b8a8f0" opacity="0.75">
+            <animate id="ab-a1" attributeName="points" from="60,55 56,55 47,12 58,4 66,12 66,55" to="60,55 56,55 52,28 59,23 64,28 66,55" dur="1s" begin="indefinite" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1" keyTimes="0;1"/>
+          </polygon>
+          <polygon points="60,55 64,55 76,38 70,32 65,36 62,55" fill="#b8a8f0" opacity="0.55">
+            <animate id="ab-a2" attributeName="points" from="60,55 64,55 86,28 76,18 68,25 62,55" to="60,55 64,55 76,38 70,32 65,36 62,55" dur="1s" begin="indefinite" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1" keyTimes="0;1"/>
+          </polygon>
+          <polygon points="60,55 56,55 44,40 50,34 55,38 58,55" fill="#b8a8f0" opacity="0.45">
+            <animate id="ab-a3" attributeName="points" from="60,55 56,55 34,31 44,21 52,28 58,55" to="60,55 56,55 44,40 50,34 55,38 58,55" dur="1s" begin="indefinite" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1" keyTimes="0;1"/>
+          </polygon>
           <circle cx="60" cy="55" r="7" fill="#070814"/>
           <circle cx="60" cy="55" r="4.5" fill="#b8a8f0" opacity="0.97"/>
           <!-- stars -->
@@ -361,11 +377,21 @@ footer{border-top:1px solid var(--b);padding:36px 0}
   <div class="container">
     <div class="support-inner reveal">
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="52" height="52" style="margin:0 auto 20px;display:block">
-        <polygon points="50,50 44,50 40,18 48,14 54,18 56,50" fill="#d4c084" opacity="0.78"/>
-        <polygon points="50,50 56,50 72,26 66,20 60,24 54,50" fill="#d4c084" opacity="0.58"/>
-        <polygon points="50,50 44,50 28,30 34,24 40,28 46,50" fill="#d4c084" opacity="0.48"/>
-        <polygon points="50,50 56,50 80,44 78,36 70,38 54,50" fill="#d4c084" opacity="0.34"/>
-        <polygon points="50,50 44,50 20,46 22,38 30,40 46,50" fill="#d4c084" opacity="0.26"/>
+        <polygon points="50,50 44,50 40,18 48,14 54,18 56,50" fill="#d4c084" opacity="0.78">
+          <animate id="s-a1" attributeName="points" from="50,50 44,50 47,40 49,39 51,40 56,50" to="50,50 44,50 40,18 48,14 54,18 56,50" dur="1s" begin="indefinite" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1" keyTimes="0;1"/>
+        </polygon>
+        <polygon points="50,50 56,50 72,26 66,20 60,24 54,50" fill="#d4c084" opacity="0.58">
+          <animate id="s-a2" attributeName="points" from="50,50 56,50 57,43 55,41 53,42 54,50" to="50,50 56,50 72,26 66,20 60,24 54,50" dur="1s" begin="indefinite" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1" keyTimes="0;1"/>
+        </polygon>
+        <polygon points="50,50 44,50 28,30 34,24 40,28 46,50" fill="#d4c084" opacity="0.48">
+          <animate id="s-a3" attributeName="points" from="50,50 44,50 43,44 45,42 47,43 46,50" to="50,50 44,50 28,30 34,24 40,28 46,50" dur="1s" begin="indefinite" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1" keyTimes="0;1"/>
+        </polygon>
+        <polygon points="50,50 56,50 80,44 78,36 70,38 54,50" fill="#d4c084" opacity="0.34">
+          <animate id="s-a4" attributeName="points" from="50,50 56,50 59,48 58,46 56,46 54,50" to="50,50 56,50 80,44 78,36 70,38 54,50" dur="1s" begin="indefinite" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1" keyTimes="0;1"/>
+        </polygon>
+        <polygon points="50,50 44,50 20,46 22,38 30,40 46,50" fill="#d4c084" opacity="0.26">
+          <animate id="s-a5" attributeName="points" from="50,50 44,50 41,49 42,46 44,47 46,50" to="50,50 44,50 20,46 22,38 30,40 46,50" dur="1s" begin="indefinite" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1" keyTimes="0;1"/>
+        </polygon>
         <circle cx="50" cy="50" r="8" fill="#070814"/>
         <circle cx="50" cy="50" r="5" fill="#d4c084" opacity="0.97"/>
       </svg>
@@ -486,6 +512,7 @@ footer{border-top:1px solid var(--b);padding:36px 0}
       <a href="#" onclick="openResources();return false" class="footer-link">resources</a>
       <a href="#" onclick="openLegal();return false" class="footer-link">legal</a>
       <a href="https://ko-fi.com/rainbowcatteck" target="_blank" class="footer-link">support us on ko-fi</a>
+      <a href="https://rainbowcatteck.notion.site/Link-Directory-130127c6a16980d7bf78f03a1cef88cf" target="_blank" rel="noopener noreferrer" class="footer-link">by nex</a>
     </div>
   </div>
 </footer>
@@ -507,7 +534,7 @@ footer{border-top:1px solid var(--b);padding:36px 0}
 .cf-input:focus{border-color:var(--brand)}.cf-ta{resize:vertical;min-height:80px;margin-bottom:10px;display:block}
 .cf-btn{background:var(--brand);color:#fff;border:none;border-radius:6px;padding:8px 18px;font-size:12px;font-family:var(--font);cursor:pointer;transition:opacity .15s}
 .cf-btn:hover{opacity:.85}.cf-btn:disabled{opacity:.5;cursor:default}
-@keyframes shardIn{from{opacity:0;transform-origin:50% 50%;transform:scale(.75)}to{opacity:1;transform:scale(1)}}
+@keyframes shardIn{from{opacity:0}to{opacity:1}}
 @keyframes dotBloom{from{opacity:0}to{opacity:1}}
 
 /* scroll-to-top */
@@ -546,9 +573,31 @@ if(heroParallax&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   },{passive:true});
 }
 
-// scroll reveal
+// scroll reveal + petal animations
+const prefersReduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function bloomPetals(ids,baseDelay,step){
+  ids.forEach((id,i)=>{
+    const el=document.getElementById(id);
+    if(el)setTimeout(()=>el.beginElement(),baseDelay+i*step);
+  });
+}
+
+// hero: blooms open on page load, timed to match shardIn CSS delays
+if(!prefersReduced)bloomPetals(['h-a1','h-a2','h-a3','h-a4','h-a5'],80,140);
+
 const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')});
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      if(!prefersReduced){
+        if(e.target.classList.contains('moon-mark'))
+          bloomPetals(['ab-a1','ab-a2','ab-a3'],200,160);
+        if(e.target.classList.contains('support-inner'))
+          bloomPetals(['s-a1','s-a2','s-a3','s-a4','s-a5'],150,140);
+      }
+    }
+  });
 },{threshold:0.1,rootMargin:'0px 0px 60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 </script>
