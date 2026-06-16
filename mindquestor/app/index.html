@@ -1685,7 +1685,7 @@ html,body{scrollbar-width:thin;scrollbar-color:rgba(192,132,252,.3) transparent}
     </div>
     <div class="q-note-rich" id="note-profile" contenteditable="true"
       data-ph="write reminders, paste links, make lists..."
-      oninput="syncNoteFromProfile()" onpaste="handleNotePaste(event,this)"></div>
+      oninput="syncNoteFromProfile()" onpaste="handleNotePaste(event)"></div>
   </div>
 </div>
 
@@ -4161,6 +4161,7 @@ function nbCtxDupe(){
 function nbCtxDel(){if(nbCtxId)nbDeleteBlock(nbCtxId);nbCloseCtx();}
 function nbCloseCtx(){const m=document.getElementById('nb-ctx');if(m)m.style.display='none';nbCtxId=null;}
 // profile note (simple widget, syncs from main blocks)
+function handleNotePaste(e){const text=(e.clipboardData||window.clipboardData).getData('text/plain');if(!text)return;e.preventDefault();document.execCommand('insertText',false,text);}
 function syncNoteFromProfile(){
   const pn=document.getElementById('note-profile');if(!pn)return;
   nbCollect();
@@ -4236,8 +4237,8 @@ document.addEventListener('mousemove',function(e){
   p.style.top=Math.max(0,Math.min(window.innerHeight-100,e.clientY-_nbDy))+'px';
 });
 document.addEventListener('mouseup',function(){_nbDrag=false;});
-function saveQuickHub(){try{localStorage.setItem('fb-links',JSON.stringify(quickChosen));localStorage.setItem('fb-custom-links',JSON.stringify(customLinks));localStorage.setItem('fb-vision',JSON.stringify(visionItems));localStorage.setItem('fb-username',userName||'');localStorage.setItem('fb-needs',JSON.stringify(needs));localStorage.setItem('fb-period',JSON.stringify(periodTracker));localStorage.setItem('fb-builtin-over',JSON.stringify(builtinOverrides));localStorage.setItem('fb-phase-meta',JSON.stringify(phaseMeta));localStorage.setItem('fb-motivations',JSON.stringify(customMotivations));localStorage.setItem('fb-quests',JSON.stringify(quests));localStorage.setItem('fb-habits',JSON.stringify(habits));localStorage.setItem('fb-blocks',JSON.stringify(blocks));localStorage.setItem('fb-templates',JSON.stringify(customTemplates));localStorage.setItem('fb-xp-h',xpHabits);localStorage.setItem('fb-xp-t',xpTasks);localStorage.setItem('fb-cat-order',JSON.stringify(catOrder))}catch(e){showNotif('⚠️ storage full — clear some vision board images or browser data')}}
-function loadQuickHub(){try{quickChosen=JSON.parse(localStorage.getItem('fb-links')||'[]');customLinks=JSON.parse(localStorage.getItem('fb-custom-links')||'[]');visionItems=JSON.parse(localStorage.getItem('fb-vision')||'[]').map((v,i)=>({x:40+(i%4)*175,y:40+Math.floor(i/4)*175,w:180,h:155,z:10+i,...v}));vMaxZ=visionItems.length?Math.max(10,...visionItems.map(v=>v.z||10)):10;userName=localStorage.getItem('fb-username')||'';document.getElementById('uname').value=userName;const n=JSON.parse(localStorage.getItem('fb-needs')||'{}');if(n.water)needs.water={...needs.water,...n.water};if(n.sleep)needs.sleep={...needs.sleep,...n.sleep};if(n.food)needs.food={...needs.food,...n.food};const p=JSON.parse(localStorage.getItem('fb-period')||'{}');periodTracker={...periodTracker,...p};if(periodTracker.name==='blood sacrifice tracker'){periodTracker.name='flow tracker';periodTracker.emoji='🌊';}const pm=JSON.parse(localStorage.getItem('fb-phase-meta')||'{}');phaseMeta={...phaseMeta,...pm};customMotivations=JSON.parse(localStorage.getItem('fb-motivations')||'[]');builtinOverrides=JSON.parse(localStorage.getItem('fb-builtin-over')||'{}');quests=JSON.parse(localStorage.getItem('fb-quests')||'[]');habits=JSON.parse(localStorage.getItem('fb-habits')||'[]');const rawB=localStorage.getItem('fb-blocks');blocks=rawB?JSON.parse(rawB):[];customTemplates=JSON.parse(localStorage.getItem('fb-templates')||'[]');xpHabits=parseInt(localStorage.getItem('fb-xp-h')||'0');xpTasks=parseInt(localStorage.getItem('fb-xp-t')||'0');const _co=JSON.parse(localStorage.getItem('fb-cat-order')||'null');if(_co&&Array.isArray(_co))catOrder=_co;}catch(e){quickChosen=[];customLinks=[];visionItems=[];userName='';customMotivations=[];quests=[];habits=[];blocks=[];customTemplates=[];xpHabits=0;xpTasks=0}}
+function saveQuickHub(){try{localStorage.setItem('fb-links',JSON.stringify(quickChosen));localStorage.setItem('fb-custom-links',JSON.stringify(customLinks));localStorage.setItem('fb-vision',JSON.stringify(visionItems));localStorage.setItem('fb-username',userName||'');localStorage.setItem('fb-needs',JSON.stringify(needs));localStorage.setItem('fb-period',JSON.stringify(periodTracker));localStorage.setItem('fb-builtin-over',JSON.stringify(builtinOverrides));localStorage.setItem('fb-phase-meta',JSON.stringify(phaseMeta));localStorage.setItem('fb-motivations',JSON.stringify(customMotivations));localStorage.setItem('fb-quests',JSON.stringify(quests));localStorage.setItem('fb-habits',JSON.stringify(habits));localStorage.setItem('fb-blocks',JSON.stringify(blocks));localStorage.setItem('fb-templates',JSON.stringify(customTemplates));localStorage.setItem('fb-xp-h',xpHabits);localStorage.setItem('fb-xp-t',xpTasks);localStorage.setItem('fb-cat-order',JSON.stringify(catOrder));localStorage.setItem('mq-dopa-menu',JSON.stringify(menu))}catch(e){showNotif('⚠️ storage full — clear some vision board images or browser data')}}
+function loadQuickHub(){try{quickChosen=JSON.parse(localStorage.getItem('fb-links')||'[]');customLinks=JSON.parse(localStorage.getItem('fb-custom-links')||'[]');visionItems=JSON.parse(localStorage.getItem('fb-vision')||'[]').map((v,i)=>({x:40+(i%4)*175,y:40+Math.floor(i/4)*175,w:180,h:155,z:10+i,...v}));vMaxZ=visionItems.length?Math.max(10,...visionItems.map(v=>v.z||10)):10;userName=localStorage.getItem('fb-username')||'';document.getElementById('uname').value=userName;const n=JSON.parse(localStorage.getItem('fb-needs')||'{}');if(n.water)needs.water={...needs.water,...n.water};if(n.sleep)needs.sleep={...needs.sleep,...n.sleep};if(n.food)needs.food={...needs.food,...n.food};const p=JSON.parse(localStorage.getItem('fb-period')||'{}');periodTracker={...periodTracker,...p};if(periodTracker.name==='blood sacrifice tracker'){periodTracker.name='flow tracker';periodTracker.emoji='🌊';}const pm=JSON.parse(localStorage.getItem('fb-phase-meta')||'{}');phaseMeta={...phaseMeta,...pm};customMotivations=JSON.parse(localStorage.getItem('fb-motivations')||'[]');builtinOverrides=JSON.parse(localStorage.getItem('fb-builtin-over')||'{}');quests=JSON.parse(localStorage.getItem('fb-quests')||'[]');habits=JSON.parse(localStorage.getItem('fb-habits')||'[]');const rawB=localStorage.getItem('fb-blocks');blocks=rawB?JSON.parse(rawB):[];customTemplates=JSON.parse(localStorage.getItem('fb-templates')||'[]');xpHabits=parseInt(localStorage.getItem('fb-xp-h')||'0');xpTasks=parseInt(localStorage.getItem('fb-xp-t')||'0');const _co=JSON.parse(localStorage.getItem('fb-cat-order')||'null');if(_co&&Array.isArray(_co))catOrder=_co;const _dm=JSON.parse(localStorage.getItem('mq-dopa-menu')||'null');if(_dm&&typeof _dm==='object'){['app','side','ent','des'].forEach(k=>{if(Array.isArray(_dm[k]))menu[k]=_dm[k];});}}catch(e){quickChosen=[];customLinks=[];visionItems=[];userName='';customMotivations=[];quests=[];habits=[];blocks=[];customTemplates=[];xpHabits=0;xpTasks=0}}
 
 // ===================== VISION BOARD =====================
 let vDrag=null,vDragOX=0,vDragOY=0,vResize=null,vResX=0,vResY=0,vResW=0,vResH=0,vMaxZ=10;
@@ -4353,9 +4354,9 @@ function reflexTap(){if(!rgArmed){startReflexGame();return}const ms=Date.now()-r
 // ===================== DOPA MENU =====================
 const menu={app:[],side:[],ent:[],des:[]};
 const catNames={app:'🥗 appetizer',side:'🍟 side dish',ent:'🍽 entree',des:'🍰 dessert'};
-function addMenuItem(cat){const inp=document.getElementById('ma-'+cat);const v=inp.value.trim();if(!v)return;menu[cat].push({id:Date.now(),text:v});inp.value='';renderMenu(cat)}
+function addMenuItem(cat){const inp=document.getElementById('ma-'+cat);const v=inp.value.trim();if(!v)return;menu[cat].push({id:Date.now(),text:v});inp.value='';renderMenu(cat);saveQuickHub()}
 document.querySelectorAll('.madd input').forEach(inp=>inp.addEventListener('keydown',function(e){if(e.key==='Enter'){const cat=this.id.replace('ma-','');addMenuItem(cat)}}))
-function delMenuItem(cat,id){menu[cat]=menu[cat].filter(x=>x.id!==id);renderMenu(cat)}
+function delMenuItem(cat,id){menu[cat]=menu[cat].filter(x=>x.id!==id);renderMenu(cat);saveQuickHub()}
 function renderMenu(cat){const el=document.getElementById('ml-'+cat);if(menu[cat].length===0){el.innerHTML=`<div class="mempty">${cat==='spe'?'add your bucket-list treats!':cat==='app'?'add some quick resets!':cat==='side'?'add some side dishes!':cat==='ent'?'add some main activities!':'add your guilty pleasures!'}</div>`;return}if(cat==='spe'){const sl=document.getElementById('ml-spe');sl.innerHTML=menu.spe.map(x=>`<div class="ds-item"><span>${esc(x.text)}</span><button class="mdel" onclick="delMenuItem('spe',${x.id})">×</button></div>`).join('');return}el.innerHTML=menu[cat].map(x=>`<div class="mitem"><span>${esc(x.text)}</span><button class="mdel" onclick="delMenuItem('${cat}',${x.id})">×</button></div>`).join('')}
 function rollDice(){const allItems=[];Object.entries(menu).forEach(([cat,items])=>items.forEach(x=>allItems.push({text:x.text,cat})));if(allItems.length===0){document.getElementById('dice-res').textContent='add some items to your menu first!';return}const dice=document.getElementById('dice');dice.classList.remove('roll');void dice.offsetWidth;dice.classList.add('roll');const faces=['🎲','⚄','⚅','⚃','⚂','⚁'];let i=0;const spin=setInterval(()=>{dice.textContent=faces[i%faces.length];i++},80);setTimeout(()=>{clearInterval(spin);const pick=allItems[Math.floor(Math.random()*allItems.length)];dice.textContent='🎲';document.getElementById('dice-res').innerHTML=`<strong>${esc(pick.text)}</strong>`;document.getElementById('dice-cat').textContent=catNames[pick.cat]},500)}
 
@@ -4478,11 +4479,11 @@ function exportAllData(){
   try{
     const LS_KEYS=['mq-journal','mq-reading','mq-photobook',
       'mq-profile-meta','mq-profile-pic','mq-profile-banner',
-      'fb-note','fb-links','fb-custom-links','fb-vision',
+      'fb-note','fb-note2','fb-links','fb-custom-links','fb-vision',
       'fb-username','fb-needs','fb-period','fb-builtin-over',
       'fb-phase-meta','fb-motivations','fb-removed-vision',
       'fb-quests','fb-habits','fb-blocks','fb-templates',
-      'fb-xp-h','fb-xp-t','mq-whimsy'];
+      'fb-xp-h','fb-xp-t','fb-cat-order','mq-whimsy','mq-dopa-menu'];
     const lsData={};
     LS_KEYS.forEach(k=>{const v=localStorage.getItem(k);if(v!=null)lsData[k]=v;});
     const payload={
@@ -4558,11 +4559,12 @@ function resetAllData(){
   if(!confirm('last chance — completely reset MindQuestor to factory defaults. everything will be gone.'))return;
   ['mq-journal','mq-reading','mq-photobook',
     'mq-profile-meta','mq-profile-pic','mq-profile-banner',
-    'fb-note','fb-links','fb-custom-links','fb-vision',
+    'fb-note','fb-note2','fb-links','fb-custom-links','fb-vision',
     'fb-username','fb-needs','fb-period','fb-builtin-over',
     'fb-phase-meta','fb-motivations','fb-removed-vision',
     'fb-quests','fb-habits','fb-blocks','fb-templates',
-    'fb-xp-h','fb-xp-t','mq-whimsy','mq-gentle-mode','mq-theme','fb-wake-time','mq-show-stats','mq-toured'].forEach(k=>localStorage.removeItem(k));
+    'fb-xp-h','fb-xp-t','fb-cat-order','mq-whimsy','mq-dopa-menu',
+    'mq-gentle-mode','mq-theme','fb-wake-time','mq-show-stats','mq-toured'].forEach(k=>localStorage.removeItem(k));
   location.reload();
 }
 </script>
