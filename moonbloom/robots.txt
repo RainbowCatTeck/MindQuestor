@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://moonbloom.netlify.app/sitemap.xml
+Sitemap: https://moonbloom.quest/sitemap.xml
