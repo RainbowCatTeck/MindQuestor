@@ -20,3 +20,10 @@
   for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
+
+# ── Redirect Netlify subdomain to custom domain ───────────────────────────────
+[[redirects]]
+  from    = "https://moonbloom.netlify.app/*"
+  to      = "https://moonbloom.quest/:splat"
+  status  = 301
+  force   = true
