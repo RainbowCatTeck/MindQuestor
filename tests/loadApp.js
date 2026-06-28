@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import { JSDOM } from 'jsdom';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const APP_HTML_PATH = path.join(__dirname, '..', 'mindquestor', 'app', 'index.html');
+const APP_HTML_PATH = path.join(__dirname, '..', 'app', 'index.html');
 
 // Loads the real, unmodified production HTML/JS into a jsdom window so tests
 // exercise the actual app code rather than a reimplementation of it.
