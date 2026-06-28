@@ -6,6 +6,9 @@
 # ──────────────────────────────────────────────────────────────────────────────
 
 [build]
+  # Static site, no build step — explicit no-op so Netlify doesn't auto-detect
+  # package.json and try to run a non-existent "npm run build" script.
+  command = "echo \"no build needed — static site\""
   publish = "."
 
 # ── Security headers (applied to every response) ──────────────────────────────
