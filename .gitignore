@@ -13,3 +13,11 @@ Thumbs.db
 # Logs and temp files
 *.log
 *.tmp
+
+# Node (test tooling)
+node_modules/
+
+# Claude-specific project files — not part of the deployed site
+CLAUDE.md
+DEVELOPMENT_ROUTINE.md
+.claude/

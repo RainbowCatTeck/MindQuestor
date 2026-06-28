@@ -1,0 +1,25 @@
+{
+  "name": "mindquestor",
+  "version": "1.0.0",
+  "description": "Free neurodivergent-first productivity tools by [Nex](https://rainbowcatteck.notion.site/Link-Directory-130127c6a16980d7bf78f03a1cef88cf).   Part of [moonbloom](https://moonbloom.quest) — a soft studio for neurospicy brains.",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RainbowCatTeck/MindQuestor.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/RainbowCatTeck/MindQuestor/issues"
+  },
+  "homepage": "https://github.com/RainbowCatTeck/MindQuestor#readme",
+  "devDependencies": {
+    "jsdom": "^29.1.1",
+    "vitest": "^4.1.9"
+  }
+}

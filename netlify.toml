@@ -1,6 +1,8 @@
 # ── MindQuestor — Netlify config ──────────────────────────────────────────────
 # Netlify site: mindquestor.netlify.app
-# In the Netlify dashboard: Base directory = "mindquestor", Publish directory = "."
+# In the Netlify dashboard: Base directory = (blank, repo root), Publish directory = "."
+# Repo tooling (package.json, tests/) lives at the same root for reproducibility,
+# but is blocked from public access below rather than excluded via base directory.
 # ──────────────────────────────────────────────────────────────────────────────
 
 [build]
@@ -32,3 +34,28 @@
   to      = "https://mindquestor.quest/:splat"
   status  = 301
   force   = true
+
+# ── Block public access to repo tooling (kept in git for reproducibility, never meant to be served) ──
+[[redirects]]
+  from   = "/package.json"
+  to     = "/index.html"
+  status = 404
+  force  = true
+
+[[redirects]]
+  from   = "/package-lock.json"
+  to     = "/index.html"
+  status = 404
+  force  = true
+
+[[redirects]]
+  from   = "/tests/*"
+  to     = "/index.html"
+  status = 404
+  force  = true
+
+[[redirects]]
+  from   = "/README.md"
+  to     = "/index.html"
+  status = 404
+  force  = true
