@@ -2463,8 +2463,8 @@ function saveShelf() {
   localStorage.setItem('mq-reading', JSON.stringify(readingList));
 }
 function loadShelf() {
-  journalEntries = JSON.parse(localStorage.getItem('mq-journal') || '[]');
-  readingList = JSON.parse(localStorage.getItem('mq-reading') || '[]');
+  try{journalEntries = JSON.parse(localStorage.getItem('mq-journal') || '[]');}catch(e){journalEntries=[];}
+  try{readingList = JSON.parse(localStorage.getItem('mq-reading') || '[]');}catch(e){readingList=[];}
 }
 
 function openBook(type) {
@@ -2704,7 +2704,7 @@ function renameBook(id){
 function pbFmt(ts){if(!ts)return'';return new Date(ts).toLocaleDateString('en-GB',{month:'long',year:'numeric'});}
 let photobookItems=[];
 function savePhotobook(){localStorage.setItem('mq-photobook',JSON.stringify(photobookItems));}
-function loadPhotobook(){photobookItems=JSON.parse(localStorage.getItem('mq-photobook')||'[]');}
+function loadPhotobook(){try{photobookItems=JSON.parse(localStorage.getItem('mq-photobook')||'[]');}catch(e){photobookItems=[];}}
 function saveToPhotobook(id){
   const v=visionItems.find(v=>String(v.id)===String(id));
   if(!v)return;
@@ -2849,8 +2849,8 @@ let quests=[];let blocks=[];let qPri='main';let poolDraft=[],poolMode=false;
 
 // ===================== PLANNER LAYOUT (freeform row/col placement) =====================
 const PGRID_DEFAULT_POS={quests:{row:0,col:0},suggestions:{row:1,col:0},loadouts:{row:0,col:1},timeline:{row:0,col:2}};
-let pgridPos=JSON.parse(localStorage.getItem('mq-pgrid-pos')||'null')||{...PGRID_DEFAULT_POS};
-let pgridHidden=new Set(JSON.parse(localStorage.getItem('mq-pgrid-hidden')||'[]'));
+let pgridPos;try{pgridPos=JSON.parse(localStorage.getItem('mq-pgrid-pos')||'null')||{...PGRID_DEFAULT_POS};}catch(e){pgridPos={...PGRID_DEFAULT_POS};}
+let pgridHidden;try{pgridHidden=new Set(JSON.parse(localStorage.getItem('mq-pgrid-hidden')||'[]'));}catch(e){pgridHidden=new Set();}
 let pgridEditMode=false;
 function togglePgridEdit(){pgridEditMode=!pgridEditMode;document.getElementById('pgrid').classList.toggle('edit-mode',pgridEditMode);document.getElementById('pgrid-edit-btn').classList.toggle('on',pgridEditMode)}
 function applyPgridLayout(){const grid=document.getElementById('pgrid');if(!grid)return;grid.querySelectorAll('.pgrid-col').forEach(el=>{const key=el.dataset.col;const p=pgridPos[key]||PGRID_DEFAULT_POS[key]||{row:0,col:0};el.style.gridRow=(p.row+1)+' / span 1';el.style.gridColumn=(p.col+1)+' / span 1';el.classList.toggle('col-hidden',pgridHidden.has(key))})}
@@ -4379,7 +4379,7 @@ function loadQuickHub(){try{quickChosen=JSON.parse(localStorage.getItem('fb-link
 
 // ===================== VISION BOARD =====================
 let vDrag=null,vDragOX=0,vDragOY=0,vResize=null,vResX=0,vResY=0,vResW=0,vResH=0,vMaxZ=10;
-let removedVisionItems=JSON.parse(localStorage.getItem('fb-removed-vision')||'[]');
+let removedVisionItems;try{removedVisionItems=JSON.parse(localStorage.getItem('fb-removed-vision')||'[]');}catch(e){removedVisionItems=[];}
 // helper — shows a timed message below the upload zone
 function vShowMsg(type, msg) {
   const el = document.getElementById('v-msg');
