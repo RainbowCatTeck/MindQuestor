@@ -3095,7 +3095,7 @@ function saveCustomTemplate(){
   customTemplates.push({id:Date.now(),name,tasks,startH:TIME_OFFSETS[timeKey]||1});
   document.getElementById('tmpl-name').value='';
   document.getElementById('tmpl-tasks').value='';
-  renderCustomTemplates();renderBuiltinTemplates();
+  renderCustomTemplates();renderBuiltinTemplates();saveQuickHub();
   showNotif('✅ custom routine saved!');
 }
 function loadCustomTemplate(id){
