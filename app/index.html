@@ -4466,7 +4466,7 @@ function renderVisionBoard(){
   visionItems.forEach(v=>{
     const c=document.createElement('div');c.className='vcard';c.dataset.vid=String(v.id);
     c.style.cssText=`left:${v.x}px;top:${v.y}px;width:${v.w}px;height:${v.h}px;z-index:${v.z||10}`;
-    c.innerHTML=`<img src="${v.src}" draggable="false"><button class="vcard-del" onclick="delVision(${v.id})">×</button><button class="vcard-save" onclick="saveToPhotobook(${v.id})" title="save to photobook">📷</button><div class="vcard-depth"><button onclick="vBringFront(${v.id})">↑ front</button><button onclick="vSendBack(${v.id})">↓ back</button></div><div class="vcard-resize" data-vid="${v.id}"></div>`;
+    c.innerHTML=`<img src="${esc(v.src).replace(/"/g,'&quot;')}" draggable="false"><button class="vcard-del" onclick="delVision(${v.id})">×</button><button class="vcard-save" onclick="saveToPhotobook(${v.id})" title="save to photobook">📷</button><div class="vcard-depth"><button onclick="vBringFront(${v.id})">↑ front</button><button onclick="vSendBack(${v.id})">↓ back</button></div><div class="vcard-resize" data-vid="${v.id}"></div>`;
     c.addEventListener('mousedown',vStartDrag);
     c.addEventListener('dblclick',()=>vExpand(v.id));
     c.querySelector('.vcard-resize').addEventListener('mousedown',vStartResize);
