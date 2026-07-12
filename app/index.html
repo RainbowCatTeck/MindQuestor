@@ -4581,6 +4581,7 @@ document.getElementById('whimsy-in')?.addEventListener('keydown',e=>{if(e.key===
 // ===================== UTILS =====================
 function hLbl(h){if(h<1)return Math.round(h*60)+'min';if(Number.isInteger(h))return h+'h';return Math.floor(h)+'h '+Math.round((h-Math.floor(h))*60)+'min'}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function escAttr(s){return esc(s).replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
 
 // ===================== INIT =====================
 (function(){const el=document.getElementById('wt');if(!el)return;const saved=localStorage.getItem('fb-wake-time');if(saved){el.value=saved;}else{const n=new Date();el.value=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');}})();initAppearance();updateDay();initPomo();initFree();updateAnimal();renderTL();renderHabits();renderCustomTemplates();renderBuiltinTemplates();renderXPBar();updateProfileHeader();loadProfileMeta();loadShelf();loadPhotobook();loadNote();loadWhimsy();
