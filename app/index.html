@@ -3146,7 +3146,7 @@ function resetCustomRoutines(){
 // ── XP SYSTEM (dual: habits + planner tasks) ──────────────────────────────────
 let xpHabits=0,xpTasks=0;
 // gentle scaling: level n needs 100+(n-1)*50 XP to advance
-function getXPInfo(total){let lvl=1,rem=total;while(true){const need=100+(lvl-1)*50;if(rem<need)return{level:lvl,cur:rem,needed:need};rem-=need;lvl++;}}
+function getXPInfo(total){if(!Number.isFinite(total)||total<0)total=0;let lvl=1,rem=total;while(true){const need=100+(lvl-1)*50;if(rem<need)return{level:lvl,cur:rem,needed:need};rem-=need;lvl++;}}
 function gainXP(source,amount){
   const before=getXPInfo(xpHabits+xpTasks).level;
   if(source==='habit')xpHabits+=amount;
