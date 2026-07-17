@@ -3715,7 +3715,7 @@ function renderEmoHelp(){
 }
 
 function saveEmotion(){
-  const d=JSON.parse(localStorage.getItem('mq-profile-meta')||'{}');
+  let d;try{d=JSON.parse(localStorage.getItem('mq-profile-meta')||'{}');}catch(e){d={};}
   d.emotionCore=emotionCore;d.emotionSub=emotionSub;d.emotionSpec=emotionSpec;
   localStorage.setItem('mq-profile-meta',JSON.stringify(d));
 }
@@ -3730,7 +3730,7 @@ function resetProfileQuote(){
   showNotif('↺ quote reset 💜');
 }
 function saveProfileMeta(){
-  const d=JSON.parse(localStorage.getItem("mq-profile-meta")||"{}");
+  let d;try{d=JSON.parse(localStorage.getItem("mq-profile-meta")||"{}");}catch(e){d={};}
   d.quote=document.getElementById("profile-quote")?.value||"";
   d.listen=document.getElementById("pcurr-listen")?.value||"";
   d.enjoy=document.getElementById("pcurr-enjoy")?.value||"";
@@ -3742,7 +3742,7 @@ function saveProfileMeta(){
   localStorage.setItem("mq-profile-meta",JSON.stringify(d));
 }
 function loadProfileMeta(){
-  const d=JSON.parse(localStorage.getItem("mq-profile-meta")||"{}");
+  let d;try{d=JSON.parse(localStorage.getItem("mq-profile-meta")||"{}");}catch(e){d={};}
   const q=document.getElementById("profile-quote");
   if(q){q.value=d.quote!==undefined&&d.quote!==''?d.quote:DEFAULT_QUOTE;q.style.height="auto";q.style.height=q.scrollHeight+"px";}
   const fields={listen:"pcurr-listen",enjoy:"pcurr-enjoy",aspire:"pcurr-aspire",hyper:"pcurr-hyper"};
